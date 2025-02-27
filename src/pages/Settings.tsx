@@ -28,9 +28,9 @@ const Settings = () => {
     <div className="container py-6 max-w-5xl animate-fade-in">
       <div className="flex flex-col items-start justify-between gap-4 mb-6">
         <div>
-          <h1 className="heading-1">Settings</h1>
+          <h1 className="heading-1">Configuración</h1>
           <p className="text-muted-foreground">
-            Manage your account and company settings
+            Gestiona la configuración de tu cuenta y empresa
           </p>
         </div>
       </div>
@@ -43,15 +43,15 @@ const Settings = () => {
         <TabsList className="grid w-full grid-cols-3 md:w-auto md:inline-flex">
           <TabsTrigger value="profile">
             <User className="h-4 w-4 mr-2" />
-            Profile
+            Perfil
           </TabsTrigger>
           <TabsTrigger value="company">
             <Building2 className="h-4 w-4 mr-2" />
-            Company
+            Empresa
           </TabsTrigger>
           <TabsTrigger value="agents">
             <BrainCircuit className="h-4 w-4 mr-2" />
-            Agents
+            Agentes
           </TabsTrigger>
         </TabsList>
 
@@ -60,15 +60,15 @@ const Settings = () => {
             <CardContent className="p-6">
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-1">Profile Information</h3>
+                  <h3 className="text-xl font-semibold mb-1">Información del Perfil</h3>
                   <p className="text-sm text-muted-foreground">
-                    Update your account details
+                    Actualiza los detalles de tu cuenta
                   </p>
                 </div>
                 <Separator />
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="name">Nombre</Label>
                     <Input
                       id="name"
                       value={userName}
@@ -93,18 +93,18 @@ const Settings = () => {
             <CardContent className="p-6">
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-1">Notifications</h3>
+                  <h3 className="text-xl font-semibold mb-1">Notificaciones</h3>
                   <p className="text-sm text-muted-foreground">
-                    Manage how you receive notifications
+                    Gestiona cómo recibes las notificaciones
                   </p>
                 </div>
                 <Separator />
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium">Enable Notifications</p>
+                      <p className="font-medium">Activar Notificaciones</p>
                       <p className="text-sm text-muted-foreground">
-                        Receive notifications about agent activity
+                        Recibe notificaciones sobre la actividad de los agentes
                       </p>
                     </div>
                     <Switch
@@ -114,9 +114,9 @@ const Settings = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium">Email Notifications</p>
+                      <p className="font-medium">Notificaciones por Email</p>
                       <p className="text-sm text-muted-foreground">
-                        Receive email notifications for important events
+                        Recibe notificaciones por email para eventos importantes
                       </p>
                     </div>
                     <Switch
@@ -132,7 +132,7 @@ const Settings = () => {
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" />
-              Save Changes
+              Guardar Cambios
             </Button>
           </div>
         </TabsContent>
@@ -143,16 +143,16 @@ const Settings = () => {
               <div className="space-y-6">
                 <div>
                   <h3 className="text-xl font-semibold mb-1">
-                    Company Information
+                    Información de la Empresa
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Update your company details
+                    Actualiza los detalles de tu empresa
                   </p>
                 </div>
                 <Separator />
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="company-name">Company Name</Label>
+                    <Label htmlFor="company-name">Nombre de la Empresa</Label>
                     <Input
                       id="company-name"
                       value={companyName}
@@ -160,7 +160,7 @@ const Settings = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="company-description">Description</Label>
+                    <Label htmlFor="company-description">Descripción</Label>
                     <Textarea
                       id="company-description"
                       value={companyDescription}
@@ -176,7 +176,7 @@ const Settings = () => {
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" />
-              Save Changes
+              Guardar Cambios
             </Button>
           </div>
         </TabsContent>
@@ -186,18 +186,18 @@ const Settings = () => {
             <CardContent className="p-6">
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-1">Agent Settings</h3>
+                  <h3 className="text-xl font-semibold mb-1">Configuración de Agentes</h3>
                   <p className="text-sm text-muted-foreground">
-                    Configure global agent settings
+                    Configura ajustes globales para los agentes
                   </p>
                 </div>
                 <Separator />
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium">Auto-Assignment</p>
+                      <p className="font-medium">Asignación Automática</p>
                       <p className="text-sm text-muted-foreground">
-                        Automatically assign new tasks to available agents
+                        Asigna automáticamente nuevas tareas a los agentes disponibles
                       </p>
                     </div>
                     <Switch
@@ -213,7 +213,7 @@ const Settings = () => {
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" />
-              Save Changes
+              Guardar Cambios
             </Button>
           </div>
         </TabsContent>

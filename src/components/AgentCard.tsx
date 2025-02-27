@@ -42,6 +42,38 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
     }
   };
 
+  const translateAgentType = (type: string): string => {
+    switch (type) {
+      case "data-analysis":
+        return "análisis de datos";
+      case "content-creation":
+        return "creación de contenido";
+      case "document-review":
+        return "revisión de documentos";
+      case "customer-support":
+        return "atención al cliente";
+      case "research":
+        return "investigación";
+      case "custom":
+        return "personalizado";
+      default:
+        return type.replace("-", " ");
+    }
+  };
+
+  const translateStatus = (status: string): string => {
+    switch (status) {
+      case "active":
+        return "activo";
+      case "inactive":
+        return "inactivo";
+      case "configuring":
+        return "configurando";
+      default:
+        return status;
+    }
+  };
+
   return (
     <Card className="overflow-hidden hover:shadow-md transition-all duration-300 border animate-fade-in h-full flex flex-col">
       <CardHeader className="p-4 pb-0">
@@ -53,12 +85,12 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
             <div>
               <h3 className="font-medium text-lg line-clamp-1">{agent.name}</h3>
               <p className="text-sm text-muted-foreground line-clamp-1">
-                {agent.type.replace("-", " ")}
+                {translateAgentType(agent.type)}
               </p>
             </div>
           </div>
           <Badge className={`ml-2 capitalize ${getStatusColor(agent.status)}`}>
-            {agent.status}
+            {translateStatus(agent.status)}
           </Badge>
         </div>
       </CardHeader>
@@ -69,18 +101,18 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
         
         <div className="grid grid-cols-2 gap-2 mt-4">
           <div className="bg-muted/50 p-2 rounded">
-            <p className="text-xs text-muted-foreground">Tasks</p>
+            <p className="text-xs text-muted-foreground">Tareas</p>
             <p className="font-medium">{agent.metrics.tasksCompleted}</p>
           </div>
           <div className="bg-muted/50 p-2 rounded">
-            <p className="text-xs text-muted-foreground">Success Rate</p>
+            <p className="text-xs text-muted-foreground">Tasa de Éxito</p>
             <p className="font-medium">{agent.metrics.successRate}%</p>
           </div>
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <Button onClick={onClick} variant="outline" className="w-full">
-          Manage Agent
+          Gestionar Agente
         </Button>
       </CardFooter>
     </Card>

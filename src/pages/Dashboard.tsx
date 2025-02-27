@@ -52,13 +52,13 @@ const Dashboard = () => {
     <div className="container py-6 max-w-7xl animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="heading-1">Dashboard</h1>
+          <h1 className="heading-1">Panel Principal</h1>
           <p className="text-muted-foreground">
-            Manage your AI agents and monitor performance
+            Gestiona tus agentes de IA y monitorea el rendimiento
           </p>
         </div>
         <Button onClick={() => navigate("/agents")}>
-          <Plus className="mr-2 h-4 w-4" /> New Agent
+          <Plus className="mr-2 h-4 w-4" /> Nuevo Agente
         </Button>
       </div>
 
@@ -69,32 +69,32 @@ const Dashboard = () => {
         className="space-y-6"
       >
         <TabsList className="grid w-full grid-cols-2 md:w-auto md:inline-flex">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="agents">Agents</TabsTrigger>
+          <TabsTrigger value="overview">Resumen</TabsTrigger>
+          <TabsTrigger value="agents">Agentes</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <MetricsCard
-              title="Total Agents"
+              title="Total Agentes"
               value={companyAgents.length}
               icon={<BrainCircuit className="h-4 w-4" />}
               trend={{ value: 12, positive: true }}
             />
             <MetricsCard
-              title="Active Agents"
+              title="Agentes Activos"
               value={activeAgents.length}
               icon={<Activity className="h-4 w-4" />}
               trend={{ value: 8, positive: true }}
             />
             <MetricsCard
-              title="Tasks Completed"
+              title="Tareas Completadas"
               value={245}
               icon={<ListChecks className="h-4 w-4" />}
               trend={{ value: 5, positive: true }}
             />
             <MetricsCard
-              title="Total Hours Saved"
+              title="Horas Ahorradas"
               value="124h"
               icon={<Clock className="h-4 w-4" />}
               trend={{ value: 18, positive: true }}
@@ -104,8 +104,8 @@ const Dashboard = () => {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Card className="md:col-span-2">
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">Recent Tasks</CardTitle>
-                <CardDescription>Latest tasks across all agents</CardDescription>
+                <CardTitle className="text-base">Tareas Recientes</CardTitle>
+                <CardDescription>Últimas tareas de todos los agentes</CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="px-6">
@@ -127,13 +127,15 @@ const Dashboard = () => {
                               </span>
                               <span className="text-sm font-medium" 
                                     style={{ color: getTaskStatusColor(task.status) }}>
-                                {task.status}
+                                {task.status === 'completed' ? 'completada' : 
+                                 task.status === 'in-progress' ? 'en progreso' : 
+                                 task.status === 'pending' ? 'pendiente' : 'fallida'}
                               </span>
                             </div>
                           </div>
                         </div>
                         <Button variant="ghost" size="sm">
-                          View
+                          Ver
                         </Button>
                       </div>
                     );
@@ -144,8 +146,8 @@ const Dashboard = () => {
 
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">Quick Actions</CardTitle>
-                <CardDescription>Common operations</CardDescription>
+                <CardTitle className="text-base">Acciones Rápidas</CardTitle>
+                <CardDescription>Operaciones comunes</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
@@ -155,7 +157,7 @@ const Dashboard = () => {
                     onClick={() => navigate("/agents")}
                   >
                     <BrainCircuit className="mr-2 h-4 w-4" />
-                    <span>Manage Agents</span>
+                    <span>Gestionar Agentes</span>
                   </Button>
                   <Button
                     variant="outline"
@@ -163,7 +165,7 @@ const Dashboard = () => {
                     onClick={() => navigate("/knowledge")}
                   >
                     <FileText className="mr-2 h-4 w-4" />
-                    <span>Knowledge Base</span>
+                    <span>Base de Conocimiento</span>
                   </Button>
                   <Button
                     variant="outline"
@@ -171,7 +173,7 @@ const Dashboard = () => {
                     onClick={() => navigate("/analytics")}
                   >
                     <BarChart3 className="mr-2 h-4 w-4" />
-                    <span>Analytics</span>
+                    <span>Análisis</span>
                   </Button>
                   <Button
                     variant="outline"
@@ -179,7 +181,7 @@ const Dashboard = () => {
                     onClick={() => navigate("/users")}
                   >
                     <Users className="mr-2 h-4 w-4" />
-                    <span>Team Members</span>
+                    <span>Miembros del Equipo</span>
                   </Button>
                 </div>
               </CardContent>
@@ -190,20 +192,20 @@ const Dashboard = () => {
         <TabsContent value="agents" className="space-y-6">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h2 className="heading-3">Your Agents</h2>
+              <h2 className="heading-3">Tus Agentes</h2>
               <p className="text-muted-foreground">
-                {companyAgents.length} agents configured for{" "}
-                {currentCompany?.name || "your company"}
+                {companyAgents.length} agentes configurados para{" "}
+                {currentCompany?.name || "tu empresa"}
               </p>
             </div>
             <div className="flex gap-2">
               <Button variant="outline" size="sm">
                 <LayoutGrid className="h-4 w-4 mr-1" />
-                Grid
+                Cuadrícula
               </Button>
               <Button variant="outline" size="sm">
                 <ListChecks className="h-4 w-4 mr-1" />
-                List
+                Lista
               </Button>
             </div>
           </div>
@@ -225,9 +227,9 @@ const Dashboard = () => {
                 <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
                   <Plus className="h-6 w-6 text-muted-foreground" />
                 </div>
-                <span className="text-lg font-medium">Add New Agent</span>
+                <span className="text-lg font-medium">Añadir Nuevo Agente</span>
                 <p className="text-sm text-muted-foreground">
-                  Configure a new AI agent for your specific needs
+                  Configura un nuevo agente de IA para tus necesidades específicas
                 </p>
               </Button>
             </Card>

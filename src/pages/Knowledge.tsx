@@ -51,9 +51,9 @@ const Knowledge = () => {
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat("en-US", {
-      month: "short",
+    return new Intl.DateTimeFormat("es-ES", {
       day: "numeric",
+      month: "short",
       year: "numeric",
     }).format(date);
   };
@@ -79,13 +79,13 @@ const Knowledge = () => {
     <div className="container py-6 max-w-7xl animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="heading-1">Knowledge Base</h1>
+          <h1 className="heading-1">Base de Conocimiento</h1>
           <p className="text-muted-foreground">
-            Manage your company's private knowledge
+            Gestiona el conocimiento privado de tu empresa
           </p>
         </div>
         <Button>
-          <Plus className="mr-2 h-4 w-4" /> New Knowledge Base
+          <Plus className="mr-2 h-4 w-4" /> Nueva Base de Conocimiento
         </Button>
       </div>
 
@@ -93,7 +93,7 @@ const Knowledge = () => {
         <div className="w-full md:w-72 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search knowledge bases..."
+            placeholder="Buscar bases de conocimiento..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-9"
@@ -102,7 +102,7 @@ const Knowledge = () => {
 
         <div className="flex gap-2 w-full md:w-auto">
           <Button variant="outline">
-            <Upload className="mr-2 h-4 w-4" /> Upload
+            <Upload className="mr-2 h-4 w-4" /> Subir
           </Button>
         </div>
       </div>
@@ -110,14 +110,14 @@ const Knowledge = () => {
       {filteredKnowledgeBases.length === 0 ? (
         <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
           <FileText className="h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-xl font-medium mb-2">No knowledge bases found</h3>
+          <h3 className="text-xl font-medium mb-2">No se encontraron bases de conocimiento</h3>
           <p className="text-muted-foreground mb-6">
             {searchTerm
-              ? "Try adjusting your search term"
-              : "Create your first knowledge base to get started"}
+              ? "Prueba a ajustar tu término de búsqueda"
+              : "Crea tu primera base de conocimiento para comenzar"}
           </p>
           <Button>
-            <Plus className="mr-2 h-4 w-4" /> New Knowledge Base
+            <Plus className="mr-2 h-4 w-4" /> Nueva Base de Conocimiento
           </Button>
         </div>
       ) : (
@@ -137,13 +137,13 @@ const Knowledge = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuLabel>Acciones</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>Edit knowledge base</DropdownMenuItem>
-                      <DropdownMenuItem>Add documents</DropdownMenuItem>
+                      <DropdownMenuItem>Editar base de conocimiento</DropdownMenuItem>
+                      <DropdownMenuItem>Añadir documentos</DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem className="text-red-500">
-                        Delete knowledge base
+                        Eliminar base de conocimiento
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -152,13 +152,13 @@ const Knowledge = () => {
               <CardContent className="pb-2">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
                   <Clock className="h-4 w-4" />
-                  <span>Last updated: {formatDate(kb.updatedAt)}</span>
+                  <span>Última actualización: {formatDate(kb.updatedAt)}</span>
                 </div>
 
                 <div className="space-y-2">
                   {kb.documents.length === 0 ? (
                     <div className="p-4 text-center border border-dashed rounded-md">
-                      <p className="text-muted-foreground">No documents yet</p>
+                      <p className="text-muted-foreground">No hay documentos aún</p>
                     </div>
                   ) : (
                     kb.documents.map((doc) => (
@@ -191,7 +191,7 @@ const Knowledge = () => {
               </CardContent>
               <CardFooter>
                 <Button variant="outline" size="sm" className="w-full">
-                  <Plus className="mr-2 h-3 w-3" /> Add Document
+                  <Plus className="mr-2 h-3 w-3" /> Añadir Documento
                 </Button>
               </CardFooter>
             </Card>
@@ -206,10 +206,10 @@ const Knowledge = () => {
                 <Plus className="h-6 w-6 text-muted-foreground" />
               </div>
               <span className="text-lg font-medium">
-                Create New Knowledge Base
+                Crear Nueva Base de Conocimiento
               </span>
               <p className="text-sm text-muted-foreground max-w-xs text-center">
-                Add a new collection of documents for your AI agents to learn from
+                Añade una nueva colección de documentos para que tus agentes de IA aprendan
               </p>
             </Button>
           </Card>

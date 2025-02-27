@@ -69,13 +69,13 @@ const Users = () => {
     <div className="container py-6 max-w-7xl animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="heading-1">Users</h1>
+          <h1 className="heading-1">Usuarios</h1>
           <p className="text-muted-foreground">
-            Manage team members and their access
+            Gestiona los miembros del equipo y sus accesos
           </p>
         </div>
         <Button>
-          <UserPlus className="mr-2 h-4 w-4" /> Add User
+          <UserPlus className="mr-2 h-4 w-4" /> Añadir Usuario
         </Button>
       </div>
 
@@ -83,7 +83,7 @@ const Users = () => {
         <div className="w-full md:w-72 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search users..."
+            placeholder="Buscar usuarios..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-9"
@@ -95,17 +95,17 @@ const Users = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[300px]">User</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead className="w-[300px]">Usuario</TableHead>
+              <TableHead>Rol</TableHead>
+              <TableHead>Estado</TableHead>
+              <TableHead className="text-right">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredUsers.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={4} className="h-24 text-center">
-                  No users found.
+                  No se encontraron usuarios.
                 </TableCell>
               </TableRow>
             ) : (
@@ -136,7 +136,7 @@ const Users = () => {
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-green-500" />
-                      <span>Active</span>
+                      <span>Activo</span>
                     </div>
                   </TableCell>
                   <TableCell className="text-right">
@@ -144,24 +144,24 @@ const Users = () => {
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon">
                           <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Open menu</span>
+                          <span className="sr-only">Abrir menú</span>
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuLabel>Acciones</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                           <User className="mr-2 h-4 w-4" />
-                          <span>View profile</span>
+                          <span>Ver perfil</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                           <Mail className="mr-2 h-4 w-4" />
-                          <span>Send email</span>
+                          <span>Enviar email</span>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem className="text-red-500">
                           <Trash2 className="mr-2 h-4 w-4" />
-                          <span>Remove</span>
+                          <span>Eliminar</span>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
