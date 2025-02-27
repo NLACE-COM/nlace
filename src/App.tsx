@@ -12,6 +12,7 @@ import Agents from "./pages/Agents";
 import Knowledge from "./pages/Knowledge";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
+import Chat from "./pages/Chat";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 
@@ -45,6 +46,14 @@ const App = () => {
               element={
                 <AppLayout>
                   <Dashboard />
+                </AppLayout>
+              }
+            />
+            <Route
+              path="/chat"
+              element={
+                <AppLayout>
+                  <Chat />
                 </AppLayout>
               }
             />

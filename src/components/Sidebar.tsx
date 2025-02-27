@@ -7,6 +7,7 @@ import {
   Building2,
   FileText,
   LayoutDashboard,
+  MessageSquare,
   Settings,
   Users,
   X,
@@ -27,6 +28,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       path: "/dashboard",
       name: "Panel Principal",
       icon: <LayoutDashboard className="h-5 w-5" />,
+    },
+    {
+      path: "/chat",
+      name: "Chat",
+      icon: <MessageSquare className="h-5 w-5" />,
     },
     {
       path: "/agents",
