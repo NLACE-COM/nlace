@@ -9,6 +9,7 @@ import {
   Send,
   Settings,
   Sparkles,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
