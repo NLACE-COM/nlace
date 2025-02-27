@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Check, ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,7 +24,7 @@ const CompanySelector = () => {
 
   return (
     <div className="space-y-2">
-      <p className="text-sm font-medium text-muted-foreground">Company</p>
+      <p className="text-sm font-medium text-muted-foreground">Empresa</p>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -45,7 +44,7 @@ const CompanySelector = () => {
                 )}
               </div>
               <span className="truncate font-medium">
-                {selectedCompany?.name || "Select company"}
+                {selectedCompany?.name || "Seleccionar empresa"}
               </span>
             </div>
             {open ? (
@@ -57,8 +56,8 @@ const CompanySelector = () => {
         </PopoverTrigger>
         <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 animate-scale-in">
           <Command>
-            <CommandInput placeholder="Search company..." className="h-9" />
-            <CommandEmpty>No company found.</CommandEmpty>
+            <CommandInput placeholder="Buscar empresa..." className="h-9" />
+            <CommandEmpty>No se encontraron empresas.</CommandEmpty>
             <CommandGroup className="max-h-[300px] overflow-auto">
               {companies.map((company) => (
                 <CommandItem
@@ -88,13 +87,12 @@ const CompanySelector = () => {
               <CommandItem
                 value="add-new"
                 onSelect={() => {
-                  // This would open a modal to add a new company
                   setOpen(false);
                 }}
                 className="flex items-center gap-2 py-2 text-primary"
               >
                 <Plus className="h-4 w-4" />
-                <span>Add new company</span>
+                <span>Agregar nueva empresa</span>
               </CommandItem>
             </CommandGroup>
           </Command>

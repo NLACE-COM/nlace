@@ -25,32 +25,32 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const navItems = [
     {
       path: "/dashboard",
-      name: "Dashboard",
+      name: "Panel Principal",
       icon: <LayoutDashboard className="h-5 w-5" />,
     },
     {
       path: "/agents",
-      name: "Agents",
+      name: "Agentes",
       icon: <BrainCircuit className="h-5 w-5" />,
     },
     {
       path: "/knowledge",
-      name: "Knowledge Base",
+      name: "Base de Conocimiento",
       icon: <FileText className="h-5 w-5" />,
     },
     {
       path: "/analytics",
-      name: "Analytics",
+      name: "Análisis",
       icon: <BarChart3 className="h-5 w-5" />,
     },
     {
       path: "/users",
-      name: "Users",
+      name: "Usuarios",
       icon: <Users className="h-5 w-5" />,
     },
     {
       path: "/settings",
-      name: "Settings",
+      name: "Configuración",
       icon: <Settings className="h-5 w-5" />,
     },
   ];
@@ -79,7 +79,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               className="rounded-full h-8 w-8 flex items-center justify-center text-muted-foreground hover:bg-muted"
             >
               <X className="h-5 w-5" />
-              <span className="sr-only">Close sidebar</span>
+              <span className="sr-only">Cerrar menú</span>
             </button>
           </div>
 

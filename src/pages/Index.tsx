@@ -16,12 +16,15 @@ const Index = () => {
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-          AgentifyCollaborate
+          NLACE AI Studio
         </h1>
         
+        <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+          Inteligencia artificial aplicada para tu empresa
+        </h2>
+        
         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-          A sophisticated multi-agent AI system that empowers your business with
-          intelligent automation and collaborative workflows.
+          NLACE AI Studio ofrece a empresas un entorno seguro para crear y gestionar agentes de inteligencia artificial adaptados a sus necesidades.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -30,7 +33,7 @@ const Index = () => {
             className="px-8 py-6 text-base"
             onClick={() => navigate("/dashboard")}
           >
-            Get Started
+            Comenzar
           </Button>
           
           <Button
@@ -39,40 +42,60 @@ const Index = () => {
             className="px-8 py-6 text-base"
             onClick={() => navigate("/agents")}
           >
-            Explore Agents
+            Explorar Agentes
           </Button>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8 text-center">
+        <div className="grid md:grid-cols-4 gap-8 text-center">
           <div className="p-6 rounded-xl bg-white/50 backdrop-blur-sm border border-muted">
             <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <BrainCircuit className="h-6 w-6 text-primary" />
+              <span className="text-2xl">🔒</span>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Custom AI Agents</h3>
+            <h3 className="text-xl font-semibold mb-2">Total privacidad y control</h3>
             <p className="text-muted-foreground">
-              Configure specialized AI agents tailored to your business needs
+              Tus datos son solo tuyos. Entrenamos la IA con tu información interna sin compartir nada con terceros ni depender de modelos públicos.
             </p>
           </div>
           
           <div className="p-6 rounded-xl bg-white/50 backdrop-blur-sm border border-muted">
             <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <BrainCircuit className="h-6 w-6 text-primary" />
+              <span className="text-2xl">⚡</span>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Private Knowledge Base</h3>
+            <h3 className="text-xl font-semibold mb-2">Implementación rápida y sin fricciones</h3>
             <p className="text-muted-foreground">
-              Secure company knowledge that only your agents can access
+              Nuestros agentes se integran con las herramientas que ya usas, como Metricool, para que empieces a ver resultados de inmediato.
             </p>
           </div>
           
           <div className="p-6 rounded-xl bg-white/50 backdrop-blur-sm border border-muted">
             <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <BrainCircuit className="h-6 w-6 text-primary" />
+              <span className="text-2xl">🎯</span>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Team Collaboration</h3>
+            <h3 className="text-xl font-semibold mb-2">Flexibilidad total para escalar</h3>
             <p className="text-muted-foreground">
-              Seamlessly integrate AI agents into your existing workflows
+              Cada empresa es única. Adaptamos la IA a tus objetivos, ayudándote a automatizar procesos, mejorar la experiencia del cliente y optimizar tu operación.
             </p>
           </div>
+          
+          <div className="p-6 rounded-xl bg-white/50 backdrop-blur-sm border border-muted">
+            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+              <span className="text-2xl">🎯</span>
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Toda la IA en un solo lugar</h3>
+            <p className="text-muted-foreground">
+              Con NLACE AI Studio tienes acceso inmediato a todos los modelos LLM disponibles en el mercado: OpenAI, Claude, Gemini, Grok y Deepseek.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-12 p-6 rounded-xl bg-white/50 backdrop-blur-sm border border-muted">
+          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+            <span className="text-2xl">💡</span>
+          </div>
+          <h3 className="text-xl font-semibold mb-2">Acceso anticipado</h3>
+          <p className="text-muted-foreground">
+            Estamos en Alpha cerrada. Únete a la lista de espera y sé de los primeros en probarlo.
+          </p>
         </div>
       </div>
     </div>

@@ -30,11 +30,11 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
             onClick={onToggleSidebar}
           >
             <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle menu</span>
+            <span className="sr-only">Menú</span>
           </Button>
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-semibold tracking-tight">
-              Agentify<span className="text-primary/80">Collaborate</span>
+              NLACE<span className="text-primary/80">AI Studio</span>
             </h1>
           </div>
         </div>
@@ -47,7 +47,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
                 {notifications}
               </span>
             )}
-            <span className="sr-only">Notifications</span>
+            <span className="sr-only">Notificaciones</span>
           </Button>
 
           <DropdownMenu>
@@ -62,25 +62,26 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
                 <div className="hidden md:flex flex-col items-start text-sm">
                   <span className="font-medium">{currentUser.name}</span>
                   <span className="text-xs text-muted-foreground">
-                    {currentUser.role}
+                    {currentUser.role === 'admin' ? 'Administrador' : 
+                     currentUser.role === 'manager' ? 'Gerente' : 'Usuario'}
                   </span>
                 </div>
                 <ChevronDown className="h-4 w-4 text-muted-foreground" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 mt-1 z-40">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
+                <span>Perfil</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
+                <span>Configuración</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Log out</DropdownMenuItem>
+              <DropdownMenuItem>Cerrar sesión</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
