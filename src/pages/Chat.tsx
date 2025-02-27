@@ -6,10 +6,13 @@ import {
   ChevronDown,
   FileUp,
   Image,
+  PaperclipIcon,
   Send,
   Settings,
   Sparkles,
   User,
+  Command,
+  ArrowUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -72,6 +75,18 @@ const Chat = () => {
     }
   };
 
+  // Función para obtener el nombre del modelo seleccionado
+  const getSelectedModelName = () => {
+    const model = llmModels.find(m => m.id === selectedModel);
+    return model ? `${model.name}` : "Seleccionar modelo";
+  };
+
+  // Función para obtener el nombre del agente seleccionado
+  const getSelectedAgentName = () => {
+    const agent = agents.find(a => a.id === selectedAgent);
+    return agent ? agent.name : "Seleccionar agente";
+  };
+
   return (
     <div className="container py-6 max-w-7xl h-[calc(100vh-4rem)] flex flex-col">
       <div className="flex items-center justify-between mb-6">
@@ -81,10 +96,21 @@ const Chat = () => {
             Interactúa con múltiples modelos de IA
           </p>
         </div>
-        <Button variant="outline">
-          <Settings className="mr-2 h-4 w-4" />
-          Configuración
-        </Button>
+        <Select value={selectedCompany} onValueChange={setSelectedCompany}>
+          <SelectTrigger className="w-[200px]">
+            <SelectValue placeholder="Seleccionar empresa" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Empresas</SelectLabel>
+              {companies.map((company) => (
+                <SelectItem key={company.id} value={company.id}>
+                  {company.name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 flex-grow">
@@ -193,57 +219,72 @@ const Chat = () => {
               </TabsContent>
             </CardContent>
 
-            <CardFooter className="border-t pt-4">
-              <div className="flex flex-col w-full space-y-4">
+            <CardFooter className="border-t pt-4 flex flex-col items-stretch">
+              <div className="relative rounded-xl border mb-3 overflow-hidden">
                 <Textarea
-                  placeholder="Escribe tu mensaje..."
+                  placeholder="Escribe aquí lo que quieras..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="min-h-[100px]"
+                  className="min-h-[100px] border-0 resize-none pr-12"
                 />
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="file"
-                      id="file-upload"
-                      className="hidden"
-                      onChange={handleFileUpload}
-                      multiple
-                    />
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => document.getElementById("file-upload")?.click()}
-                    >
-                      <FileUp className="h-4 w-4" />
-                    </Button>
-                    <Button variant="outline" size="icon">
-                      <Image className="h-4 w-4" />
-                    </Button>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="icon">
-                          <AtSign className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="start" className="w-48">
-                        {users.map((user) => (
-                          <DropdownMenuItem key={user.id}>
-                            <div className="flex items-center">
-                              <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mr-2">
-                                <User className="h-4 w-4" />
-                              </div>
-                              {user.name}
-                            </div>
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                  <Button onClick={handleSendMessage}>
-                    <Sparkles className="mr-2 h-4 w-4" />
-                    Enviar
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="absolute bottom-2 right-2 rounded-full bg-primary/10 hover:bg-primary/20"
+                  onClick={handleSendMessage}
+                >
+                  <ArrowUp className="h-5 w-5" />
+                </Button>
+              </div>
+              
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="file"
+                    id="file-upload"
+                    className="hidden"
+                    onChange={handleFileUpload}
+                    multiple
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => document.getElementById("file-upload")?.click()}
+                    className="h-9 w-9"
+                  >
+                    <PaperclipIcon className="h-4 w-4" />
                   </Button>
+                  
+                  {/* Selector de modelo */}
+                  <Select value={selectedModel} onValueChange={setSelectedModel}>
+                    <SelectTrigger className="h-9 border-0 bg-secondary/40 hover:bg-secondary/60 px-3">
+                      <div className="flex items-center gap-1.5">
+                        <Command className="h-3.5 w-3.5" />
+                        <span className="text-sm">{getSelectedModelName()}</span>
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Modelos disponibles</SelectLabel>
+                        {llmModels.map((model) => (
+                          <SelectItem key={model.id} value={model.id}>
+                            <div className="flex items-center">
+                              <span>{model.name}</span>
+                              <Badge variant="secondary" className="ml-2">
+                                {model.provider}
+                              </Badge>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <p className="text-sm text-muted-foreground hidden sm:block">
+                    Presiona <kbd className="rounded border bg-muted px-1 text-xs">⌘</kbd> <kbd className="rounded border bg-muted px-1 text-xs">↵</kbd> para enviar
+                  </p>
                 </div>
               </div>
             </CardFooter>
