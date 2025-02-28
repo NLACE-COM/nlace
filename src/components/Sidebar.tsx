@@ -54,7 +54,7 @@ const SidebarItem = ({
         <NavLink
           to={to}
           className={({ isActive }) =>
-            `flex items-center px-3 py-2 rounded-md transition-colors ${
+            `flex items-center w-full px-3 py-3 rounded-md transition-colors ${
               isActive
                 ? "bg-sidebar-accent text-sidebar-accent-foreground"
                 : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
@@ -62,8 +62,8 @@ const SidebarItem = ({
           }
           onClick={onClick}
         >
-          <div className="flex-shrink-0">{icon}</div>
-          {!collapsed && <div className="ml-3">{label}</div>}
+          {icon}
+          {!collapsed && <span className="ml-4 text-base">{label}</span>}
         </NavLink>
       </TooltipTrigger>
       {collapsed && <TooltipContent side="right">{label}</TooltipContent>}
@@ -146,52 +146,52 @@ const Sidebar = ({
 
           {/* Navigation */}
           <ScrollArea className="flex-1 px-4 py-2">
-            <nav className="space-y-1">
+            <nav className="space-y-2">
               <SidebarItem
                 to="/dashboard"
-                icon={<LayoutDashboard className="h-5 w-5" />}
+                icon={<LayoutDashboard size={24} />}
                 label="Panel Principal"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/agents"
-                icon={<BrainCircuit className="h-5 w-5" />}
+                icon={<BrainCircuit size={24} />}
                 label="Agentes"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/chat"
-                icon={<MessageSquare className="h-5 w-5" />}
+                icon={<MessageSquare size={24} />}
                 label="Chat"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/knowledge"
-                icon={<FileText className="h-5 w-5" />}
+                icon={<FileText size={24} />}
                 label="Conocimiento"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/integrations"
-                icon={<Globe className="h-5 w-5" />}
+                icon={<Globe size={24} />}
                 label="Integraciones"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/users"
-                icon={<Users className="h-5 w-5" />}
+                icon={<Users size={24} />}
                 label="Usuarios"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/analytics"
-                icon={<BarChart3 className="h-5 w-5" />}
+                icon={<BarChart3 size={24} />}
                 label="Análisis"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
@@ -204,7 +204,7 @@ const Sidebar = ({
             <Separator className="bg-sidebar-border" />
             <SidebarItem
               to="/settings"
-              icon={<Settings className="h-5 w-5" />}
+              icon={<Settings size={24} />}
               label="Configuración"
               collapsed={collapsed}
               onClick={isMobile ? onClose : undefined}
@@ -212,13 +212,11 @@ const Sidebar = ({
             <Button
               variant="ghost"
               className={`w-full flex items-center text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground ${
-                collapsed ? "justify-center" : "justify-start"
+                collapsed ? "justify-center" : ""
               }`}
             >
-              <div className="flex-shrink-0">
-                <LogOut className="h-5 w-5" />
-              </div>
-              {!collapsed && <div className="ml-3">Cerrar Sesión</div>}
+              <LogOut size={24} />
+              {!collapsed && <span className="ml-4 text-base">Cerrar Sesión</span>}
             </Button>
           </div>
 
