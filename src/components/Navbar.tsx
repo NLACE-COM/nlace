@@ -76,7 +76,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
                 <img
                   src="/lovable-uploads/ce52e81f-b486-4b1c-a6db-ed96bebf8482.png"
                   alt="NLACE AI Studio"
-                  className="h-8 md:h-10"
+                  className="h-6 md:h-10"
                 />
               )}
             </a>

@@ -112,6 +112,7 @@ const Sidebar = ({
         <div
           className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
           style={{ opacity: isOpen ? 1 : 0 }}
+          onClick={onClose}
         />
       )}
 
