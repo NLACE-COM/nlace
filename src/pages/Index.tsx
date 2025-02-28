@@ -9,14 +9,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Globe } from "lucide-react";
+import { Globe, Lock, Zap, BarChart } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
   const { language, setLanguage, t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-[#1A1F2C] text-white">
+    <div className="min-h-screen bg-[#111827] text-white">
       {/* Header con logo y selector de idioma */}
       <header className="container max-w-7xl mx-auto py-6 px-4 flex justify-between items-center">
         <div>
@@ -26,12 +26,12 @@ const Index = () => {
               alt="NLACE" 
               className="h-8 invert"
             />
-            <span className="text-xl font-semibold">AI Studio</span>
+            <span className="text-xl font-semibold text-white">AI Studio</span>
           </div>
         </div>
         <div className="flex items-center gap-4">
           <Select value={language} onValueChange={(value) => setLanguage(value as "es" | "en")}>
-            <SelectTrigger className="w-32 bg-transparent border-gray-700">
+            <SelectTrigger className="w-32 bg-transparent border-gray-700 text-gray-300">
               <div className="flex items-center gap-2">
                 <Globe className="h-4 w-4" />
                 <SelectValue>{language === "es" ? "Español" : "English"}</SelectValue>
@@ -44,7 +44,7 @@ const Index = () => {
           </Select>
           <Button 
             onClick={() => navigate("/dashboard")}
-            className="bg-white/10 hover:bg-white/20 text-white"
+            className="bg-[#1F2937] hover:bg-[#374151] text-white border border-gray-700"
           >
             {t("dashboard")}
           </Button>
@@ -52,10 +52,10 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="container max-w-7xl mx-auto px-4 py-16">
+      <section className="container max-w-7xl mx-auto px-4 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl font-bold">
+            <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight">
               {language === "es" ? "Inteligencia artificial aplicada para tu empresa" : "Applied artificial intelligence for your business"}
             </h1>
             
@@ -66,11 +66,11 @@ const Index = () => {
             </p>
             
             <Button
-              className="px-6 py-2.5 bg-white text-black hover:bg-gray-100 rounded-md flex items-center justify-center gap-2"
+              className="mt-4 px-6 py-6 h-auto bg-white text-black hover:bg-gray-100 rounded-md flex items-center justify-center gap-2 text-base font-medium"
               onClick={() => navigate("/dashboard")}
             >
               <img 
-                src="/public/lovable-uploads/ed1a6be8-b1c3-41c4-8543-f14ef0683e3b.png" 
+                src="/lovable-uploads/ed1a6be8-b1c3-41c4-8543-f14ef0683e3b.png" 
                 alt="Google Logo" 
                 className="h-5" 
               />
@@ -79,11 +79,11 @@ const Index = () => {
           </div>
           
           <div className="flex justify-center lg:justify-end">
-            <div className="bg-[#262B38] p-4 rounded-lg shadow-xl">
+            <div className="bg-gradient-to-b from-[#1E293B] to-[#0F172A] p-6 rounded-xl shadow-2xl border border-gray-700">
               <img 
-                src="/placeholder.svg" 
+                src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
                 alt="Dashboard Analytics" 
-                className="w-full max-w-md rounded"
+                className="w-full max-w-md rounded-lg shadow-lg"
               />
             </div>
           </div>
@@ -91,70 +91,70 @@ const Index = () => {
       </section>
 
       {/* Partner Logos */}
-      <section className="border-t border-b border-gray-700 py-8">
+      <section className="border-t border-b border-gray-800 py-10 bg-[#1E293B]">
         <div className="container max-w-7xl mx-auto px-4">
-          <div className="flex flex-wrap justify-center md:justify-between items-center gap-8">
-            <img src="/placeholder.svg" alt="OpenAI" className="h-10 opacity-50" />
-            <img src="/placeholder.svg" alt="Metricool" className="h-8 opacity-50" />
-            <img src="/placeholder.svg" alt="Gemini" className="h-8 opacity-50" />
-            <img src="/placeholder.svg" alt="LangChain" className="h-8 opacity-50" />
+          <div className="flex flex-wrap justify-center md:justify-between items-center gap-10">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" className="h-8 opacity-70 invert" />
+            <img src="/placeholder.svg" alt="Metricool" className="h-8 opacity-70" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Google_Bard_logo.svg" alt="Gemini" className="h-8 opacity-70" />
+            <img src="https://python.langchain.com/img/langchain_icon.png" alt="LangChain" className="h-9 opacity-70" />
           </div>
         </div>
       </section>
 
       {/* Dashboard Preview */}
-      <section className="py-20">
+      <section className="py-24 bg-[#111827]">
         <div className="container max-w-7xl mx-auto px-4">
-          <div className="bg-[#FAF2DE] rounded-xl p-4 md:p-8 shadow-xl">
+          <div className="bg-gradient-to-br from-[#FFE29F] to-[#FFA99F] rounded-xl p-6 md:p-8 shadow-2xl">
             <img 
-              src="/placeholder.svg" 
+              src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
               alt="Dashboard Demo" 
-              className="w-full max-w-4xl mx-auto rounded-lg shadow-lg" 
+              className="w-full max-w-4xl mx-auto rounded-lg shadow-xl border-4 border-white/30" 
             />
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20">
+      <section className="py-24 bg-[#0F172A]">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-16">
-            <div className="space-y-4">
-              <div className="bg-blue-500/20 w-16 h-16 rounded-lg flex items-center justify-center">
-                <img src="/placeholder.svg" alt="Privacy Icon" className="h-8 w-8" />
+            <div className="space-y-6">
+              <div className="bg-blue-600/20 w-16 h-16 rounded-lg flex items-center justify-center">
+                <Lock className="h-8 w-8 text-blue-400" />
               </div>
-              <h3 className="text-xl font-bold">
+              <h3 className="text-2xl font-bold text-white">
                 {language === "es" ? "Total privacidad y control" : "Total privacy and control"}
               </h3>
-              <p className="text-gray-400">
+              <p className="text-gray-400 text-base leading-relaxed">
                 {language === "es"
                   ? "Tus datos son solo tuyos. Entrenamos la IA con tu información interna sin compartir nada con terceros ni depender de modelos públicos."
                   : "Your data is only yours. We train AI with your internal information without sharing anything with third parties or relying on public models."}
               </p>
             </div>
             
-            <div className="space-y-4">
-              <div className="bg-purple-500/20 w-16 h-16 rounded-lg flex items-center justify-center">
-                <img src="/placeholder.svg" alt="Speed Icon" className="h-8 w-8" />
+            <div className="space-y-6">
+              <div className="bg-purple-600/20 w-16 h-16 rounded-lg flex items-center justify-center">
+                <Zap className="h-8 w-8 text-purple-400" />
               </div>
-              <h3 className="text-xl font-bold">
+              <h3 className="text-2xl font-bold text-white">
                 {language === "es" ? "Implementación rápida y sin fricciones" : "Fast and frictionless implementation"}
               </h3>
-              <p className="text-gray-400">
+              <p className="text-gray-400 text-base leading-relaxed">
                 {language === "es"
                   ? "Nuestros agentes se integran con las herramientas que ya usas, como Metricool, para que empieces a ver resultados de inmediato."
                   : "Our agents integrate with tools you already use, like Metricool, so you can start seeing results right away."}
               </p>
             </div>
             
-            <div className="space-y-4">
-              <div className="bg-yellow-500/20 w-16 h-16 rounded-lg flex items-center justify-center">
-                <img src="/placeholder.svg" alt="Flexibility Icon" className="h-8 w-8" />
+            <div className="space-y-6">
+              <div className="bg-amber-600/20 w-16 h-16 rounded-lg flex items-center justify-center">
+                <BarChart className="h-8 w-8 text-amber-400" />
               </div>
-              <h3 className="text-xl font-bold">
+              <h3 className="text-2xl font-bold text-white">
                 {language === "es" ? "Flexibilidad total para escalar" : "Total flexibility to scale"}
               </h3>
-              <p className="text-gray-400">
+              <p className="text-gray-400 text-base leading-relaxed">
                 {language === "es"
                   ? "Cada empresa es única. Adaptamos la IA a tus objetivos, ayudándote a automatizar procesos, mejorar la experiencia del cliente y optimizar tu operación."
                   : "Every company is unique. We adapt AI to your goals, helping you automate processes, improve customer experience, and optimize your operation."}
@@ -165,29 +165,33 @@ const Index = () => {
       </section>
 
       {/* Alpha Access Section */}
-      <section className="py-20">
+      <section className="py-24 bg-[#111827]">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-5">
-              <h2 className="text-4xl font-bold">
+            <div className="space-y-6">
+              <h2 className="text-4xl font-bold text-white">
                 {language === "es" ? "Únete al alpha" : "Join the alpha"}
               </h2>
               <h3 className="text-2xl text-gray-300">
                 {language === "es" ? "Acceso anticipado" : "Early access"}
               </h3>
-              <p className="text-gray-400">
+              <p className="text-gray-400 text-lg leading-relaxed">
                 {language === "es" 
                   ? "Estamos en Alpha cerrada, únete a la lista de espera y sé de los primeros en probarlo."
                   : "We're in closed Alpha, join the waitlist and be among the first to try it."}
               </p>
+              
+              <Button className="mt-4 bg-white text-gray-900 hover:bg-gray-100 rounded-md">
+                {language === "es" ? "Unirse a la lista" : "Join waitlist"}
+              </Button>
             </div>
             
             <div className="flex justify-center">
-              <div className="bg-[#DCF3F0] p-8 rounded-xl max-w-md w-full">
+              <div className="bg-gradient-to-br from-[#DCF3F0] to-[#9EEEE6] p-8 rounded-xl max-w-md w-full shadow-xl">
                 <img 
-                  src="/placeholder.svg" 
+                  src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
                   alt="Card Illustration" 
-                  className="w-full" 
+                  className="w-full rounded-lg" 
                 />
               </div>
             </div>
@@ -196,7 +200,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-gray-800">
+      <footer className="py-12 border-t border-gray-800 bg-[#0F172A]">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
