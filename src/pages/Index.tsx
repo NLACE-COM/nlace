@@ -16,7 +16,7 @@ const Index = () => {
   const { language, setLanguage, t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-[#1A1F2C] text-white">
+    <div className="min-h-screen bg-[#2B2B2B] text-white">
       {/* Header con logo y selector de idioma */}
       <header className="container max-w-7xl mx-auto py-6 px-4 flex justify-between items-center">
         <div>
@@ -91,7 +91,7 @@ const Index = () => {
       </section>
 
       {/* Partner Logos */}
-      <section className="border-t border-b border-[#8E9196]/30 py-10 bg-[#1E2332]">
+      <section className="border-t border-b border-[#8E9196]/30 py-10 bg-[#333333]">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="flex flex-wrap justify-center md:justify-between items-center gap-10">
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" className="h-8 opacity-70 brightness-0 invert" />
@@ -103,7 +103,7 @@ const Index = () => {
       </section>
 
       {/* Dashboard Preview */}
-      <section className="py-24 bg-[#1A1F2C]">
+      <section className="py-24 bg-[#2B2B2B]">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="bg-gradient-to-br from-[#9b87f5] to-[#7E69AB] rounded-xl p-6 md:p-8 shadow-2xl">
             <img 
@@ -116,7 +116,7 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-[#141821]">
+      <section className="py-24 bg-[#222222]">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-16">
             <div className="space-y-6">
@@ -165,7 +165,7 @@ const Index = () => {
       </section>
 
       {/* Alpha Access Section */}
-      <section className="py-24 bg-[#1A1F2C]">
+      <section className="py-24 bg-[#2B2B2B]">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -181,7 +181,7 @@ const Index = () => {
                   : "We're in closed Alpha, join the waitlist and be among the first to try it."}
               </p>
               
-              <Button className="mt-4 bg-white text-[#1A1F2C] hover:bg-gray-100 rounded-md">
+              <Button className="mt-4 bg-white text-[#2B2B2B] hover:bg-gray-100 rounded-md">
                 {language === "es" ? "Unirse a la lista" : "Join waitlist"}
               </Button>
             </div>
@@ -200,7 +200,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-[#8E9196]/30 bg-[#141821]">
+      <footer className="py-12 border-t border-[#8E9196]/30 bg-[#222222]">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
