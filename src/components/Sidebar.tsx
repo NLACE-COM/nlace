@@ -54,16 +54,16 @@ const SidebarItem = ({
         <NavLink
           to={to}
           className={({ isActive }) =>
-            `flex items-center w-full px-3 py-3 rounded-md transition-colors ${
+            `flex items-center w-full px-6 py-3 transition-colors ${
               isActive
                 ? "bg-sidebar-accent text-sidebar-accent-foreground"
                 : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
-            } ${collapsed ? "justify-center" : ""}`
+            } ${collapsed ? "justify-center px-0" : ""}`
           }
           onClick={onClick}
         >
-          {icon}
-          {!collapsed && <span className="ml-4 text-base">{label}</span>}
+          <span className="inline-block">{icon}</span>
+          {!collapsed && <span className="ml-6 text-base font-normal">{label}</span>}
         </NavLink>
       </TooltipTrigger>
       {collapsed && <TooltipContent side="right">{label}</TooltipContent>}
@@ -145,53 +145,53 @@ const Sidebar = ({
           </div>
 
           {/* Navigation */}
-          <ScrollArea className="flex-1 px-4 py-2">
-            <nav className="space-y-2">
+          <ScrollArea className="flex-1 py-2">
+            <nav className="space-y-1">
               <SidebarItem
                 to="/dashboard"
-                icon={<LayoutDashboard size={24} />}
+                icon={<LayoutDashboard size={24} strokeWidth={1.5} />}
                 label="Panel Principal"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/agents"
-                icon={<BrainCircuit size={24} />}
+                icon={<BrainCircuit size={24} strokeWidth={1.5} />}
                 label="Agentes"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/chat"
-                icon={<MessageSquare size={24} />}
+                icon={<MessageSquare size={24} strokeWidth={1.5} />}
                 label="Chat"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/knowledge"
-                icon={<FileText size={24} />}
+                icon={<FileText size={24} strokeWidth={1.5} />}
                 label="Conocimiento"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/integrations"
-                icon={<Globe size={24} />}
+                icon={<Globe size={24} strokeWidth={1.5} />}
                 label="Integraciones"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/users"
-                icon={<Users size={24} />}
+                icon={<Users size={24} strokeWidth={1.5} />}
                 label="Usuarios"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/analytics"
-                icon={<BarChart3 size={24} />}
+                icon={<BarChart3 size={24} strokeWidth={1.5} />}
                 label="Análisis"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
@@ -204,7 +204,7 @@ const Sidebar = ({
             <Separator className="bg-sidebar-border" />
             <SidebarItem
               to="/settings"
-              icon={<Settings size={24} />}
+              icon={<Settings size={24} strokeWidth={1.5} />}
               label="Configuración"
               collapsed={collapsed}
               onClick={isMobile ? onClose : undefined}
@@ -212,11 +212,11 @@ const Sidebar = ({
             <Button
               variant="ghost"
               className={`w-full flex items-center text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground ${
-                collapsed ? "justify-center" : ""
+                collapsed ? "justify-center px-0" : "px-6"
               }`}
             >
-              <LogOut size={24} />
-              {!collapsed && <span className="ml-4 text-base">Cerrar Sesión</span>}
+              <LogOut size={24} strokeWidth={1.5} />
+              {!collapsed && <span className="ml-6 text-base font-normal">Cerrar Sesión</span>}
             </Button>
           </div>
 
