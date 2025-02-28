@@ -13,6 +13,7 @@ import Knowledge from "./pages/Knowledge";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 import Chat from "./pages/Chat";
+import Integrations from "./pages/Integrations";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 
@@ -84,6 +85,14 @@ const App = () => {
               element={
                 <AppLayout>
                   <Users />
+                </AppLayout>
+              }
+            />
+            <Route
+              path="/integrations"
+              element={
+                <AppLayout>
+                  <Integrations />
                 </AppLayout>
               }
             />
