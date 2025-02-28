@@ -15,6 +15,7 @@ import Knowledge from "@/pages/Knowledge";
 import Integrations from "@/pages/Integrations";
 import Chat from "@/pages/Chat";
 import Users from "@/pages/Users";
+import CreateUser from "@/pages/CreateUser";
 import Settings from "@/pages/Settings";
 import NotFound from "@/pages/NotFound";
 
@@ -68,6 +69,7 @@ function App() {
                 <Route path="/knowledge" element={<Knowledge />} />
                 <Route path="/integrations" element={<Integrations />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/users/create" element={<CreateUser />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

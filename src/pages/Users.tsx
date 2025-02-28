@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CheckCircle2,
   Mail,
@@ -32,6 +33,7 @@ import { Badge } from "@/components/ui/badge";
 import { currentCompany, getUsersByCompany } from "@/lib/data";
 
 const Users = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   
   const companyUsers = currentCompany ? getUsersByCompany(currentCompany.id) : [];
@@ -74,7 +76,7 @@ const Users = () => {
             Gestiona los miembros del equipo y sus accesos
           </p>
         </div>
-        <Button>
+        <Button onClick={() => navigate("/users/create")}>
           <UserPlus className="mr-2 h-4 w-4" /> Añadir Usuario
         </Button>
       </div>
