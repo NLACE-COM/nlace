@@ -1,6 +1,6 @@
 
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   BarChart3,
   BrainCircuit,
@@ -62,8 +62,8 @@ const SidebarItem = ({
           }
           onClick={onClick}
         >
-          {icon}
-          {!collapsed && <span>{label}</span>}
+          <div className="flex-shrink-0">{icon}</div>
+          {!collapsed && <div className="flex-grow">{label}</div>}
         </NavLink>
       </TooltipTrigger>
       {collapsed && <TooltipContent side="right">{label}</TooltipContent>}
@@ -215,8 +215,10 @@ const Sidebar = ({
                 collapsed ? "justify-center" : "justify-start"
               }`}
             >
-              <LogOut className="h-5 w-5" />
-              {!collapsed && <span>Cerrar Sesión</span>}
+              <div className="flex-shrink-0">
+                <LogOut className="h-5 w-5" />
+              </div>
+              {!collapsed && <div className="flex-grow">Cerrar Sesión</div>}
             </Button>
           </div>
 
