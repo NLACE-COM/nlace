@@ -44,9 +44,9 @@ import { Agent, AgentType, Brand, BrandCategory } from "@/lib/types";
 
 const Agents = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [typeFilter, setTypeFilter] = useState<string>("");
-  const [statusFilter, setStatusFilter] = useState<string>("");
-  const [categoryFilter, setCategoryFilter] = useState<string>("");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [view, setView] = useState<"grid" | "list">("grid");
   const [activeTab, setActiveTab] = useState("agents");
   
@@ -58,7 +58,7 @@ const Agents = () => {
   const [newAgentName, setNewAgentName] = useState("");
   const [newAgentDescription, setNewAgentDescription] = useState("");
   const [newAgentType, setNewAgentType] = useState<AgentType>("custom");
-  const [newAgentBrand, setNewAgentBrand] = useState("");
+  const [newAgentBrand, setNewAgentBrand] = useState("none");
   
   const [newBrandName, setNewBrandName] = useState("");
   const [newBrandDescription, setNewBrandDescription] = useState("");
@@ -76,8 +76,8 @@ const Agents = () => {
     const matchesSearch = agent.name
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-    const matchesType = typeFilter ? agent.type === typeFilter : true;
-    const matchesStatus = statusFilter ? agent.status === statusFilter : true;
+    const matchesType = typeFilter === "all" ? true : agent.type === typeFilter;
+    const matchesStatus = statusFilter === "all" ? true : agent.status === statusFilter;
     return matchesSearch && matchesType && matchesStatus;
   });
   
@@ -85,7 +85,7 @@ const Agents = () => {
     const matchesSearch = brand.name
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-    const matchesCategory = categoryFilter ? brand.category === categoryFilter : true;
+    const matchesCategory = categoryFilter === "all" ? true : brand.category === categoryFilter;
     return matchesSearch && matchesCategory;
   });
 
@@ -151,7 +151,7 @@ const Agents = () => {
       name: newAgentName,
       description: newAgentDescription,
       type: newAgentType,
-      brand: newAgentBrand || undefined
+      brand: newAgentBrand !== "none" ? newAgentBrand : undefined
     });
     
     setNewAgentDialogOpen(false);
@@ -174,7 +174,7 @@ const Agents = () => {
     setNewAgentName("");
     setNewAgentDescription("");
     setNewAgentType("custom");
-    setNewAgentBrand("");
+    setNewAgentBrand("none");
   };
   
   const resetNewBrandForm = () => {
@@ -187,7 +187,7 @@ const Agents = () => {
     <div className="container py-6 max-w-7xl animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="heading-1">Agentes y Marcas</h1>
+          <h1 className="text-2xl font-bold">Agentes y Marcas</h1>
           <p className="text-muted-foreground">
             Configura y gestiona tus agentes de IA y sus marcas asociadas
           </p>
@@ -363,7 +363,7 @@ const Agents = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="">Todos los tipos</SelectItem>
+                      <SelectItem value="all">Todos los tipos</SelectItem>
                       {agentTypes.map((type) => (
                         <SelectItem key={type} value={type}>
                           {translateAgentType(type)}
@@ -380,7 +380,7 @@ const Agents = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="">Todos los estados</SelectItem>
+                      <SelectItem value="all">Todos los estados</SelectItem>
                       <SelectItem value="active">Activo</SelectItem>
                       <SelectItem value="inactive">Inactivo</SelectItem>
                       <SelectItem value="configuring">Configurando</SelectItem>
@@ -396,7 +396,7 @@ const Agents = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="">Todas las categorías</SelectItem>
+                    <SelectItem value="all">Todas las categorías</SelectItem>
                     {brandCategories.map((category) => (
                       <SelectItem key={category} value={category}>
                         {translateBrandCategory(category)}
@@ -443,7 +443,7 @@ const Agents = () => {
               <BrainCircuit className="h-12 w-12 text-muted-foreground mb-4" />
               <h3 className="text-xl font-medium mb-2">No se encontraron agentes</h3>
               <p className="text-muted-foreground mb-6">
-                {searchTerm || typeFilter || statusFilter
+                {searchTerm || typeFilter !== "all" || statusFilter !== "all"
                   ? "Prueba a ajustar tus filtros o términos de búsqueda"
                   : "Crea tu primer agente de IA para comenzar"}
               </p>
@@ -489,7 +489,7 @@ const Agents = () => {
               <Building2 className="h-12 w-12 text-muted-foreground mb-4" />
               <h3 className="text-xl font-medium mb-2">No se encontraron marcas</h3>
               <p className="text-muted-foreground mb-6">
-                {searchTerm || categoryFilter
+                {searchTerm || categoryFilter !== "all"
                   ? "Prueba a ajustar tus filtros o términos de búsqueda"
                   : "Crea tu primera marca para comenzar"}
               </p>
