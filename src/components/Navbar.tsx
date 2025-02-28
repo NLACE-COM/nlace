@@ -32,12 +32,12 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
             <Menu className="h-5 w-5" />
             <span className="sr-only">Menú</span>
           </Button>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <a href="/" className="flex items-center">
               <img 
                 src="https://nlace.com/hubfs/nlace_black.svg" 
                 alt="NLACE AI Studio" 
-                className="h-8"
+                className="h-6 md:h-8 mt-1"
               />
             </a>
           </div>
