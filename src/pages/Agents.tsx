@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   BrainCircuit,
@@ -474,8 +473,8 @@ const Agents = () => {
                   <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
                     <Plus className="h-6 w-6 text-muted-foreground" />
                   </div>
-                  <span className="text-lg font-medium">Añadir Nuevo Agente</span>
-                  <p className="text-sm text-muted-foreground px-4 max-w-[250px] mx-auto">
+                  <span className="text-lg font-medium text-center px-4">Añadir Nuevo Agente</span>
+                  <p className="text-sm text-muted-foreground text-center w-full px-6 max-w-xs mx-auto line-clamp-3">
                     Configura un nuevo agente de IA para tus necesidades específicas
                   </p>
                 </Button>
@@ -528,8 +527,8 @@ const Agents = () => {
                   <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
                     <Plus className="h-6 w-6 text-muted-foreground" />
                   </div>
-                  <span className="text-lg font-medium">Añadir Nueva Marca</span>
-                  <p className="text-sm text-muted-foreground px-4 max-w-[250px] mx-auto">
+                  <span className="text-lg font-medium text-center px-4">Añadir Nueva Marca</span>
+                  <p className="text-sm text-muted-foreground text-center w-full px-6 max-w-xs mx-auto line-clamp-3">
                     Crea una nueva marca para asociar con tus agentes
                   </p>
                 </Button>

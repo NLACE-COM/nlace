@@ -204,10 +204,10 @@ const Knowledge = () => {
               <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
                 <Plus className="h-6 w-6 text-muted-foreground" />
               </div>
-              <span className="text-lg font-medium">
+              <span className="text-lg font-medium text-center px-4">
                 Crear Nueva Base de Conocimiento
               </span>
-              <p className="text-sm text-muted-foreground max-w-[250px] mx-auto px-4 overflow-hidden break-words">
+              <p className="text-sm text-muted-foreground text-center w-full px-6 max-w-xs mx-auto line-clamp-3">
                 Añade una nueva colección de documentos para que tus agentes de IA aprendan
               </p>
             </Button>
