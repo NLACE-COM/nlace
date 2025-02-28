@@ -18,6 +18,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import CompanySelector from "./CompanySelector";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -65,6 +66,7 @@ const Sidebar = ({
   collapsed,
   onToggleCollapse,
 }: SidebarProps) => {
+  const { t } = useLanguage();
   const sidebarRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
@@ -141,7 +143,7 @@ const Sidebar = ({
           {/* Company selector */}
           {!collapsed && (
             <div className="px-4 py-2 mb-6">
-              <p className="text-sm font-medium text-muted-foreground ml-1 mb-2">Empresa</p>
+              <p className="text-sm font-medium text-muted-foreground ml-1 mb-2">{t("company")}</p>
               <CompanySelector />
             </div>
           )}
@@ -152,42 +154,42 @@ const Sidebar = ({
               <SidebarItem
                 to="/dashboard"
                 icon={<LayoutDashboard size={20} strokeWidth={1.5} />}
-                label="Panel Principal"
+                label={t("dashboard")}
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/agents"
                 icon={<Bot size={20} strokeWidth={1.5} />}
-                label="Agentes"
+                label={t("agents")}
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/chat"
                 icon={<MessageSquare size={20} strokeWidth={1.5} />}
-                label="Chat"
+                label={t("chat")}
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/knowledge"
                 icon={<FileText size={20} strokeWidth={1.5} />}
-                label="Conocimiento"
+                label={t("knowledge")}
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/integrations"
                 icon={<Globe size={20} strokeWidth={1.5} />}
-                label="Integraciones"
+                label={t("integrations")}
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/users"
                 icon={<Users size={20} strokeWidth={1.5} />}
-                label="Usuarios"
+                label={t("users")}
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
@@ -200,7 +202,7 @@ const Sidebar = ({
             <SidebarItem
               to="/settings"
               icon={<Settings size={20} strokeWidth={1.5} />}
-              label="Configuración"
+              label={t("settings")}
               collapsed={collapsed}
               onClick={isMobile ? onClose : undefined}
             />
@@ -210,7 +212,7 @@ const Sidebar = ({
               }`}
             >
               <LogOut size={20} strokeWidth={1.5} />
-              {!collapsed && <span className="text-[15px]">Cerrar Sesión</span>}
+              {!collapsed && <span className="text-[15px]">{t("logout")}</span>}
             </div>
           </div>
 

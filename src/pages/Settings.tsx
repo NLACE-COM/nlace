@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { BrainCircuit, Building2, Save, User } from "lucide-react";
+import { BrainCircuit, Building2, Globe, Save, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,8 +10,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { currentCompany, currentUser } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useToast } from "@/hooks/use-toast";
 
 const Settings = () => {
+  const { t, language, setLanguage, country, setCountry } = useLanguage();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("profile");
   const [companyName, setCompanyName] = useState(currentCompany?.name || "");
   const [companyDescription, setCompanyDescription] = useState(
@@ -23,14 +28,26 @@ const Settings = () => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [emailNotificationsEnabled, setEmailNotificationsEnabled] = useState(true);
   const [autoAssignmentEnabled, setAutoAssignmentEnabled] = useState(true);
+  
+  const [selectedLanguage, setSelectedLanguage] = useState(language);
+  const [selectedCountry, setSelectedCountry] = useState(country);
+
+  const handleLanguageSave = () => {
+    setLanguage(selectedLanguage);
+    setCountry(selectedCountry);
+    toast({
+      title: t("saveChanges"),
+      description: t("languageSettings") + " " + t("saveChanges").toLowerCase(),
+    });
+  };
 
   return (
     <div className="container py-6 max-w-5xl animate-fade-in">
       <div className="flex flex-col items-start justify-between gap-4 mb-6">
         <div>
-          <h1 className="heading-1">Configuración</h1>
+          <h1 className="heading-1">{t("settingsTitle")}</h1>
           <p className="text-muted-foreground">
-            Gestiona la configuración de tu cuenta y empresa
+            {t("settingsDescription")}
           </p>
         </div>
       </div>
@@ -40,18 +57,22 @@ const Settings = () => {
         onValueChange={setActiveTab}
         className="space-y-6"
       >
-        <TabsList className="grid w-full grid-cols-3 md:w-auto md:inline-flex">
+        <TabsList className="grid w-full grid-cols-4 md:w-auto md:inline-flex">
           <TabsTrigger value="profile">
             <User className="h-4 w-4 mr-2" />
-            Perfil
+            {t("profileTab")}
           </TabsTrigger>
           <TabsTrigger value="company">
             <Building2 className="h-4 w-4 mr-2" />
-            Empresa
+            {t("companyTab")}
           </TabsTrigger>
           <TabsTrigger value="agents">
             <BrainCircuit className="h-4 w-4 mr-2" />
-            Agentes
+            {t("agentsTab")}
+          </TabsTrigger>
+          <TabsTrigger value="language">
+            <Globe className="h-4 w-4 mr-2" />
+            {t("languageTab")}
           </TabsTrigger>
         </TabsList>
 
@@ -60,15 +81,15 @@ const Settings = () => {
             <CardContent className="p-6">
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-1">Información del Perfil</h3>
+                  <h3 className="text-xl font-semibold mb-1">{t("profileInfo")}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Actualiza los detalles de tu cuenta
+                    {t("updateProfileDetails")}
                   </p>
                 </div>
                 <Separator />
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Nombre</Label>
+                    <Label htmlFor="name">{t("name")}</Label>
                     <Input
                       id="name"
                       value={userName}
@@ -76,7 +97,7 @@ const Settings = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">{t("email")}</Label>
                     <Input
                       id="email"
                       type="email"
@@ -93,18 +114,18 @@ const Settings = () => {
             <CardContent className="p-6">
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-1">Notificaciones</h3>
+                  <h3 className="text-xl font-semibold mb-1">{t("notifications")}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Gestiona cómo recibes las notificaciones
+                    {t("manageNotifications")}
                   </p>
                 </div>
                 <Separator />
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium">Activar Notificaciones</p>
+                      <p className="font-medium">{t("enableNotifications")}</p>
                       <p className="text-sm text-muted-foreground">
-                        Recibe notificaciones sobre la actividad de los agentes
+                        {t("receiveAgentNotifications")}
                       </p>
                     </div>
                     <Switch
@@ -114,9 +135,9 @@ const Settings = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium">Notificaciones por Email</p>
+                      <p className="font-medium">{t("emailNotifications")}</p>
                       <p className="text-sm text-muted-foreground">
-                        Recibe notificaciones por email para eventos importantes
+                        {t("receiveEmailNotifications")}
                       </p>
                     </div>
                     <Switch
@@ -132,7 +153,7 @@ const Settings = () => {
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" />
-              Guardar Cambios
+              {t("saveChanges")}
             </Button>
           </div>
         </TabsContent>
@@ -143,16 +164,16 @@ const Settings = () => {
               <div className="space-y-6">
                 <div>
                   <h3 className="text-xl font-semibold mb-1">
-                    Información de la Empresa
+                    {t("companyInfo")}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Actualiza los detalles de tu empresa
+                    {t("updateCompanyDetails")}
                   </p>
                 </div>
                 <Separator />
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="company-name">Nombre de la Empresa</Label>
+                    <Label htmlFor="company-name">{t("companyName")}</Label>
                     <Input
                       id="company-name"
                       value={companyName}
@@ -160,7 +181,7 @@ const Settings = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="company-description">Descripción</Label>
+                    <Label htmlFor="company-description">{t("description")}</Label>
                     <Textarea
                       id="company-description"
                       value={companyDescription}
@@ -176,7 +197,7 @@ const Settings = () => {
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" />
-              Guardar Cambios
+              {t("saveChanges")}
             </Button>
           </div>
         </TabsContent>
@@ -186,18 +207,18 @@ const Settings = () => {
             <CardContent className="p-6">
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-1">Configuración de Agentes</h3>
+                  <h3 className="text-xl font-semibold mb-1">{t("agentSettings")}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Configura ajustes globales para los agentes
+                    {t("configureGlobalAgentSettings")}
                   </p>
                 </div>
                 <Separator />
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium">Asignación Automática</p>
+                      <p className="font-medium">{t("autoAssignment")}</p>
                       <p className="text-sm text-muted-foreground">
-                        Asigna automáticamente nuevas tareas a los agentes disponibles
+                        {t("autoAssignTasks")}
                       </p>
                     </div>
                     <Switch
@@ -213,7 +234,64 @@ const Settings = () => {
           <div className="flex justify-end">
             <Button>
               <Save className="mr-2 h-4 w-4" />
-              Guardar Cambios
+              {t("saveChanges")}
+            </Button>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="language" className="space-y-6">
+          <Card>
+            <CardContent className="p-6">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold mb-1">{t("languageSettings")}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {t("languageDescription")}
+                  </p>
+                </div>
+                <Separator />
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="language">{t("selectLanguage")}</Label>
+                    <Select value={selectedLanguage} onValueChange={(value: "es" | "en") => setSelectedLanguage(value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder={t("selectLanguage")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="es">{t("spanish")}</SelectItem>
+                        <SelectItem value="en">{t("english")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="country">{t("selectCountry")}</Label>
+                    <Select 
+                      value={selectedCountry} 
+                      onValueChange={(value: "españa" | "eeuu" | "méxico" | "colombia" | "argentina" | "chile" | "perú") => setSelectedCountry(value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder={t("selectCountry")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="españa">{t("spain")}</SelectItem>
+                        <SelectItem value="eeuu">{t("usa")}</SelectItem>
+                        <SelectItem value="méxico">{t("mexico")}</SelectItem>
+                        <SelectItem value="colombia">{t("colombia")}</SelectItem>
+                        <SelectItem value="argentina">{t("argentina")}</SelectItem>
+                        <SelectItem value="chile">{t("chile")}</SelectItem>
+                        <SelectItem value="perú">{t("peru")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="flex justify-end">
+            <Button onClick={handleLanguageSave}>
+              <Save className="mr-2 h-4 w-4" />
+              {t("saveChanges")}
             </Button>
           </div>
         </TabsContent>

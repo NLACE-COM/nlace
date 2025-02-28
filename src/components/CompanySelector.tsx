@@ -16,8 +16,10 @@ import {
 } from "@/components/ui/popover";
 import { companies, currentCompany } from "@/lib/data";
 import { Company } from "@/lib/types";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const CompanySelector = () => {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(
     currentCompany
@@ -43,7 +45,7 @@ const CompanySelector = () => {
               )}
             </div>
             <span className="truncate font-medium">
-              {selectedCompany?.name || "Seleccionar empresa"}
+              {selectedCompany?.name || t("selectCountry")}
             </span>
           </div>
           {open ? (
@@ -55,8 +57,8 @@ const CompanySelector = () => {
       </PopoverTrigger>
       <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 animate-scale-in">
         <Command>
-          <CommandInput placeholder="Buscar empresa..." className="h-9" />
-          <CommandEmpty>No se encontraron empresas.</CommandEmpty>
+          <CommandInput placeholder={t("searchCompany")} className="h-9" />
+          <CommandEmpty>{t("noCompaniesFound")}</CommandEmpty>
           <CommandGroup className="max-h-[300px] overflow-auto">
             {companies.map((company) => (
               <CommandItem
@@ -91,7 +93,7 @@ const CompanySelector = () => {
               className="flex items-center gap-2 py-2 text-primary"
             >
               <Plus className="h-4 w-4" />
-              <span>Agregar nueva empresa</span>
+              <span>{t("addNewCompany")}</span>
             </CommandItem>
           </CommandGroup>
         </Command>

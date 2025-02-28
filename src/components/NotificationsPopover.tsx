@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type NotificationType = "info" | "success" | "warning" | "error";
 
@@ -57,6 +58,7 @@ const mockNotifications: Notification[] = [
 ];
 
 const NotificationsPopover = () => {
+  const { t } = useLanguage();
   const [notifications, setNotifications] = useState<Notification[]>(mockNotifications);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -71,7 +73,7 @@ const NotificationsPopover = () => {
   const markAllAsRead = () => {
     setNotifications(notifications.map((n) => ({ ...n, read: true })));
     toast({
-      title: "Todas las notificaciones marcadas como leídas",
+      title: t("markAllAsRead"),
       variant: "default",
     });
   };
@@ -79,7 +81,7 @@ const NotificationsPopover = () => {
   const dismissNotification = (id: string) => {
     setNotifications(notifications.filter((n) => n.id !== id));
     toast({
-      title: "Notificación eliminada",
+      title: t("notificationDismissed"),
       variant: "default",
     });
   };
@@ -107,12 +109,12 @@ const NotificationsPopover = () => {
               {unreadCount}
             </span>
           )}
-          <span className="sr-only">Notificaciones</span>
+          <span className="sr-only">{t("notifications")}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0" align="end">
         <div className="flex items-center justify-between p-4 bg-muted/50">
-          <h3 className="font-medium">Notificaciones</h3>
+          <h3 className="font-medium">{t("notifications")}</h3>
           {unreadCount > 0 && (
             <Button
               variant="ghost"
@@ -120,14 +122,14 @@ const NotificationsPopover = () => {
               className="h-auto text-xs px-2 text-muted-foreground"
               onClick={markAllAsRead}
             >
-              Marcar todas como leídas
+              {t("markAllAsRead")}
             </Button>
           )}
         </div>
         <Separator />
         {notifications.length === 0 ? (
           <div className="py-8 text-center">
-            <p className="text-muted-foreground">No tienes notificaciones</p>
+            <p className="text-muted-foreground">{t("noNotifications")}</p>
           </div>
         ) : (
           <div className="max-h-[400px] overflow-auto">
@@ -179,7 +181,7 @@ const NotificationsPopover = () => {
                 size="sm"
                 className="h-auto text-xs text-muted-foreground"
               >
-                Ver todas las notificaciones
+                {t("viewAllNotifications")}
                 <ChevronRight className="h-3 w-3 ml-1" />
               </Button>
             </div>

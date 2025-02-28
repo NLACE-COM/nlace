@@ -19,6 +19,7 @@ import Settings from "@/pages/Settings";
 import NotFound from "@/pages/NotFound";
 // Importamos CreateUser directamente con ruta relativa
 import CreateUser from "./pages/CreateUser";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 // Inicializar el queryClient para React Query
 const queryClient = new QueryClient();
@@ -57,28 +58,30 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="light">
-      <TooltipProvider>
-        <QueryClientProvider client={queryClient}>
-          <Router>
-            <AppLayout>
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/agents" element={<Agents />} />
-                <Route path="/agents/create" element={<CreateAgent />} />
-                <Route path="/chat" element={<Chat />} />
-                <Route path="/knowledge" element={<Knowledge />} />
-                <Route path="/integrations" element={<Integrations />} />
-                <Route path="/users" element={<Users />} />
-                <Route path="/users/create" element={<CreateUser />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </AppLayout>
-            <Toaster />
-          </Router>
-        </QueryClientProvider>
-      </TooltipProvider>
+      <LanguageProvider>
+        <TooltipProvider>
+          <QueryClientProvider client={queryClient}>
+            <Router>
+              <AppLayout>
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/agents" element={<Agents />} />
+                  <Route path="/agents/create" element={<CreateAgent />} />
+                  <Route path="/chat" element={<Chat />} />
+                  <Route path="/knowledge" element={<Knowledge />} />
+                  <Route path="/integrations" element={<Integrations />} />
+                  <Route path="/users" element={<Users />} />
+                  <Route path="/users/create" element={<CreateUser />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </AppLayout>
+              <Toaster />
+            </Router>
+          </QueryClientProvider>
+        </TooltipProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

@@ -13,12 +13,14 @@ import {
 import { currentUser } from "@/lib/data";
 import NotificationsPopover from "./NotificationsPopover";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface NavbarProps {
   onToggleSidebar: () => void;
 }
 
 const Navbar = ({ onToggleSidebar }: NavbarProps) => {
+  const { t } = useLanguage();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const { toast } = useToast();
 
@@ -44,8 +46,8 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
 
   const handleLogout = () => {
     toast({
-      title: "Cerrar sesión",
-      description: "Has cerrado sesión correctamente",
+      title: t("logout"),
+      description: t("logout") + " " + t("successful"),
     });
   };
 
@@ -96,26 +98,26 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
                 <div className="hidden md:flex flex-col items-start text-sm">
                   <span className="font-medium">{currentUser.name}</span>
                   <span className="text-xs text-muted-foreground">
-                    {currentUser.role === 'admin' ? 'Administrador' : 
-                     currentUser.role === 'manager' ? 'Gerente' : 'Usuario'}
+                    {currentUser.role === 'admin' ? t("admin") : 
+                     currentUser.role === 'manager' ? t("manager") : t("user")}
                   </span>
                 </div>
                 <ChevronDown className="h-4 w-4 text-muted-foreground" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 mt-1 z-40">
-              <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("myAccount")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <User className="mr-2 h-4 w-4" />
-                <span>Perfil</span>
+                <span>{t("profile")}</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Settings className="mr-2 h-4 w-4" />
-                <span>Configuración</span>
+                <span>{t("settings")}</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout}>Cerrar sesión</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>{t("logout")}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
