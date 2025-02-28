@@ -79,7 +79,7 @@ const Index = () => {
               style={{ maxWidth: "240px" }}
             >
               <img 
-                src="/lovable-uploads/ed1a6be8-b1c3-41c4-8543-f14ef0683e3b.png" 
+                src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
                 alt="Google Logo" 
                 className="h-5" 
               />
