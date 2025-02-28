@@ -89,9 +89,9 @@ const Index = () => {
           <div className="w-full xl:w-2/3 xl:mx-auto flex items-center justify-around flex-wrap md:flex-nowrap gap-8 md:gap-4">
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" className="h-8 opacity-70 brightness-0 invert" />
             <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Google_Bard_logo.svg" alt="Gemini" className="h-8 opacity-70 brightness-0 invert" />
-            <img src="https://python.langchain.com/img/langchain_icon.png" alt="LangChain" className="h-9 opacity-70 brightness-0 invert" />
-            <img src="https://n8n.io/images/n8n-logo.svg" alt="n8n" className="h-9 opacity-70 brightness-0 invert" />
-            <img src="https://metricool.com/wp-content/uploads/2021/11/cropped-LOGO-METRICOOL-1.png" alt="Metricool" className="h-8 opacity-70 brightness-0 invert" />
+            <img src="https://dev-app.nlace.com/langchain.svg" alt="LangChain" className="h-9 opacity-70 brightness-0 invert" />
+            <img src="https://dev-app.nlace.com/n8n.svg" alt="n8n" className="h-9 opacity-70 brightness-0 invert" />
+            <img src="https://dev-app.nlace.com/metricool.svg" alt="Metricool" className="h-8 opacity-70 brightness-0 invert" />
           </div>
         </div>
       </div>
