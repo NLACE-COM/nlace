@@ -146,9 +146,9 @@ const Sidebar = ({
           {!collapsed && (
             <div className="flex justify-center py-4">
               <img 
-                src="/lovable-uploads/05c5cd91-9e77-4776-8acd-174e7510a439.png" 
+                src="https://nlace.com/hubfs/nlace_black.svg" 
                 alt="NLACE Logo" 
-                className="h-12"
+                className="h-10"
               />
             </div>
           )}
