@@ -8,18 +8,21 @@ export const companies: Company[] = [
     name: "TechCorp",
     plan: "enterprise",
     logo: "/placeholder.svg",
+    description: "Empresa líder en soluciones tecnológicas",
   },
   {
     id: "c2",
     name: "RetailPro",
     plan: "business",
     logo: "/placeholder.svg",
+    description: "Plataforma de gestión para retail",
   },
   {
     id: "c3",
     name: "FoodDelivery",
     plan: "startup",
     logo: "/placeholder.svg",
+    description: "Servicio de entrega de comida a domicilio",
   },
 ];
 
@@ -52,7 +55,7 @@ export const agents: Agent[] = [
     createdAt: "2024-03-15T12:00:00Z",
     updatedAt: "2024-04-10T15:30:00Z",
     conversationCount: 245,
-    avatar: "/public/lovable-uploads/7c7da80b-8043-4bd7-99ad-1d832e95d4da.png"
+    avatar: "/lovable-uploads/7c7da80b-8043-4bd7-99ad-1d832e95d4da.png"
   },
   {
     id: "a2",
@@ -129,6 +132,26 @@ export const agents: Agent[] = [
     updatedAt: "2024-04-10T09:10:00Z",
     conversationCount: 76
   },
+];
+
+// Integraciones ficticias
+export const integrations = [
+  { id: "i1", name: "Slack", agentIds: ["a1", "a5"] },
+  { id: "i2", name: "Gmail", agentIds: ["a1"] },
+  { id: "i3", name: "Google Sheets", agentIds: ["a2"] },
+  { id: "i4", name: "Dropbox", agentIds: ["a4"] },
+  { id: "i5", name: "Twitter", agentIds: ["a6"] },
+];
+
+// Conversaciones ficticias
+export const conversations = [
+  { id: "c1", agentId: "a1", userId: "u2", messageCount: 34, date: "2024-04-12T09:15:00Z" },
+  { id: "c2", agentId: "a1", userId: "u3", messageCount: 57, date: "2024-04-10T14:30:00Z" },
+  { id: "c3", agentId: "a2", userId: "u1", messageCount: 23, date: "2024-04-11T11:20:00Z" },
+  { id: "c4", agentId: "a3", userId: "u5", messageCount: 42, date: "2024-04-09T16:45:00Z" },
+  { id: "c5", agentId: "a4", userId: "u2", messageCount: 19, date: "2024-04-08T10:30:00Z" },
+  { id: "c6", agentId: "a5", userId: "u4", messageCount: 67, date: "2024-04-12T13:15:00Z" },
+  { id: "c7", agentId: "a6", userId: "u1", messageCount: 15, date: "2024-04-11T17:40:00Z" },
 ];
 
 // Tareas ficticias
@@ -395,4 +418,26 @@ export const getAgentsByCompany = (companyId: string): Agent[] => {
 // Función para obtener bases de conocimiento por empresa
 export const getKnowledgeBasesByCompany = (companyId: string): KnowledgeBase[] => {
   return knowledgeBases.filter((kb) => kb.companyId === companyId);
+};
+
+// Función para obtener usuarios por empresa
+export const getUsersByCompany = (companyId: string): User[] => {
+  return users.filter((user) => user.companyId === companyId);
+};
+
+// Función para obtener conversaciones por agente
+export const getConversationsByAgent = (agentId: string) => {
+  return conversations.filter((conv) => conv.agentId === agentId);
+};
+
+// Función para obtener integraciones por agente
+export const getIntegrationsByAgent = (agentId: string) => {
+  return integrations.filter((integration) => integration.agentIds.includes(agentId));
+};
+
+// Función para obtener bases de conocimiento por agente
+export const getKnowledgeBasesByAgent = (agentId: string) => {
+  const agent = agents.find((a) => a.id === agentId);
+  if (!agent) return [];
+  return knowledgeBases.filter((kb) => agent.knowledgeBases.includes(kb.id));
 };

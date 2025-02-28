@@ -53,6 +53,7 @@ export interface Company {
   name: string;
   plan: string;
   logo: string;
+  description?: string;
 }
 
 export interface User {
