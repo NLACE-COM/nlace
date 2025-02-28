@@ -23,6 +23,12 @@ const translations = {
     "markAllAsRead": "Marcar todas como leídas",
     "noNotifications": "No tienes notificaciones",
     "viewAllNotifications": "Ver todas las notificaciones",
+    "admin": "Administrador",
+    "manager": "Gerente",
+    "user": "Usuario",
+    "myAccount": "Mi Cuenta",
+    "notificationDismissed": "Notificación descartada",
+    "successful": "exitoso",
     
     // Sidebar
     "dashboard": "Panel Principal",
@@ -47,7 +53,6 @@ const translations = {
     "updateProfileDetails": "Actualiza los detalles de tu cuenta",
     "name": "Nombre",
     "email": "Email",
-    "notifications": "Notificaciones",
     "manageNotifications": "Gestiona cómo recibes las notificaciones",
     "enableNotifications": "Activar Notificaciones",
     "receiveAgentNotifications": "Recibe notificaciones sobre la actividad de los agentes",
@@ -90,6 +95,12 @@ const translations = {
     "markAllAsRead": "Mark all as read",
     "noNotifications": "You have no notifications",
     "viewAllNotifications": "View all notifications",
+    "admin": "Admin",
+    "manager": "Manager",
+    "user": "User",
+    "myAccount": "My Account",
+    "notificationDismissed": "Notification dismissed",
+    "successful": "successful",
     
     // Sidebar
     "dashboard": "Dashboard",
@@ -114,7 +125,6 @@ const translations = {
     "updateProfileDetails": "Update your account details",
     "name": "Name",
     "email": "Email",
-    "notifications": "Notifications",
     "manageNotifications": "Manage how you receive notifications",
     "enableNotifications": "Enable Notifications",
     "receiveAgentNotifications": "Receive notifications about agent activity",
