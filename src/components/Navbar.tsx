@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Bell, ChevronDown, Menu, Settings, User } from "lucide-react";
+import { ChevronDown, Menu, Settings, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,14 +11,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { currentUser } from "@/lib/data";
+import NotificationsPopover from "./NotificationsPopover";
+import { useToast } from "@/hooks/use-toast";
 
 interface NavbarProps {
   onToggleSidebar: () => void;
 }
 
 const Navbar = ({ onToggleSidebar }: NavbarProps) => {
-  const [notifications] = useState(3);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const { toast } = useToast();
 
   // Detectar si el sidebar está colapsado usando una clase en el body
   useEffect(() => {
@@ -39,6 +41,13 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
 
     return () => observer.disconnect();
   }, []);
+
+  const handleLogout = () => {
+    toast({
+      title: "Cerrar sesión",
+      description: "Has cerrado sesión correctamente",
+    });
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-30 h-16 px-4 md:px-6 border-b bg-background/80 backdrop-blur-md">
@@ -73,15 +82,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="h-5 w-5" />
-            {notifications > 0 && (
-              <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-destructive-foreground">
-                {notifications}
-              </span>
-            )}
-            <span className="sr-only">Notificaciones</span>
-          </Button>
+          <NotificationsPopover />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -114,7 +115,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
                 <span>Configuración</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Cerrar sesión</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Cerrar sesión</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

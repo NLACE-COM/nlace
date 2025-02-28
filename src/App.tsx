@@ -1,115 +1,83 @@
 
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import Dashboard from "./pages/Dashboard";
-import Agents from "./pages/Agents";
-import Knowledge from "./pages/Knowledge";
-import Users from "./pages/Users";
-import Settings from "./pages/Settings";
-import Chat from "./pages/Chat";
-import Integrations from "./pages/Integrations";
-import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
+import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar";
+import Dashboard from "@/pages/Dashboard";
+import Agents from "@/pages/Agents";
+import CreateAgent from "@/pages/CreateAgent";
+import Knowledge from "@/pages/Knowledge";
+import Integrations from "@/pages/Integrations";
+import Chat from "@/pages/Chat";
+import Users from "@/pages/Users";
+import Settings from "@/pages/Settings";
+import NotFound from "@/pages/NotFound";
+
+// Inicializar el queryClient para React Query
 const queryClient = new QueryClient();
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
+// Layout principal
+interface AppLayoutProps {
+  children: React.ReactNode;
+}
+
+const AppLayout = ({ children }: AppLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-      <Sidebar 
-        isOpen={sidebarOpen} 
-        onClose={() => setSidebarOpen(false)}
-        collapsed={sidebarCollapsed}
-        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} 
-      />
-      <main className={`pt-16 transition-all duration-300 ${sidebarCollapsed ? 'md:pl-20' : 'md:pl-72'}`}>
-        {children}
-      </main>
+    <div className="h-screen flex flex-col">
+      <Navbar onToggleSidebar={() => setSidebarOpen(true)} />
+      <div className="flex flex-1 pt-16 overflow-hidden">
+        <Sidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          collapsed={sidebarCollapsed}
+          onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+        />
+        <main
+          className={`flex-1 overflow-auto transition-all duration-300 ${
+            sidebarCollapsed ? "md:pl-20" : "md:pl-72"
+          }`}
+        >
+          {children}
+        </main>
+      </div>
     </div>
   );
 };
 
-const App = () => {
+function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <ThemeProvider attribute="class" defaultTheme="light">
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route
-              path="/dashboard"
-              element={
-                <AppLayout>
-                  <Dashboard />
-                </AppLayout>
-              }
-            />
-            <Route
-              path="/chat"
-              element={
-                <AppLayout>
-                  <Chat />
-                </AppLayout>
-              }
-            />
-            <Route
-              path="/agents"
-              element={
-                <AppLayout>
-                  <Agents />
-                </AppLayout>
-              }
-            />
-            <Route
-              path="/knowledge"
-              element={
-                <AppLayout>
-                  <Knowledge />
-                </AppLayout>
-              }
-            />
-            <Route
-              path="/users"
-              element={
-                <AppLayout>
-                  <Users />
-                </AppLayout>
-              }
-            />
-            <Route
-              path="/integrations"
-              element={
-                <AppLayout>
-                  <Integrations />
-                </AppLayout>
-              }
-            />
-            <Route
-              path="/settings"
-              element={
-                <AppLayout>
-                  <Settings />
-                </AppLayout>
-              }
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <Router>
+            <AppLayout>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/agents" element={<Agents />} />
+                <Route path="/agents/create" element={<CreateAgent />} />
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/knowledge" element={<Knowledge />} />
+                <Route path="/integrations" element={<Integrations />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </AppLayout>
+            <Toaster />
+          </Router>
+        </QueryClientProvider>
       </TooltipProvider>
-    </QueryClientProvider>
+    </ThemeProvider>
   );
-};
+}
 
 export default App;

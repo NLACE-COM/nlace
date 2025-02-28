@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   BrainCircuit,
   FileText,
@@ -10,7 +11,6 @@ import {
   Plus,
   Search,
   Book,
-  MoreHorizontal,
   Plug,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -29,45 +29,18 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import AgentCard from "@/components/AgentCard";
 import { currentCompany, getAgentsByCompany } from "@/lib/data";
 import { Agent, AgentCategory, AgentType } from "@/lib/types";
 
 const Agents = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [view, setView] = useState<"grid" | "list">("grid");
-  
-  // Estado para diálogos
-  const [newAgentDialogOpen, setNewAgentDialogOpen] = useState(false);
-  
-  // Estado para nuevos agentes
-  const [newAgentName, setNewAgentName] = useState("");
-  const [newAgentDescription, setNewAgentDescription] = useState("");
-  const [newAgentType, setNewAgentType] = useState<AgentType>("custom");
-  const [newAgentCategory, setNewAgentCategory] = useState<AgentCategory>("other");
 
   const companyAgents = currentCompany
     ? getAgentsByCompany(currentCompany.id)
@@ -138,26 +111,6 @@ const Agents = () => {
         return category;
     }
   };
-  
-  const handleCreateAgent = () => {
-    // Aquí iría la lógica para crear un nuevo agente
-    console.log("Crear agente:", {
-      name: newAgentName,
-      description: newAgentDescription,
-      type: newAgentType,
-      category: newAgentCategory
-    });
-    
-    setNewAgentDialogOpen(false);
-    resetNewAgentForm();
-  };
-  
-  const resetNewAgentForm = () => {
-    setNewAgentName("");
-    setNewAgentDescription("");
-    setNewAgentType("custom");
-    setNewAgentCategory("other");
-  };
 
   return (
     <div className="container py-6 max-w-7xl animate-fade-in">
@@ -169,87 +122,9 @@ const Agents = () => {
           </p>
         </div>
         <div className="flex gap-2">
-          <Dialog open={newAgentDialogOpen} onOpenChange={setNewAgentDialogOpen}>
-            <DialogTrigger asChild>
-              <Button>
-                <Plus className="mr-2 h-4 w-4" /> Crear Agente
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px]">
-              <DialogHeader>
-                <DialogTitle>Crear nuevo agente</DialogTitle>
-                <DialogDescription>
-                  Crea un nuevo agente para tu empresa. Completa todos los campos requeridos.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
-                    Nombre
-                  </Label>
-                  <Input
-                    id="name"
-                    value={newAgentName}
-                    onChange={(e) => setNewAgentName(e.target.value)}
-                    className="col-span-3"
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="type" className="text-right">
-                    Tipo
-                  </Label>
-                  <Select value={newAgentType} onValueChange={(value) => setNewAgentType(value as AgentType)}>
-                    <SelectTrigger className="col-span-3">
-                      <SelectValue placeholder="Selecciona un tipo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {agentTypes.map((type) => (
-                          <SelectItem key={type} value={type}>
-                            {translateAgentType(type)}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="category" className="text-right">
-                    Categoría
-                  </Label>
-                  <Select value={newAgentCategory} onValueChange={(value) => setNewAgentCategory(value as AgentCategory)}>
-                    <SelectTrigger className="col-span-3">
-                      <SelectValue placeholder="Selecciona una categoría" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {agentCategories.map((category) => (
-                          <SelectItem key={category} value={category}>
-                            {translateCategory(category)}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid grid-cols-4 items-start gap-4">
-                  <Label htmlFor="description" className="text-right pt-2">
-                    Descripción
-                  </Label>
-                  <Textarea
-                    id="description"
-                    value={newAgentDescription}
-                    onChange={(e) => setNewAgentDescription(e.target.value)}
-                    className="col-span-3"
-                    rows={4}
-                  />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button type="submit" onClick={handleCreateAgent}>Crear agente</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <Button onClick={() => navigate("/agents/create")}>
+            <Plus className="mr-2 h-4 w-4" /> Crear Agente
+          </Button>
         </div>
       </div>
 
@@ -358,7 +233,7 @@ const Agents = () => {
                   ? "Prueba a ajustar tus filtros o términos de búsqueda"
                   : "Crea tu primer agente de IA para comenzar"}
               </p>
-              <Button onClick={() => setNewAgentDialogOpen(true)}>
+              <Button onClick={() => navigate("/agents/create")}>
                 <Plus className="mr-2 h-4 w-4" /> Crear Agente
               </Button>
             </div>
@@ -387,7 +262,11 @@ const Agents = () => {
                     : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
                 }
               >
-                <Button variant="ghost" className="h-full w-full flex flex-col gap-4 p-6" onClick={() => setNewAgentDialogOpen(true)}>
+                <Button 
+                  variant="ghost" 
+                  className="h-full w-full flex flex-col gap-4 p-6" 
+                  onClick={() => navigate("/agents/create")}
+                >
                   <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
                     <Plus className="h-6 w-6 text-muted-foreground" />
                   </div>
