@@ -200,14 +200,14 @@ const Dashboard = () => {
           {/* Gráfico principal */}
           <Card>
             <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
                   <CardTitle className="text-base">Uso y Actividad</CardTitle>
                   <CardDescription>Análisis detallado del uso del sistema</CardDescription>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <Select value={timeRange} onValueChange={setTimeRange}>
-                    <SelectTrigger className="w-[120px]">
+                    <SelectTrigger className="w-full sm:w-[120px]">
                       <SelectValue placeholder="Periodo" />
                     </SelectTrigger>
                     <SelectContent>
@@ -219,7 +219,7 @@ const Dashboard = () => {
                     </SelectContent>
                   </Select>
                   <Select value={chartMetric} onValueChange={setChartMetric}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-full sm:w-[180px]">
                       <SelectValue placeholder="Métrica" />
                     </SelectTrigger>
                     <SelectContent>
@@ -230,7 +230,7 @@ const Dashboard = () => {
                       ))}
                     </SelectContent>
                   </Select>
-                  <Button variant="outline" size="icon">
+                  <Button variant="outline" size="icon" className="ml-auto sm:ml-0">
                     <RefreshCw className="h-4 w-4" />
                   </Button>
                 </div>
