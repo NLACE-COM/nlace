@@ -61,7 +61,7 @@ const SidebarItem = ({
               isActive
                 ? "bg-sidebar-accent text-sidebar-accent-foreground"
                 : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
-            } ${collapsed ? "justify-center" : ""}`
+            } ${collapsed ? "justify-center" : "flex-row"}`
           }
           onClick={onClick}
         >
@@ -215,7 +215,7 @@ const Sidebar = ({
             <Button
               variant="ghost"
               className={`w-full text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground ${
-                collapsed ? "justify-center" : "justify-start"
+                collapsed ? "justify-center" : "justify-start flex-row"
               }`}
             >
               <LogOut className="h-5 w-5" />
