@@ -1,5 +1,5 @@
 
-import { Agent, AgentType, Company, KnowledgeBase, Task, User } from "./types";
+import { Agent, AgentType, Brand, BrandCategory, Company, KnowledgeBase, Task, User } from "./types";
 
 export const users: User[] = [
   {
@@ -32,6 +32,59 @@ export const users: User[] = [
   },
 ];
 
+export const brands: Brand[] = [
+  {
+    id: "b1",
+    name: "Centros Comerciales",
+    logo: "/placeholder.svg",
+    description: "Gestión de centros comerciales y retail",
+    company: "c1",
+    agents: ["a1", "a2"],
+    category: "retail",
+    createdAt: "2023-08-15T11:30:00Z",
+  },
+  {
+    id: "b2",
+    name: "Arauco",
+    logo: "/placeholder.svg",
+    description: "Grupo empresarial con operaciones en Argentina, Brasil, Chile, Colombia, México, Perú y Uruguay",
+    company: "c1",
+    agents: ["a4"],
+    category: "retail",
+    createdAt: "2023-09-10T09:30:00Z",
+  },
+  {
+    id: "b3",
+    name: "Cheetos",
+    logo: "/placeholder.svg",
+    description: "Marca de snacks de queso",
+    company: "c2",
+    agents: ["a3"],
+    category: "food",
+    createdAt: "2023-10-20T14:15:00Z",
+  },
+  {
+    id: "b4",
+    name: "Pepsi",
+    logo: "/placeholder.svg",
+    description: "Marca global de bebidas",
+    company: "c2",
+    agents: ["a5"],
+    category: "food",
+    createdAt: "2023-11-05T08:45:00Z",
+  },
+  {
+    id: "b5",
+    name: "Quaker",
+    logo: "/placeholder.svg",
+    description: "Marca de cereales y alimentos saludables",
+    company: "c2",
+    agents: ["a6"],
+    category: "food",
+    createdAt: "2024-01-18T12:30:00Z",
+  }
+];
+
 export const companies: Company[] = [
   {
     id: "c1",
@@ -40,6 +93,7 @@ export const companies: Company[] = [
     description: "Leading innovation in tech solutions",
     users: ["u1", "u2", "u3"],
     agents: ["a1", "a2", "a4"],
+    brands: ["b1", "b2"],
   },
   {
     id: "c2",
@@ -47,7 +101,8 @@ export const companies: Company[] = [
     logo: "/placeholder.svg",
     description: "Sustainable solutions for a better planet",
     users: ["u1", "u4"],
-    agents: ["a3", "a5"],
+    agents: ["a3", "a5", "a6"],
+    brands: ["b3", "b4", "b5"],
   },
   {
     id: "c3",
@@ -55,7 +110,8 @@ export const companies: Company[] = [
     logo: "/placeholder.svg",
     description: "Cutting-edge financial solutions",
     users: ["u1"],
-    agents: ["a6"],
+    agents: [],
+    brands: [],
   },
 ];
 
@@ -72,10 +128,11 @@ export const agents: Agent[] = [
   {
     id: "a1",
     name: "DataMaster",
-    description: "Analyze complex datasets and generate insights",
+    description: "Analiza datos complejos de centros comerciales y genera insights",
     type: "data-analysis",
     status: "active",
     company: "c1",
+    brand: "b1",
     metrics: {
       tasksCompleted: 147,
       averageCompletionTime: 3.2,
@@ -88,10 +145,11 @@ export const agents: Agent[] = [
   {
     id: "a2",
     name: "ContentGen",
-    description: "Create engaging content for various platforms",
+    description: "Crea contenido atractivo para los centros comerciales",
     type: "content-creation",
     status: "active",
     company: "c1",
+    brand: "b1",
     metrics: {
       tasksCompleted: 89,
       averageCompletionTime: 5.7,
@@ -103,11 +161,12 @@ export const agents: Agent[] = [
   },
   {
     id: "a3",
-    name: "EcoAnalyzer",
-    description: "Analyze environmental data and sustainability metrics",
-    type: "data-analysis",
+    name: "CheeTalker",
+    description: "Agente de contenido de marca para Cheetos",
+    type: "content-creation",
     status: "active",
     company: "c2",
+    brand: "b3",
     metrics: {
       tasksCompleted: 73,
       averageCompletionTime: 4.5,
@@ -115,15 +174,16 @@ export const agents: Agent[] = [
       usageHours: 156,
     },
     createdAt: "2023-08-22T09:15:00Z",
-    icon: agentIcons["data-analysis"],
+    icon: agentIcons["content-creation"],
   },
   {
     id: "a4",
     name: "DocReviewer",
-    description: "Review and analyze documents for compliance and quality",
+    description: "Revisa documentos para Arauco",
     type: "document-review",
     status: "inactive",
     company: "c1",
+    brand: "b2",
     metrics: {
       tasksCompleted: 112,
       averageCompletionTime: 2.8,
@@ -135,11 +195,12 @@ export const agents: Agent[] = [
   },
   {
     id: "a5",
-    name: "GreenContent",
-    description: "Create content focused on sustainability and environmental topics",
+    name: "PepsiContent",
+    description: "Crea contenido para Pepsi enfocado en campañas digitales",
     type: "content-creation",
     status: "configuring",
     company: "c2",
+    brand: "b4",
     metrics: {
       tasksCompleted: 42,
       averageCompletionTime: 6.1,
@@ -151,11 +212,12 @@ export const agents: Agent[] = [
   },
   {
     id: "a6",
-    name: "FinBot",
-    description: "Analyze financial data and generate reports",
-    type: "data-analysis",
+    name: "QuakerSupport",
+    description: "Agente de atención al cliente para Quaker",
+    type: "customer-support",
     status: "active",
-    company: "c3",
+    company: "c2",
+    brand: "b5",
     metrics: {
       tasksCompleted: 56,
       averageCompletionTime: 4.2,
@@ -163,7 +225,7 @@ export const agents: Agent[] = [
       usageHours: 108,
     },
     createdAt: "2024-02-12T13:10:00Z",
-    icon: agentIcons["data-analysis"],
+    icon: agentIcons["customer-support"],
   },
 ];
 
@@ -286,6 +348,14 @@ export const getAgentsByCompany = (companyId: string) => {
   return agents.filter(agent => agent.company === companyId);
 };
 
+export const getBrandsByCompany = (companyId: string) => {
+  return brands.filter(brand => brand.company === companyId);
+};
+
+export const getAgentsByBrand = (brandId: string) => {
+  return agents.filter(agent => agent.brand === brandId);
+};
+
 export const getKnowledgeBasesByCompany = (companyId: string) => {
   return knowledgeBases.filter(kb => kb.company === companyId);
 };
@@ -298,4 +368,8 @@ export const getUsersByCompany = (companyId: string) => {
 
 export const getTasksByAgent = (agentId: string) => {
   return tasks.filter(task => task.agent === agentId);
+};
+
+export const getBrandById = (brandId: string) => {
+  return brands.find(brand => brand.id === brandId);
 };

@@ -2,11 +2,13 @@
 import { useState } from "react";
 import {
   BrainCircuit,
+  Building2,
   Filter,
   LayoutGrid,
   ListChecks,
   Plus,
   Search,
+  Briefcase,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,18 +20,56 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import AgentCard from "@/components/AgentCard";
-import { currentCompany, getAgentsByCompany } from "@/lib/data";
-import { Agent, AgentType } from "@/lib/types";
+import BrandCard from "@/components/BrandCard";
+import { currentCompany, getAgentsByCompany, getBrandsByCompany } from "@/lib/data";
+import { Agent, AgentType, Brand, BrandCategory } from "@/lib/types";
 
 const Agents = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<string>("");
+  const [categoryFilter, setCategoryFilter] = useState<string>("");
   const [view, setView] = useState<"grid" | "list">("grid");
+  const [activeTab, setActiveTab] = useState("agents");
+  
+  // Estado para diálogos
+  const [newAgentDialogOpen, setNewAgentDialogOpen] = useState(false);
+  const [newBrandDialogOpen, setNewBrandDialogOpen] = useState(false);
+  
+  // Estado para nuevos agentes/marcas
+  const [newAgentName, setNewAgentName] = useState("");
+  const [newAgentDescription, setNewAgentDescription] = useState("");
+  const [newAgentType, setNewAgentType] = useState<AgentType>("custom");
+  const [newAgentBrand, setNewAgentBrand] = useState("");
+  
+  const [newBrandName, setNewBrandName] = useState("");
+  const [newBrandDescription, setNewBrandDescription] = useState("");
+  const [newBrandCategory, setNewBrandCategory] = useState<BrandCategory>("other");
 
   const companyAgents = currentCompany
     ? getAgentsByCompany(currentCompany.id)
+    : [];
+    
+  const companyBrands = currentCompany
+    ? getBrandsByCompany(currentCompany.id)
     : [];
 
   const filteredAgents = companyAgents.filter((agent) => {
@@ -40,6 +80,14 @@ const Agents = () => {
     const matchesStatus = statusFilter ? agent.status === statusFilter : true;
     return matchesSearch && matchesType && matchesStatus;
   });
+  
+  const filteredBrands = companyBrands.filter((brand) => {
+    const matchesSearch = brand.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesCategory = categoryFilter ? brand.category === categoryFilter : true;
+    return matchesSearch && matchesCategory;
+  });
 
   const agentTypes: AgentType[] = [
     "data-analysis",
@@ -48,6 +96,15 @@ const Agents = () => {
     "customer-support",
     "research",
     "custom",
+  ];
+  
+  const brandCategories: BrandCategory[] = [
+    "retail",
+    "food",
+    "technology",
+    "finance",
+    "entertainment",
+    "other",
   ];
 
   const translateAgentType = (type: string): string => {
@@ -68,26 +125,238 @@ const Agents = () => {
         return type.replace("-", " ");
     }
   };
+  
+  const translateBrandCategory = (category: string): string => {
+    switch (category) {
+      case "retail":
+        return "retail";
+      case "food":
+        return "alimentación";
+      case "technology":
+        return "tecnología";
+      case "finance":
+        return "finanzas";
+      case "entertainment":
+        return "entretenimiento";
+      case "other":
+        return "otros";
+      default:
+        return category;
+    }
+  };
+  
+  const handleCreateAgent = () => {
+    // Aquí iría la lógica para crear un nuevo agente
+    console.log("Crear agente:", {
+      name: newAgentName,
+      description: newAgentDescription,
+      type: newAgentType,
+      brand: newAgentBrand || undefined
+    });
+    
+    setNewAgentDialogOpen(false);
+    resetNewAgentForm();
+  };
+  
+  const handleCreateBrand = () => {
+    // Aquí iría la lógica para crear una nueva marca
+    console.log("Crear marca:", {
+      name: newBrandName,
+      description: newBrandDescription,
+      category: newBrandCategory
+    });
+    
+    setNewBrandDialogOpen(false);
+    resetNewBrandForm();
+  };
+  
+  const resetNewAgentForm = () => {
+    setNewAgentName("");
+    setNewAgentDescription("");
+    setNewAgentType("custom");
+    setNewAgentBrand("");
+  };
+  
+  const resetNewBrandForm = () => {
+    setNewBrandName("");
+    setNewBrandDescription("");
+    setNewBrandCategory("other");
+  };
 
   return (
     <div className="container py-6 max-w-7xl animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="heading-1">Agentes</h1>
+          <h1 className="heading-1">Agentes y Marcas</h1>
           <p className="text-muted-foreground">
-            Configura y gestiona tus agentes de IA
+            Configura y gestiona tus agentes de IA y sus marcas asociadas
           </p>
         </div>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" /> Crear Agente
-        </Button>
+        <div className="flex gap-2">
+          <Dialog open={newAgentDialogOpen} onOpenChange={setNewAgentDialogOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" /> Crear Agente
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[500px]">
+              <DialogHeader>
+                <DialogTitle>Crear nuevo agente</DialogTitle>
+                <DialogDescription>
+                  Crea un nuevo agente para tu empresa. Completa todos los campos requeridos.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Nombre
+                  </Label>
+                  <Input
+                    id="name"
+                    value={newAgentName}
+                    onChange={(e) => setNewAgentName(e.target.value)}
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="type" className="text-right">
+                    Tipo
+                  </Label>
+                  <Select value={newAgentType} onValueChange={(value) => setNewAgentType(value as AgentType)}>
+                    <SelectTrigger className="col-span-3">
+                      <SelectValue placeholder="Selecciona un tipo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {agentTypes.map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {translateAgentType(type)}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="brand" className="text-right">
+                    Marca
+                  </Label>
+                  <Select value={newAgentBrand} onValueChange={setNewAgentBrand}>
+                    <SelectTrigger className="col-span-3">
+                      <SelectValue placeholder="Selecciona una marca (opcional)" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="">Sin marca</SelectItem>
+                        {companyBrands.map((brand) => (
+                          <SelectItem key={brand.id} value={brand.id}>
+                            {brand.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid grid-cols-4 items-start gap-4">
+                  <Label htmlFor="description" className="text-right pt-2">
+                    Descripción
+                  </Label>
+                  <Textarea
+                    id="description"
+                    value={newAgentDescription}
+                    onChange={(e) => setNewAgentDescription(e.target.value)}
+                    className="col-span-3"
+                    rows={4}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit" onClick={handleCreateAgent}>Crear agente</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          
+          <Dialog open={newBrandDialogOpen} onOpenChange={setNewBrandDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline">
+                <Briefcase className="mr-2 h-4 w-4" /> Crear Marca
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[500px]">
+              <DialogHeader>
+                <DialogTitle>Crear nueva marca</DialogTitle>
+                <DialogDescription>
+                  Crea una nueva marca para asociar con tus agentes.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="brandName" className="text-right">
+                    Nombre
+                  </Label>
+                  <Input
+                    id="brandName"
+                    value={newBrandName}
+                    onChange={(e) => setNewBrandName(e.target.value)}
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="category" className="text-right">
+                    Categoría
+                  </Label>
+                  <Select value={newBrandCategory} onValueChange={(value) => setNewBrandCategory(value as BrandCategory)}>
+                    <SelectTrigger className="col-span-3">
+                      <SelectValue placeholder="Selecciona una categoría" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {brandCategories.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {translateBrandCategory(category)}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid grid-cols-4 items-start gap-4">
+                  <Label htmlFor="brandDescription" className="text-right pt-2">
+                    Descripción
+                  </Label>
+                  <Textarea
+                    id="brandDescription"
+                    value={newBrandDescription}
+                    onChange={(e) => setNewBrandDescription(e.target.value)}
+                    className="col-span-3"
+                    rows={4}
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit" onClick={handleCreateBrand}>Crear marca</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
+
+      <Tabs defaultValue="agents" value={activeTab} onValueChange={setActiveTab} className="mb-6">
+        <TabsList className="grid w-full md:w-auto grid-cols-2">
+          <TabsTrigger value="agents" className="flex items-center gap-2">
+            <BrainCircuit className="h-4 w-4" /> Agentes
+          </TabsTrigger>
+          <TabsTrigger value="brands" className="flex items-center gap-2">
+            <Building2 className="h-4 w-4" /> Marcas
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
 
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
         <div className="w-full md:w-72 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Buscar agentes..."
+            placeholder={activeTab === "agents" ? "Buscar agentes..." : "Buscar marcas..."}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-9"
@@ -96,37 +365,58 @@ const Agents = () => {
 
         <div className="flex flex-wrap gap-2 items-center w-full md:w-auto">
           <div className="flex items-center gap-2">
-            <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger className="w-[160px]">
-                <Filter className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Filtrar por tipo" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="">Todos los tipos</SelectItem>
-                  {agentTypes.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {translateAgentType(type)}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            {activeTab === "agents" ? (
+              <>
+                <Select value={typeFilter} onValueChange={setTypeFilter}>
+                  <SelectTrigger className="w-[160px]">
+                    <Filter className="h-4 w-4 mr-2" />
+                    <SelectValue placeholder="Filtrar por tipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="">Todos los tipos</SelectItem>
+                      {agentTypes.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {translateAgentType(type)}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
 
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[160px]">
-                <Filter className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Filtrar por estado" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="">Todos los estados</SelectItem>
-                  <SelectItem value="active">Activo</SelectItem>
-                  <SelectItem value="inactive">Inactivo</SelectItem>
-                  <SelectItem value="configuring">Configurando</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-[160px]">
+                    <Filter className="h-4 w-4 mr-2" />
+                    <SelectValue placeholder="Filtrar por estado" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="">Todos los estados</SelectItem>
+                      <SelectItem value="active">Activo</SelectItem>
+                      <SelectItem value="inactive">Inactivo</SelectItem>
+                      <SelectItem value="configuring">Configurando</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </>
+            ) : (
+              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <SelectTrigger className="w-[160px]">
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Filtrar por categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="">Todas las categorías</SelectItem>
+                    {brandCategories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {translateBrandCategory(category)}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
           </div>
 
           <div className="flex gap-2 ml-auto">
@@ -148,49 +438,105 @@ const Agents = () => {
         </div>
       </div>
 
-      {filteredAgents.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
-          <BrainCircuit className="h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-xl font-medium mb-2">No se encontraron agentes</h3>
-          <p className="text-muted-foreground mb-6">
-            {searchTerm || typeFilter || statusFilter
-              ? "Prueba a ajustar tus filtros o términos de búsqueda"
-              : "Crea tu primer agente de IA para comenzar"}
-          </p>
-          <Button>
-            <Plus className="mr-2 h-4 w-4" /> Crear Agente
-          </Button>
-        </div>
-      ) : (
-        <div
-          className={
-            view === "grid"
-              ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-              : "flex flex-col gap-4"
-          }
-        >
-          {filteredAgents.map((agent) => (
-            <AgentCard key={agent.id} agent={agent} />
-          ))}
+      <TabsContent value="agents" className="mt-0">
+        {filteredAgents.length === 0 ? (
+          <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
+            <BrainCircuit className="h-12 w-12 text-muted-foreground mb-4" />
+            <h3 className="text-xl font-medium mb-2">No se encontraron agentes</h3>
+            <p className="text-muted-foreground mb-6">
+              {searchTerm || typeFilter || statusFilter
+                ? "Prueba a ajustar tus filtros o términos de búsqueda"
+                : "Crea tu primer agente de IA para comenzar"}
+            </p>
+            <Button onClick={() => setNewAgentDialogOpen(true)}>
+              <Plus className="mr-2 h-4 w-4" /> Crear Agente
+            </Button>
+          </div>
+        ) : (
           <div
             className={
               view === "grid"
-                ? "flex items-center justify-center min-h-[250px] border border-dashed rounded-lg animate-fade-in"
-                : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
+                ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                : "flex flex-col gap-4"
             }
           >
-            <Button variant="ghost" className="h-full w-full flex flex-col gap-2 p-6">
-              <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-                <Plus className="h-6 w-6 text-muted-foreground" />
-              </div>
-              <span className="text-lg font-medium">Añadir Nuevo Agente</span>
-              <p className="text-sm text-muted-foreground">
-                Configura un nuevo agente de IA para tus necesidades específicas
-              </p>
+            {filteredAgents.map((agent) => (
+              <AgentCard key={agent.id} agent={agent} />
+            ))}
+            <div
+              className={
+                view === "grid"
+                  ? "flex items-center justify-center min-h-[250px] border border-dashed rounded-lg animate-fade-in"
+                  : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
+              }
+            >
+              <Button variant="ghost" className="h-full w-full flex flex-col gap-2 p-6" onClick={() => setNewAgentDialogOpen(true)}>
+                <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
+                  <Plus className="h-6 w-6 text-muted-foreground" />
+                </div>
+                <span className="text-lg font-medium">Añadir Nuevo Agente</span>
+                <p className="text-sm text-muted-foreground">
+                  Configura un nuevo agente de IA para tus necesidades específicas
+                </p>
+              </Button>
+            </div>
+          </div>
+        )}
+      </TabsContent>
+
+      <TabsContent value="brands" className="mt-0">
+        {filteredBrands.length === 0 ? (
+          <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
+            <Building2 className="h-12 w-12 text-muted-foreground mb-4" />
+            <h3 className="text-xl font-medium mb-2">No se encontraron marcas</h3>
+            <p className="text-muted-foreground mb-6">
+              {searchTerm || categoryFilter
+                ? "Prueba a ajustar tus filtros o términos de búsqueda"
+                : "Crea tu primera marca para comenzar"}
+            </p>
+            <Button onClick={() => setNewBrandDialogOpen(true)}>
+              <Plus className="mr-2 h-4 w-4" /> Crear Marca
             </Button>
           </div>
-        </div>
-      )}
+        ) : (
+          <div
+            className={
+              view === "grid"
+                ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                : "flex flex-col gap-4"
+            }
+          >
+            {filteredBrands.map((brand) => (
+              <BrandCard 
+                key={brand.id} 
+                brand={brand} 
+                onClick={() => console.log("Ver detalles de marca:", brand.id)}
+                onAddAgent={() => {
+                  setNewAgentDialogOpen(true);
+                  setNewAgentBrand(brand.id);
+                }}
+              />
+            ))}
+            <div
+              className={
+                view === "grid"
+                  ? "flex items-center justify-center min-h-[250px] border border-dashed rounded-lg animate-fade-in"
+                  : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
+              }
+            >
+              <Button variant="ghost" className="h-full w-full flex flex-col gap-2 p-6" onClick={() => setNewBrandDialogOpen(true)}>
+                <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
+                  <Plus className="h-6 w-6 text-muted-foreground" />
+                </div>
+                <span className="text-lg font-medium">Añadir Nueva Marca</span>
+                <p className="text-sm text-muted-foreground">
+                  Crea una nueva marca para asociar con tus agentes
+                </p>
+              </Button>
+            </div>
+          </div>
+        )}
+      </TabsContent>
     </div>
   );
 };

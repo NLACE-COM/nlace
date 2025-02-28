@@ -14,7 +14,27 @@ export interface Company {
   description: string;
   users: string[]; // User IDs
   agents: string[]; // Agent IDs
+  brands: string[]; // Brand IDs
 }
+
+export interface Brand {
+  id: string;
+  name: string;
+  logo: string;
+  description: string;
+  company: string; // Company ID
+  agents: string[]; // Agent IDs
+  category: BrandCategory;
+  createdAt: string;
+}
+
+export type BrandCategory = 
+  | 'retail' 
+  | 'food' 
+  | 'technology' 
+  | 'finance' 
+  | 'entertainment'
+  | 'other';
 
 export interface Agent {
   id: string;
@@ -23,6 +43,7 @@ export interface Agent {
   type: AgentType;
   status: 'active' | 'inactive' | 'configuring';
   company: string; // Company ID
+  brand?: string; // Brand ID
   metrics: AgentMetrics;
   createdAt: string;
   icon: string;
@@ -78,6 +99,7 @@ export interface AppState {
   currentCompany: Company | null;
   companies: Company[];
   agents: Agent[];
+  brands: Brand[];
   knowledgeBases: KnowledgeBase[];
   tasks: Task[];
 }
