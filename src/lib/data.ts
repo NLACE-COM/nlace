@@ -1,4 +1,3 @@
-
 import { 
   Agent, 
   AgentType, 
@@ -527,4 +526,10 @@ export const getUsersByCompany = (companyId: string) => {
 
 export const getTasksByAgent = (agentId: string) => {
   return tasks.filter(task => task.agent === agentId);
+};
+
+export const getKnowledgeBasesByCompany = (companyId: string) => {
+  const companyAgents = getAgentsByCompany(companyId);
+  const agentIds = companyAgents.map(agent => agent.id);
+  return knowledgeBases.filter(kb => agentIds.includes(kb.agent));
 };

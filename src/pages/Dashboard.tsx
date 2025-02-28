@@ -93,11 +93,11 @@ const Dashboard = () => {
   const tokenPercentage = Math.round((totalTokensUsed / tokenLimit) * 100);
   
   // Funciones de ayuda para gráficas
-  const formatChartYAxis = (value: number) => {
+  const formatChartYAxis = (value: number): string => {
     if (chartMetric === "tokens") {
-      return value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value;
+      return value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value.toString();
     }
-    return value;
+    return value.toString();
   };
 
   const getChartData = () => {
@@ -337,7 +337,7 @@ const Dashboard = () => {
                       <CartesianGrid strokeDasharray="3 3" opacity={0.2} horizontal={true} vertical={false} />
                       <XAxis 
                         type="number" 
-                        tickFormatter={(value) => value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value} 
+                        tickFormatter={(value) => value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value.toString()} 
                       />
                       <YAxis 
                         type="category" 
