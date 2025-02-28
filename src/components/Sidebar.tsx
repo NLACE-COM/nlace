@@ -9,7 +9,7 @@ import {
   LayoutDashboard,
   LogOut,
   MessageSquare,
-  Robot,
+  Bot,
   Settings,
   Users,
 } from "lucide-react";
@@ -170,7 +170,7 @@ const Sidebar = ({
               />
               <SidebarItem
                 to="/agents"
-                icon={<Robot size={22} strokeWidth={1.5} />}
+                icon={<Bot size={22} strokeWidth={1.5} />}
                 label="Agentes"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
