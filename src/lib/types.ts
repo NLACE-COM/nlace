@@ -1,70 +1,31 @@
 
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: 'admin' | 'manager' | 'user';
-  avatar: string;
-  tokensUsed: number;
-  tokenLimit: number;
-}
-
-export interface Company {
-  id: string;
-  name: string;
-  logo: string;
-  description: string;
-  users: string[]; // User IDs
-  agents: string[]; // Agent IDs
-}
+export type AgentStatus = "active" | "inactive" | "configuring";
+export type AgentType = "data-analysis" | "content-creation" | "document-review" | "customer-support" | "research" | "custom";
+export type AgentCategory = "retail" | "food" | "technology" | "finance" | "entertainment" | "other";
 
 export interface Agent {
   id: string;
   name: string;
   description: string;
   type: AgentType;
-  status: 'active' | 'inactive' | 'configuring';
-  company: string; // Company ID
   category: AgentCategory;
-  metrics: AgentMetrics;
+  status: AgentStatus;
+  model: string;
+  companyId: string;
+  knowledgeBases: string[];
+  integrations: string[];
   createdAt: string;
-  icon: string;
-  active: boolean;
-  knowledgeBases: string[]; // KnowledgeBase IDs
-  integrations: string[]; // Integration IDs
+  updatedAt: string;
+  avatar?: string;
+  conversationCount?: number;
 }
 
-export type AgentType = 
-  | 'data-analysis' 
-  | 'content-creation' 
-  | 'document-review' 
-  | 'customer-support' 
-  | 'research' 
-  | 'custom';
-
-export type AgentCategory = 
-  | 'retail' 
-  | 'food' 
-  | 'technology' 
-  | 'finance' 
-  | 'entertainment'
-  | 'other';
-
-export interface AgentMetrics {
-  tasksCompleted: number;
-  averageCompletionTime: number;
-  successRate: number;
-  usageHours: number;
-  tokensUsed: number;
-  conversations: number;
-}
-
-export interface KnowledgeBase {
+export interface Task {
   id: string;
-  name: string;
+  title: string;
   description: string;
-  agent: string; // Agent ID
-  documents: KnowledgeDocument[];
+  status: "completed" | "in-progress" | "pending" | "failed";
+  agent: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -72,76 +33,43 @@ export interface KnowledgeBase {
 export interface KnowledgeDocument {
   id: string;
   title: string;
-  type: 'pdf' | 'doc' | 'txt' | 'url' | 'image';
-  size: number; // in KB
+  type: string;
+  size: number;
   uploadedAt: string;
-  url: string;
 }
 
-export interface Integration {
+export interface KnowledgeBase {
   id: string;
   name: string;
-  type: 'api' | 'database' | 'storage' | 'payment' | 'email' | 'other';
-  status: 'active' | 'inactive' | 'configuring';
-  agent: string; // Agent ID
-  createdAt: string;
-  icon: string;
-}
-
-export interface Conversation {
-  id: string;
-  title: string;
-  agent: string; // Agent ID
-  user: string; // User ID
-  messages: Message[];
+  description: string;
+  companyId: string;
+  documents: KnowledgeDocument[];
   createdAt: string;
   updatedAt: string;
-  tokensUsed: number;
 }
 
-export interface Message {
+export interface Company {
   id: string;
-  content: string;
-  sender: 'user' | 'agent';
-  timestamp: string;
-  tokensUsed?: number;
+  name: string;
+  plan: string;
+  logo: string;
 }
 
-export interface Task {
+export interface User {
   id: string;
-  title: string;
-  description: string;
-  agent: string; // Agent ID
-  status: 'pending' | 'in-progress' | 'completed' | 'failed';
-  createdAt: string;
-  completedAt?: string;
-  result?: string;
+  name: string;
+  email: string;
+  role: string;
+  companyId: string;
+  tokenLimit: number;
+  avatar?: string;
+  activityCount?: number;
 }
 
 export interface UsageMetrics {
-  totalUsers: number;
-  activeUsers: number;
-  totalConversations: number;
-  activeConversations: number;
   totalTokensUsed: number;
-  tokenUsageByDay: {
-    date: string;
-    count: number;
-  }[];
-  conversationsByDay: {
-    date: string;
-    count: number;
-  }[];
-}
-
-export interface AppState {
-  currentUser: User | null;
-  currentCompany: Company | null;
-  companies: Company[];
-  agents: Agent[];
-  knowledgeBases: KnowledgeBase[];
-  integrations: Integration[];
-  conversations: Conversation[];
-  tasks: Task[];
-  usageMetrics: UsageMetrics;
+  activeConversations: number;
+  totalUsers: number;
+  tokenUsageByDay: { date: string; count: number }[];
+  conversationsByDay: { date: string; count: number }[];
 }

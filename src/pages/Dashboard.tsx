@@ -14,6 +14,7 @@ import {
   Plus,
   RefreshCw,
   Users,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,7 +40,8 @@ import {
   currentUser, 
   getAgentsByCompany, 
   tasks, 
-  usageMetrics 
+  usageMetrics,
+  users,
 } from "@/lib/data";
 import { 
   Area, 
@@ -53,6 +55,7 @@ import {
   XAxis, 
   YAxis 
 } from "recharts";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -130,20 +133,15 @@ const Dashboard = () => {
     return `${date.getDate()}/${date.getMonth() + 1}`;
   };
 
-  const getTaskStatusColor = (status: string) => {
-    switch (status) {
-      case "completed":
-        return "text-green-500";
-      case "in-progress":
-        return "text-blue-500";
-      case "pending":
-        return "text-amber-500";
-      case "failed":
-        return "text-red-500";
-      default:
-        return "text-gray-500";
-    }
-  };
+  // Datos para los nuevos componentes
+  const mostUsedAgents = [...companyAgents]
+    .sort((a, b) => (b.conversationCount || 0) - (a.conversationCount || 0))
+    .slice(0, 5);
+
+  const mostActiveUsers = [...users]
+    .filter(user => user.companyId === currentCompany?.id)
+    .sort((a, b) => (b.activityCount || 0) - (a.activityCount || 0))
+    .slice(0, 5);
 
   return (
     <div className="container py-6 max-w-7xl animate-fade-in">
@@ -271,90 +269,81 @@ const Dashboard = () => {
           </Card>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {/* Tareas recientes */}
+            {/* Agentes más usados */}
             <Card className="md:col-span-2">
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">Tareas Recientes</CardTitle>
-                <CardDescription>Últimas tareas de todos los agentes</CardDescription>
+                <CardTitle className="text-base">Agentes más Usados</CardTitle>
+                <CardDescription>Los agentes con mayor número de conversaciones</CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="px-6">
-                  {tasks.slice(0, 5).map((task) => {
-                    const agent = agents.find((a) => a.id === task.agent);
-                    return (
-                      <div
-                        key={task.id}
-                        className="flex items-center justify-between py-3 border-b last:border-0"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="mt-0.5 h-2 w-2 rounded-full bg-current shrink-0 animate-pulse" 
-                               style={{ color: task.status === 'in-progress' ? '#3b82f6' : 'transparent' }} />
-                          <div>
-                            <p className="font-medium">{task.title}</p>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-muted-foreground">
-                                {agent?.name}
-                              </span>
-                              <span className="text-sm font-medium" 
-                                    style={{ color: getTaskStatusColor(task.status) }}>
-                                {task.status === 'completed' ? 'completada' : 
-                                 task.status === 'in-progress' ? 'en progreso' : 
-                                 task.status === 'pending' ? 'pendiente' : 'fallida'}
-                              </span>
-                            </div>
+                  {mostUsedAgents.map((agent) => (
+                    <div
+                      key={agent.id}
+                      className="flex items-center justify-between py-3 border-b last:border-0"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary overflow-hidden">
+                          {agent.avatar ? (
+                            <img 
+                              src={agent.avatar} 
+                              alt={agent.name} 
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <BrainCircuit className="h-4 w-4" />
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-medium">{agent.name}</p>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-muted-foreground">
+                              {agent.conversationCount || 0} conversaciones
+                            </span>
                           </div>
                         </div>
-                        <Button variant="ghost" size="sm">
-                          Ver
-                        </Button>
                       </div>
-                    );
-                  })}
+                      <Button variant="ghost" size="sm" onClick={() => navigate("/agents")}>
+                        Ver
+                      </Button>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
 
-            {/* Distribución de tokens por categoría */}
+            {/* Usuarios más activos */}
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">Distribución de Tokens</CardTitle>
-                <CardDescription>Por categoría de agente</CardDescription>
+                <CardTitle className="text-base">Usuarios más Activos</CardTitle>
+                <CardDescription>Por número de interacciones</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="h-[220px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart 
-                      data={[
-                        { name: "Retail", value: 45200 },
-                        { name: "Alimentos", value: 38800 },
-                        { name: "Tecnología", value: 22100 },
-                        { name: "Finanzas", value: 15600 },
-                        { name: "Otros", value: 4100 },
-                      ]}
-                      layout="vertical"
-                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" opacity={0.2} horizontal={true} vertical={false} />
-                      <XAxis 
-                        type="number" 
-                        tickFormatter={(value) => value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value.toString()} 
-                      />
-                      <YAxis 
-                        type="category" 
-                        dataKey="name" 
-                        width={80} 
-                      />
-                      <Tooltip 
-                        formatter={(value: number) => [`${(value / 1000).toFixed(1)}K tokens`, ""]}
-                      />
-                      <Bar 
-                        dataKey="value" 
-                        fill="var(--primary)" 
-                        radius={[0, 4, 4, 0]} 
-                        barSize={20}
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
+                <div className="space-y-4">
+                  {mostActiveUsers.map((user) => (
+                    <div key={user.id} className="flex items-center gap-3">
+                      <Avatar>
+                        <AvatarImage src={user.avatar} alt={user.name} />
+                        <AvatarFallback>
+                          {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <div className="flex justify-between mb-1">
+                          <span className="font-medium">{user.name}</span>
+                          <span className="text-sm text-muted-foreground">{user.activityCount || 0} acciones</span>
+                        </div>
+                        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-primary" 
+                            style={{ 
+                              width: `${Math.min(100, ((user.activityCount || 0) / 100) * 100)}%`
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
