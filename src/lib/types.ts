@@ -5,6 +5,8 @@ export interface User {
   email: string;
   role: 'admin' | 'manager' | 'user';
   avatar: string;
+  tokensUsed: number;
+  tokenLimit: number;
 }
 
 export interface Company {
@@ -14,27 +16,7 @@ export interface Company {
   description: string;
   users: string[]; // User IDs
   agents: string[]; // Agent IDs
-  brands: string[]; // Brand IDs
 }
-
-export interface Brand {
-  id: string;
-  name: string;
-  logo: string;
-  description: string;
-  company: string; // Company ID
-  agents: string[]; // Agent IDs
-  category: BrandCategory;
-  createdAt: string;
-}
-
-export type BrandCategory = 
-  | 'retail' 
-  | 'food' 
-  | 'technology' 
-  | 'finance' 
-  | 'entertainment'
-  | 'other';
 
 export interface Agent {
   id: string;
@@ -43,11 +25,13 @@ export interface Agent {
   type: AgentType;
   status: 'active' | 'inactive' | 'configuring';
   company: string; // Company ID
-  brand?: string; // Brand ID
+  category: AgentCategory;
   metrics: AgentMetrics;
   createdAt: string;
   icon: string;
-  active: boolean; // Añadimos la propiedad active
+  active: boolean;
+  knowledgeBases: string[]; // KnowledgeBase IDs
+  integrations: string[]; // Integration IDs
 }
 
 export type AgentType = 
@@ -58,18 +42,28 @@ export type AgentType =
   | 'research' 
   | 'custom';
 
+export type AgentCategory = 
+  | 'retail' 
+  | 'food' 
+  | 'technology' 
+  | 'finance' 
+  | 'entertainment'
+  | 'other';
+
 export interface AgentMetrics {
   tasksCompleted: number;
   averageCompletionTime: number;
   successRate: number;
   usageHours: number;
+  tokensUsed: number;
+  conversations: number;
 }
 
 export interface KnowledgeBase {
   id: string;
   name: string;
   description: string;
-  company: string; // Company ID
+  agent: string; // Agent ID
   documents: KnowledgeDocument[];
   createdAt: string;
   updatedAt: string;
@@ -84,6 +78,35 @@ export interface KnowledgeDocument {
   url: string;
 }
 
+export interface Integration {
+  id: string;
+  name: string;
+  type: 'api' | 'database' | 'storage' | 'payment' | 'email' | 'other';
+  status: 'active' | 'inactive' | 'configuring';
+  agent: string; // Agent ID
+  createdAt: string;
+  icon: string;
+}
+
+export interface Conversation {
+  id: string;
+  title: string;
+  agent: string; // Agent ID
+  user: string; // User ID
+  messages: Message[];
+  createdAt: string;
+  updatedAt: string;
+  tokensUsed: number;
+}
+
+export interface Message {
+  id: string;
+  content: string;
+  sender: 'user' | 'agent';
+  timestamp: string;
+  tokensUsed?: number;
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -95,12 +118,30 @@ export interface Task {
   result?: string;
 }
 
+export interface UsageMetrics {
+  totalUsers: number;
+  activeUsers: number;
+  totalConversations: number;
+  activeConversations: number;
+  totalTokensUsed: number;
+  tokenUsageByDay: {
+    date: string;
+    count: number;
+  }[];
+  conversationsByDay: {
+    date: string;
+    count: number;
+  }[];
+}
+
 export interface AppState {
   currentUser: User | null;
   currentCompany: Company | null;
   companies: Company[];
   agents: Agent[];
-  brands: Brand[];
   knowledgeBases: KnowledgeBase[];
+  integrations: Integration[];
+  conversations: Conversation[];
   tasks: Task[];
+  usageMetrics: UsageMetrics;
 }

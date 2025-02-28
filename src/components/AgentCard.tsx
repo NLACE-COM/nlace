@@ -3,7 +3,18 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Agent } from "@/lib/types";
-import { BarChart, FileText, MessagesSquare, Settings, Search, FileSearch } from "lucide-react";
+import { 
+  BarChart, 
+  Book, 
+  FileText, 
+  MessagesSquare, 
+  Search, 
+  Settings, 
+  FileSearch,
+  Plug,
+  Lock
+} from "lucide-react";
+import { getConversationsByAgent, getIntegrationsByAgent, getKnowledgeBasesByAgent } from "@/lib/data";
 
 interface AgentCardProps {
   agent: Agent;
@@ -11,6 +22,10 @@ interface AgentCardProps {
 }
 
 const AgentCard = ({ agent, onClick }: AgentCardProps) => {
+  const knowledgeBases = getKnowledgeBasesByAgent(agent.id);
+  const integrations = getIntegrationsByAgent(agent.id);
+  const conversations = getConversationsByAgent(agent.id);
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active":
@@ -19,6 +34,23 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
         return "bg-gray-500/10 text-gray-500 border-gray-500/20";
       case "configuring":
         return "bg-amber-500/10 text-amber-500 border-amber-500/20";
+      default:
+        return "bg-gray-500/10 text-gray-500 border-gray-500/20";
+    }
+  };
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case "retail":
+        return "bg-blue-500/10 text-blue-500 border-blue-500/20";
+      case "food":
+        return "bg-orange-500/10 text-orange-500 border-orange-500/20";
+      case "technology":
+        return "bg-purple-500/10 text-purple-500 border-purple-500/20";
+      case "finance":
+        return "bg-green-500/10 text-green-500 border-green-500/20";
+      case "entertainment":
+        return "bg-pink-500/10 text-pink-500 border-pink-500/20";
       default:
         return "bg-gray-500/10 text-gray-500 border-gray-500/20";
     }
@@ -61,6 +93,25 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
     }
   };
 
+  const translateCategory = (category: string): string => {
+    switch (category) {
+      case "retail":
+        return "retail";
+      case "food":
+        return "alimentación";
+      case "technology":
+        return "tecnología";
+      case "finance":
+        return "finanzas";
+      case "entertainment":
+        return "entretenimiento";
+      case "other":
+        return "otros";
+      default:
+        return category;
+    }
+  };
+
   const translateStatus = (status: string): string => {
     switch (status) {
       case "active":
@@ -76,7 +127,7 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
 
   return (
     <Card className="overflow-hidden hover:shadow-md transition-all duration-300 border animate-fade-in h-full flex flex-col">
-      <CardHeader className="p-4 pb-0">
+      <CardHeader className="p-4 pb-2">
         <div className="flex justify-between items-start">
           <div className="flex items-center">
             <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-3">
@@ -84,36 +135,85 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
             </div>
             <div>
               <h3 className="font-medium text-lg line-clamp-1">{agent.name}</h3>
-              <p className="text-sm text-muted-foreground line-clamp-1">
-                {translateAgentType(agent.type)}
-              </p>
+              <div className="flex flex-wrap gap-1 mt-1">
+                <Badge className={`capitalize ${getStatusColor(agent.status)}`}>
+                  {translateStatus(agent.status)}
+                </Badge>
+                <Badge className={`capitalize ${getCategoryColor(agent.category)}`}>
+                  {translateCategory(agent.category)}
+                </Badge>
+              </div>
             </div>
           </div>
-          <Badge className={`ml-2 capitalize ${getStatusColor(agent.status)}`}>
-            {translateStatus(agent.status)}
-          </Badge>
         </div>
       </CardHeader>
       <CardContent className="p-4 flex-grow">
-        <p className="text-sm text-muted-foreground line-clamp-2">
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
           {agent.description}
         </p>
         
-        <div className="grid grid-cols-2 gap-2 mt-4">
-          <div className="bg-muted/50 p-2 rounded">
-            <p className="text-xs text-muted-foreground">Tareas</p>
-            <p className="font-medium">{agent.metrics.tasksCompleted}</p>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="bg-muted/50 p-2 rounded flex flex-col">
+            <div className="flex items-center mb-1">
+              <MessagesSquare className="h-3.5 w-3.5 mr-1 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">Conversaciones</p>
+            </div>
+            <p className="font-medium">{agent.metrics.conversations}</p>
           </div>
-          <div className="bg-muted/50 p-2 rounded">
-            <p className="text-xs text-muted-foreground">Tasa de Éxito</p>
+          <div className="bg-muted/50 p-2 rounded flex flex-col">
+            <div className="flex items-center mb-1">
+              <BarChart className="h-3.5 w-3.5 mr-1 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">Éxito</p>
+            </div>
             <p className="font-medium">{agent.metrics.successRate}%</p>
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <div className="flex items-center justify-between text-sm mb-2">
+            <span className="text-muted-foreground">Recursos asociados:</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {knowledgeBases.length > 0 && (
+              <Badge variant="outline" className="flex items-center gap-1">
+                <Book className="h-3 w-3" />
+                <span>{knowledgeBases.length} KB</span>
+              </Badge>
+            )}
+            {integrations.length > 0 && (
+              <Badge variant="outline" className="flex items-center gap-1">
+                <Plug className="h-3 w-3" />
+                <span>{integrations.length} integraciones</span>
+              </Badge>
+            )}
+            {agent.metrics.tokensUsed > 0 && (
+              <Badge variant="outline" className="flex items-center gap-1">
+                <Lock className="h-3 w-3" />
+                <span>{(agent.metrics.tokensUsed / 1000).toFixed(1)}K tokens</span>
+              </Badge>
+            )}
           </div>
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <Button onClick={onClick} variant="outline" className="w-full">
-          Gestionar Agente
-        </Button>
+        <div className="w-full flex gap-2">
+          <Button 
+            onClick={onClick} 
+            variant="outline" 
+            className="w-full"
+          >
+            Gestionar
+          </Button>
+          {conversations.length > 0 && (
+            <Button 
+              variant="secondary"
+              className="flex items-center gap-1"
+              onClick={() => console.log("Chat con", agent.name)}
+            >
+              <MessagesSquare className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
       </CardFooter>
     </Card>
   );
