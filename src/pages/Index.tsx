@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Globe, Shield, Zap, BarChart, CreditCard } from "lucide-react";
+import { Globe, Shield, Zap, BarChart, CreditCard, Rocket } from "lucide-react";
 import { useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -208,7 +208,10 @@ const Index = () => {
         <div className="container max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-white mb-4">
+              <h2 className="text-4xl font-bold text-white mb-4 flex items-center">
+                <div className="bg-[#A347F0]/10 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                  <Rocket className="h-6 w-6 text-[#A347F0]" />
+                </div>
                 {language === "es" ? "Únete al alpha" : "Join the alpha"}
               </h2>
               <h3 className="text-2xl text-[#9E9E9E] mb-4">
