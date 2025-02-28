@@ -67,6 +67,10 @@ const Users = () => {
     }
   };
 
+  const handleAddUser = () => {
+    navigate("/users/create");
+  };
+
   return (
     <div className="container py-6 max-w-7xl animate-fade-in">
       <div className="flex items-center justify-between mb-6">
@@ -76,7 +80,7 @@ const Users = () => {
             Gestiona los miembros del equipo y sus accesos
           </p>
         </div>
-        <Button onClick={() => navigate("/users/create")}>
+        <Button onClick={handleAddUser}>
           <UserPlus className="mr-2 h-4 w-4" /> Añadir Usuario
         </Button>
       </div>
