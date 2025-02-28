@@ -247,7 +247,7 @@ const Agents = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectItem value="">Sin marca</SelectItem>
+                        <SelectItem value="none">Sin marca</SelectItem>
                         {companyBrands.map((brand) => (
                           <SelectItem key={brand.id} value={brand.id}>
                             {brand.name}
@@ -341,17 +341,6 @@ const Agents = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="agents" value={activeTab} onValueChange={setActiveTab} className="mb-6">
-        <TabsList className="grid w-full md:w-auto grid-cols-2">
-          <TabsTrigger value="agents" className="flex items-center gap-2">
-            <BrainCircuit className="h-4 w-4" /> Agentes
-          </TabsTrigger>
-          <TabsTrigger value="brands" className="flex items-center gap-2">
-            <Building2 className="h-4 w-4" /> Marcas
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
-
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
         <div className="w-full md:w-72 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -438,105 +427,116 @@ const Agents = () => {
         </div>
       </div>
 
-      <TabsContent value="agents" className="mt-0">
-        {filteredAgents.length === 0 ? (
-          <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
-            <BrainCircuit className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-xl font-medium mb-2">No se encontraron agentes</h3>
-            <p className="text-muted-foreground mb-6">
-              {searchTerm || typeFilter || statusFilter
-                ? "Prueba a ajustar tus filtros o términos de búsqueda"
-                : "Crea tu primer agente de IA para comenzar"}
-            </p>
-            <Button onClick={() => setNewAgentDialogOpen(true)}>
-              <Plus className="mr-2 h-4 w-4" /> Crear Agente
-            </Button>
-          </div>
-        ) : (
-          <div
-            className={
-              view === "grid"
-                ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-                : "flex flex-col gap-4"
-            }
-          >
-            {filteredAgents.map((agent) => (
-              <AgentCard key={agent.id} agent={agent} />
-            ))}
-            <div
-              className={
-                view === "grid"
-                  ? "flex items-center justify-center min-h-[250px] border border-dashed rounded-lg animate-fade-in"
-                  : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
-              }
-            >
-              <Button variant="ghost" className="h-full w-full flex flex-col gap-2 p-6" onClick={() => setNewAgentDialogOpen(true)}>
-                <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-                  <Plus className="h-6 w-6 text-muted-foreground" />
-                </div>
-                <span className="text-lg font-medium">Añadir Nuevo Agente</span>
-                <p className="text-sm text-muted-foreground">
-                  Configura un nuevo agente de IA para tus necesidades específicas
-                </p>
-              </Button>
-            </div>
-          </div>
-        )}
-      </TabsContent>
+      <Tabs defaultValue="agents" value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="grid w-full md:w-auto grid-cols-2 mb-6">
+          <TabsTrigger value="agents" className="flex items-center gap-2">
+            <BrainCircuit className="h-4 w-4" /> Agentes
+          </TabsTrigger>
+          <TabsTrigger value="brands" className="flex items-center gap-2">
+            <Building2 className="h-4 w-4" /> Marcas
+          </TabsTrigger>
+        </TabsList>
 
-      <TabsContent value="brands" className="mt-0">
-        {filteredBrands.length === 0 ? (
-          <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
-            <Building2 className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-xl font-medium mb-2">No se encontraron marcas</h3>
-            <p className="text-muted-foreground mb-6">
-              {searchTerm || categoryFilter
-                ? "Prueba a ajustar tus filtros o términos de búsqueda"
-                : "Crea tu primera marca para comenzar"}
-            </p>
-            <Button onClick={() => setNewBrandDialogOpen(true)}>
-              <Plus className="mr-2 h-4 w-4" /> Crear Marca
-            </Button>
-          </div>
-        ) : (
-          <div
-            className={
-              view === "grid"
-                ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-                : "flex flex-col gap-4"
-            }
-          >
-            {filteredBrands.map((brand) => (
-              <BrandCard 
-                key={brand.id} 
-                brand={brand} 
-                onClick={() => console.log("Ver detalles de marca:", brand.id)}
-                onAddAgent={() => {
-                  setNewAgentDialogOpen(true);
-                  setNewAgentBrand(brand.id);
-                }}
-              />
-            ))}
+        <TabsContent value="agents" className="mt-0">
+          {filteredAgents.length === 0 ? (
+            <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
+              <BrainCircuit className="h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="text-xl font-medium mb-2">No se encontraron agentes</h3>
+              <p className="text-muted-foreground mb-6">
+                {searchTerm || typeFilter || statusFilter
+                  ? "Prueba a ajustar tus filtros o términos de búsqueda"
+                  : "Crea tu primer agente de IA para comenzar"}
+              </p>
+              <Button onClick={() => setNewAgentDialogOpen(true)}>
+                <Plus className="mr-2 h-4 w-4" /> Crear Agente
+              </Button>
+            </div>
+          ) : (
             <div
               className={
                 view === "grid"
-                  ? "flex items-center justify-center min-h-[250px] border border-dashed rounded-lg animate-fade-in"
-                  : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
+                  ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                  : "flex flex-col gap-4"
               }
             >
-              <Button variant="ghost" className="h-full w-full flex flex-col gap-2 p-6" onClick={() => setNewBrandDialogOpen(true)}>
-                <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-                  <Plus className="h-6 w-6 text-muted-foreground" />
-                </div>
-                <span className="text-lg font-medium">Añadir Nueva Marca</span>
-                <p className="text-sm text-muted-foreground">
-                  Crea una nueva marca para asociar con tus agentes
-                </p>
+              {filteredAgents.map((agent) => (
+                <AgentCard key={agent.id} agent={agent} />
+              ))}
+              <div
+                className={
+                  view === "grid"
+                    ? "flex items-center justify-center min-h-[250px] border border-dashed rounded-lg animate-fade-in"
+                    : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
+                }
+              >
+                <Button variant="ghost" className="h-full w-full flex flex-col gap-2 p-6" onClick={() => setNewAgentDialogOpen(true)}>
+                  <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
+                    <Plus className="h-6 w-6 text-muted-foreground" />
+                  </div>
+                  <span className="text-lg font-medium">Añadir Nuevo Agente</span>
+                  <p className="text-sm text-muted-foreground">
+                    Configura un nuevo agente de IA para tus necesidades específicas
+                  </p>
+                </Button>
+              </div>
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="brands" className="mt-0">
+          {filteredBrands.length === 0 ? (
+            <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
+              <Building2 className="h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="text-xl font-medium mb-2">No se encontraron marcas</h3>
+              <p className="text-muted-foreground mb-6">
+                {searchTerm || categoryFilter
+                  ? "Prueba a ajustar tus filtros o términos de búsqueda"
+                  : "Crea tu primera marca para comenzar"}
+              </p>
+              <Button onClick={() => setNewBrandDialogOpen(true)}>
+                <Plus className="mr-2 h-4 w-4" /> Crear Marca
               </Button>
             </div>
-          </div>
-        )}
-      </TabsContent>
+          ) : (
+            <div
+              className={
+                view === "grid"
+                  ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                  : "flex flex-col gap-4"
+              }
+            >
+              {filteredBrands.map((brand) => (
+                <BrandCard 
+                  key={brand.id} 
+                  brand={brand} 
+                  onClick={() => console.log("Ver detalles de marca:", brand.id)}
+                  onAddAgent={() => {
+                    setNewAgentDialogOpen(true);
+                    setNewAgentBrand(brand.id);
+                  }}
+                />
+              ))}
+              <div
+                className={
+                  view === "grid"
+                    ? "flex items-center justify-center min-h-[250px] border border-dashed rounded-lg animate-fade-in"
+                    : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
+                }
+              >
+                <Button variant="ghost" className="h-full w-full flex flex-col gap-2 p-6" onClick={() => setNewBrandDialogOpen(true)}>
+                  <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
+                    <Plus className="h-6 w-6 text-muted-foreground" />
+                  </div>
+                  <span className="text-lg font-medium">Añadir Nueva Marca</span>
+                  <p className="text-sm text-muted-foreground">
+                    Crea una nueva marca para asociar con tus agentes
+                  </p>
+                </Button>
+              </div>
+            </div>
+          )}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
