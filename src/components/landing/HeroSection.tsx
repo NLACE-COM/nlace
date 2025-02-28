@@ -1,13 +1,11 @@
-
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-
 export const HeroSection = () => {
   const navigate = useNavigate();
-  const { language } = useLanguage();
-  
-  return (
-    <section className="container max-w-6xl mx-auto px-6 py-20">
+  const {
+    language
+  } = useLanguage();
+  return <section className="container max-w-6xl mx-auto px-6 py-20">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
           <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
@@ -28,10 +26,9 @@ export const HeroSection = () => {
         
         <div className="flex justify-center lg:justify-end">
           <div className="bg-[#2A2A2A] p-6 rounded-xl shadow-lg">
-            <img src="/lovable-uploads/1907d299-ea0e-463c-8146-6411f33028a0.png" alt="Dashboard Analytics" className="w-full max-w-md rounded-lg" />
+            <img alt="Dashboard Analytics" className="w-full max-w-md rounded-lg" src="/lovable-uploads/982ff367-0723-4e1d-ae10-8a7ca082f8ff.png" />
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
