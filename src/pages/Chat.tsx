@@ -1,4 +1,4 @@
-<lov-code>
+
 import { useState, useEffect } from "react";
 import {
   AtSign,
@@ -305,3 +305,213 @@ const Chat = () => {
     <div className="h-[calc(100vh-4rem)] flex overflow-hidden relative">
       {/* Capa de overlay para móvil cuando el sidebar está abierto */}
       {isMobile && showSidebarMobile && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40"
+          onClick={() => setShowSidebarMobile(false)}
+        />
+      )}
+
+      {/* Sidebar - Lista de conversaciones */}
+      <div 
+        className={`
+          ${sidebarCollapsed ? 'w-0 border-r-0' : 'w-72'} 
+          ${showSidebarMobile ? 'absolute inset-y-0 left-0 z-50 w-72' : ''}
+          h-full transition-all duration-300 bg-white border-r overflow-hidden
+        `}
+      >
+        <div className="flex flex-col h-full">
+          <div className="flex justify-between items-center p-4 border-b">
+            <h2 className="font-semibold">Conversaciones</h2>
+            <Button variant="ghost" size="icon" onClick={() => setSidebarCollapsed(true)}>
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+          </div>
+
+          <div className="p-3">
+            <Button className="w-full flex items-center gap-2 mb-3">
+              <MessageSquare className="h-4 w-4" />
+              Nueva conversación
+            </Button>
+          </div>
+
+          <div className="flex-1 overflow-auto">
+            <div className="px-3">
+              {/* Conversaciones recientes */}
+              <h3 className="text-xs font-medium text-gray-500 mb-2 px-2">Recientes</h3>
+              <div className="space-y-1">
+                {activeConversations.map((chat) => (
+                  <div 
+                    key={chat.id}
+                    className={`rounded-md px-2 py-1.5 cursor-pointer hover:bg-gray-100 ${activeChat === chat.id ? 'bg-gray-100 border-l-2 border-primary' : ''}`}
+                    onClick={() => handleChatSelect(chat.id)}
+                  >
+                    <div className="flex justify-between items-start">
+                      <span className="font-medium text-sm">{chat.title}</span>
+                      <span className="text-xs text-gray-500">{chat.timestamp}</span>
+                    </div>
+                    <div className="text-xs text-gray-500 truncate">{chat.preview}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Área de conversación */}
+      <div className="flex-1 flex flex-col overflow-hidden bg-muted/10">
+        {/* Header del chat */}
+        <div className="border-b bg-white p-2 flex items-center justify-between">
+          <div className="flex items-center">
+            {/* Botón para mostrar sidebar (solo visible cuando está colapsado) */}
+            {sidebarCollapsed && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="mr-2"
+                onClick={() => isMobile ? setShowSidebarMobile(true) : setSidebarCollapsed(false)}
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            )}
+            
+            <div className="flex items-center gap-2">
+              {/* Agente seleccionado */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-2">
+                    <Bot className="h-4 w-4" />
+                    <span>{getSelectedAgentName()}</span>
+                    <ChevronDown className="h-3 w-3 opacity-50" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  {agents.map((agent) => (
+                    <DropdownMenuItem 
+                      key={agent.id}
+                      onClick={() => setSelectedAgent(agent.id)}
+                    >
+                      <div className="flex items-center gap-2">
+                        {agent.avatar ? (
+                          <img src={agent.avatar} alt={agent.name} className="h-6 w-6 rounded-full" />
+                        ) : (
+                          <User className="h-4 w-4" />
+                        )}
+                        <span>{agent.name}</span>
+                      </div>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Separador */}
+              <span className="text-gray-300">|</span>
+
+              {/* Modelo seleccionado */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4" />
+                    <span>{getSelectedModelName()}</span>
+                    <ChevronDown className="h-3 w-3 opacity-50" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-52">
+                  {llmModels.map((model) => (
+                    <DropdownMenuItem 
+                      key={model.id}
+                      onClick={() => setSelectedModel(model.id)}
+                    >
+                      <div className="flex flex-col">
+                        <span>{model.name}</span>
+                        <span className="text-xs text-gray-500">{model.provider}</span>
+                      </div>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" title="Análisis de datos">
+              <BarChart3 className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="icon" title="Configuración">
+              <Settings className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Área de mensajes */}
+        <div className="flex-1 overflow-auto p-4 space-y-4">
+          {currentChat?.messages.map((msg) => (
+            <div 
+              key={msg.id} 
+              className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div 
+                className={`max-w-[80%] rounded-lg p-3 ${
+                  msg.sender === 'user' 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'bg-muted'
+                }`}
+              >
+                <div className="whitespace-pre-line">{msg.content}</div>
+                <div 
+                  className={`text-xs mt-1 ${
+                    msg.sender === 'user' 
+                      ? 'text-primary-foreground/70' 
+                      : 'text-muted-foreground'
+                  }`}
+                >
+                  {msg.timestamp}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Área de entrada de mensaje */}
+        <div className="p-3 border-t bg-white">
+          <div className="flex flex-col space-y-2">
+            <Textarea
+              placeholder="Escribe un mensaje..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="min-h-24 resize-none"
+            />
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" title="Adjuntar archivo">
+                  <label htmlFor="file-upload" className="cursor-pointer">
+                    <PaperclipIcon className="h-4 w-4" />
+                    <input
+                      id="file-upload"
+                      type="file"
+                      className="hidden"
+                      onChange={handleFileUpload}
+                    />
+                  </label>
+                </Button>
+                <Button variant="ghost" size="icon" title="Subir imagen">
+                  <Image className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" title="Comandos">
+                  <Command className="h-4 w-4" />
+                </Button>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" onClick={handleSendMessage}>
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Chat;
