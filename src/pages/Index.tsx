@@ -73,17 +73,18 @@ const Index = () => {
                 : "NLACE AI Studio offers businesses a secure environment to create and manage artificial intelligence agents tailored to their needs."}
             </p>
             
-            <Button
-              className="px-6 py-3 h-auto bg-white text-black hover:bg-gray-100 rounded-md flex items-center justify-center gap-2 text-sm font-medium"
+            <button
+              className="px-6 py-2.5 h-auto bg-white text-black hover:bg-gray-50 rounded-md flex items-center justify-center gap-2 text-sm font-medium border border-gray-200 shadow-sm transition-all"
               onClick={() => navigate("/dashboard")}
+              style={{ maxWidth: "240px" }}
             >
               <img 
                 src="/lovable-uploads/ed1a6be8-b1c3-41c4-8543-f14ef0683e3b.png" 
                 alt="Google Logo" 
                 className="h-5" 
               />
-              Continue with Google
-            </Button>
+              <span className="text-gray-700">Continue with Google</span>
+            </button>
           </div>
           
           <div className="flex justify-center lg:justify-end">
