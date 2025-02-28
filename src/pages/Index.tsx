@@ -1,21 +1,17 @@
-
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Globe, Shield, Zap, BarChart, CreditCard, Rocket } from "lucide-react";
 import { useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-
 const Index = () => {
   const navigate = useNavigate();
-  const { language, setLanguage, t } = useLanguage();
+  const {
+    language,
+    setLanguage,
+    t
+  } = useLanguage();
   const isMobile = useIsMobile();
 
   // Cargar el script de HubSpot una vez que el componente esté montado
@@ -30,27 +26,21 @@ const Index = () => {
       document.head.removeChild(script);
     };
   }, []);
-
-  return (
-    <div className="min-h-screen bg-[#212121] text-white">
+  return <div className="min-h-screen bg-[#212121] text-white">
       {/* Header con logo y selector de idioma */}
       <header className="container max-w-6xl mx-auto py-8 px-6">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
           <div className="flex items-center">
             {/* Logo para móvil */}
-            <div className="flex items-center">
-              <img 
-                src="https://nlace.com/hubfs/nlace_black.svg" 
-                alt="NLACE" 
-                className="h-12 brightness-0 invert"
-              />
+            <div className="flex items-bottom">
+              <img src="https://nlace.com/hubfs/nlace_black.svg" alt="NLACE" className="h-12 brightness-0 invert" />
               <span className="text-2xl font-semibold text-white ml-3">
                 AI Studio
               </span>
             </div>
           </div>
           <div className="mt-4 md:mt-0">
-            <Select value={language} onValueChange={(value) => setLanguage(value as "es" | "en")}>
+            <Select value={language} onValueChange={value => setLanguage(value as "es" | "en")}>
               <SelectTrigger className="w-36 bg-transparent border-[#4D4D4D] text-[#9E9E9E]">
                 <div className="flex items-center gap-2">
                   <Globe className="h-4 w-4" />
@@ -75,32 +65,20 @@ const Index = () => {
             </h1>
             
             <p className="text-lg text-[#9E9E9E] max-w-xl mb-8">
-              {language === "es" 
-                ? "NLACE AI Studio ofrece a empresas un entorno seguro para crear y gestionar agentes de inteligencia artificial adaptados a sus necesidades."
-                : "NLACE AI Studio offers businesses a secure environment to create and manage artificial intelligence agents tailored to their needs."}
+              {language === "es" ? "NLACE AI Studio ofrece a empresas un entorno seguro para crear y gestionar agentes de inteligencia artificial adaptados a sus necesidades." : "NLACE AI Studio offers businesses a secure environment to create and manage artificial intelligence agents tailored to their needs."}
             </p>
             
-            <button
-              className="px-6 py-2.5 h-auto bg-white text-black hover:bg-gray-50 rounded-md flex items-center justify-center gap-2 text-sm font-medium border border-gray-200 shadow-sm transition-all"
-              onClick={() => navigate("/dashboard")}
-              style={{ maxWidth: "240px" }}
-            >
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
-                alt="Google Logo" 
-                className="h-5" 
-              />
+            <button className="px-6 py-2.5 h-auto bg-white text-black hover:bg-gray-50 rounded-md flex items-center justify-center gap-2 text-sm font-medium border border-gray-200 shadow-sm transition-all" onClick={() => navigate("/dashboard")} style={{
+            maxWidth: "240px"
+          }}>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo" className="h-5" />
               <span className="text-gray-700">Continue with Google</span>
             </button>
           </div>
           
           <div className="flex justify-center lg:justify-end">
             <div className="bg-[#2A2A2A] p-6 rounded-xl shadow-lg">
-              <img 
-                src="/lovable-uploads/1907d299-ea0e-463c-8146-6411f33028a0.png" 
-                alt="Dashboard Analytics" 
-                className="w-full max-w-md rounded-lg"
-              />
+              <img src="/lovable-uploads/1907d299-ea0e-463c-8146-6411f33028a0.png" alt="Dashboard Analytics" className="w-full max-w-md rounded-lg" />
             </div>
           </div>
         </div>
@@ -142,13 +120,7 @@ const Index = () => {
         <div className="container max-w-6xl mx-auto px-6">
           <div className="bg-[#FAEAD7] rounded-xl p-6 md:p-8 shadow-lg">
             <div className="w-full max-w-4xl mx-auto rounded-lg shadow-lg overflow-hidden aspect-video">
-              <iframe
-                src="https://www.youtube.com/embed/ApX-UhpUiOE"
-                title="NLACE AI Studio Demo"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              ></iframe>
+              <iframe src="https://www.youtube.com/embed/ApX-UhpUiOE" title="NLACE AI Studio Demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full"></iframe>
             </div>
           </div>
         </div>
@@ -166,9 +138,7 @@ const Index = () => {
                 {language === "es" ? "Total privacidad y control" : "Total privacy and control"}
               </h3>
               <p className="text-[#9E9E9E] text-base leading-relaxed">
-                {language === "es"
-                  ? "Tus datos son solo tuyos. Entrenamos la IA con tu información interna sin compartir nada con terceros ni depender de modelos públicos."
-                  : "Your data is only yours. We train AI with your internal information without sharing anything with third parties or relying on public models."}
+                {language === "es" ? "Tus datos son solo tuyos. Entrenamos la IA con tu información interna sin compartir nada con terceros ni depender de modelos públicos." : "Your data is only yours. We train AI with your internal information without sharing anything with third parties or relying on public models."}
               </p>
             </div>
             
@@ -180,9 +150,7 @@ const Index = () => {
                 {language === "es" ? "Implementación rápida y sin fricciones" : "Fast and frictionless implementation"}
               </h3>
               <p className="text-[#9E9E9E] text-base leading-relaxed">
-                {language === "es"
-                  ? "Nuestros agentes se integran con las herramientas que ya usas, como Metricool, para que empieces a ver resultados de inmediato."
-                  : "Our agents integrate with tools you already use, like Metricool, so you can start seeing results right away."}
+                {language === "es" ? "Nuestros agentes se integran con las herramientas que ya usas, como Metricool, para que empieces a ver resultados de inmediato." : "Our agents integrate with tools you already use, like Metricool, so you can start seeing results right away."}
               </p>
             </div>
             
@@ -194,9 +162,7 @@ const Index = () => {
                 {language === "es" ? "Flexibilidad total para escalar" : "Total flexibility to scale"}
               </h3>
               <p className="text-[#9E9E9E] text-base leading-relaxed">
-                {language === "es"
-                  ? "Cada empresa es única. Adaptamos la IA a tus objetivos, ayudándote a automatizar procesos, mejorar la experiencia del cliente y optimizar tu operación."
-                  : "Every company is unique. We adapt AI to your goals, helping you automate processes, improve customer experience, and optimize your operation."}
+                {language === "es" ? "Cada empresa es única. Adaptamos la IA a tus objetivos, ayudándote a automatizar procesos, mejorar la experiencia del cliente y optimizar tu operación." : "Every company is unique. We adapt AI to your goals, helping you automate processes, improve customer experience, and optimize your operation."}
               </p>
             </div>
           </div>
@@ -218,21 +184,14 @@ const Index = () => {
                 {language === "es" ? "Acceso anticipado" : "Early access"}
               </h3>
               <p className="text-[#9E9E9E] text-lg leading-relaxed">
-                {language === "es" 
-                  ? "Estamos en Alpha cerrada, únete a la lista de espera y sé de los primeros en probarlo."
-                  : "We're in closed Alpha, join the waitlist and be among the first to try it."}
+                {language === "es" ? "Estamos en Alpha cerrada, únete a la lista de espera y sé de los primeros en probarlo." : "We're in closed Alpha, join the waitlist and be among the first to try it."}
               </p>
             </div>
             
             <div className="flex justify-center">
               <div className="bg-[#E3F4EC] p-8 rounded-xl max-w-md w-full shadow-lg">
                 {/* HubSpot Form integration */}
-                <div 
-                  className="hs-form-frame" 
-                  data-region="na1" 
-                  data-form-id="c830ca7e-0c48-49dd-86d1-2d0a57c5caf4" 
-                  data-portal-id="39533233"
-                ></div>
+                <div className="hs-form-frame" data-region="na1" data-form-id="c830ca7e-0c48-49dd-86d1-2d0a57c5caf4" data-portal-id="39533233"></div>
               </div>
             </div>
           </div>
@@ -244,11 +203,7 @@ const Index = () => {
         <div className="container max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
-              <img 
-                src="https://nlace.com/hubfs/nlace_black.svg" 
-                alt="NLACE" 
-                className="h-7 brightness-0 invert"
-              />
+              <img src="https://nlace.com/hubfs/nlace_black.svg" alt="NLACE" className="h-7 brightness-0 invert" />
               <p className="text-[#9E9E9E] mt-3">
                 © {new Date().getFullYear()} NLACE. {language === "es" ? "Todos los derechos reservados" : "All rights reserved"}.
               </p>
@@ -267,8 +222,6 @@ const Index = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
