@@ -28,7 +28,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 
@@ -46,7 +45,6 @@ interface Integration {
 
 const Integrations = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState("all");
 
   // Lista de integraciones disponibles
   const integrationsList: Integration[] = [
@@ -164,14 +162,9 @@ const Integrations = () => {
     },
   ];
 
-  // Filtramos las integraciones según la búsqueda y categoría seleccionada
+  // Filtramos las integraciones según la búsqueda
   const filteredIntegrations = integrationsList.filter((integration) => {
-    const matchesSearch = integration.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      activeCategory === "all" || integration.category === activeCategory;
-    return matchesSearch && matchesCategory;
+    return integration.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   // Ordenamos las integraciones: primero conectadas, luego pendientes, y finalmente desconectadas
@@ -231,101 +224,64 @@ const Integrations = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="all" value={activeCategory} onValueChange={setActiveCategory}>
-        <TabsList className="mb-6">
-          <TabsTrigger value="all">Todas</TabsTrigger>
-          <TabsTrigger value="social">Redes Sociales</TabsTrigger>
-          <TabsTrigger value="marketing">Marketing</TabsTrigger>
-          <TabsTrigger value="productivity">Productividad</TabsTrigger>
-          <TabsTrigger value="data">Datos</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="all" className="mt-0">
-          <div className="grid gap-6 md:grid-cols-2">
-            {sortedIntegrations.length === 0 ? (
-              <div className="col-span-2 flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
-                <Globe className="h-12 w-12 text-muted-foreground mb-4" />
-                <h3 className="text-xl font-medium mb-2">No se encontraron integraciones</h3>
-                <p className="text-muted-foreground mb-6">
-                  No hay integraciones disponibles que coincidan con tu búsqueda
-                </p>
-              </div>
-            ) : (
-              sortedIntegrations.map((integration) => (
-                <Card key={integration.id} className="animate-fade-in hover:shadow-md transition-shadow duration-200">
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <div className="p-2 border rounded-md flex items-center justify-center">
-                      {integration.icon}
+      <div className="grid gap-6 md:grid-cols-2">
+        {sortedIntegrations.length === 0 ? (
+          <div className="col-span-2 flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
+            <Globe className="h-12 w-12 text-muted-foreground mb-4" />
+            <h3 className="text-xl font-medium mb-2">No se encontraron integraciones</h3>
+            <p className="text-muted-foreground mb-6">
+              No hay integraciones disponibles que coincidan con tu búsqueda
+            </p>
+          </div>
+        ) : (
+          sortedIntegrations.map((integration) => (
+            <Card key={integration.id} className="animate-fade-in hover:shadow-md transition-shadow duration-200">
+              <CardHeader className="flex flex-row items-center gap-4">
+                <div className="p-2 border rounded-md flex items-center justify-center">
+                  {integration.icon}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg">{integration.name}</CardTitle>
+                    {renderStatus(integration.status)}
+                  </div>
+                  <CardDescription className="mt-1 line-clamp-2">{integration.description}</CardDescription>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center text-sm gap-4">
+                  <div className="flex items-center gap-1">
+                    <ThumbsUp className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-muted-foreground">{integration.popularityScore}% popularidad</span>
+                  </div>
+                  {integration.status === "connected" && integration.connectedDate && (
+                    <div className="flex items-center gap-1">
+                      <span className="text-muted-foreground">Conectado desde: {formatDate(integration.connectedDate)}</span>
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg">{integration.name}</CardTitle>
-                        {renderStatus(integration.status)}
-                      </div>
-                      <CardDescription className="mt-1 line-clamp-2">{integration.description}</CardDescription>
+                  )}
+                </div>
+              </CardContent>
+              <CardFooter className="flex justify-between items-center">
+                <div className="flex items-center">
+                  {integration.status === "connected" && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium">Activo</span>
+                      <Switch checked={true} />
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center text-sm gap-4">
-                      <div className="flex items-center gap-1">
-                        <ThumbsUp className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">{integration.popularityScore}% popularidad</span>
-                      </div>
-                      {integration.status === "connected" && integration.connectedDate && (
-                        <div className="flex items-center gap-1">
-                          <span className="text-muted-foreground">Conectado desde: {formatDate(integration.connectedDate)}</span>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      {integration.status === "connected" && (
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium">Activo</span>
-                          <Switch checked={true} />
-                        </div>
-                      )}
-                    </div>
-                    <Button 
-                      variant={integration.status === "connected" ? "outline" : "default"}
-                      className="gap-2"
-                    >
-                      {integration.status === "connected" ? "Configurar" : "Conectar"}
-                      <ExternalLink className="h-4 w-4" />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))
-            )}
-          </div>
-        </TabsContent>
-
-        {/* Contenido para las otras pestañas (mismo contenido pero filtrado) */}
-        <TabsContent value="social" className="mt-0">
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* El contenido se filtrará automáticamente por categoría */}
-          </div>
-        </TabsContent>
-        
-        <TabsContent value="marketing" className="mt-0">
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* El contenido se filtrará automáticamente por categoría */}
-          </div>
-        </TabsContent>
-        
-        <TabsContent value="productivity" className="mt-0">
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* El contenido se filtrará automáticamente por categoría */}
-          </div>
-        </TabsContent>
-        
-        <TabsContent value="data" className="mt-0">
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* El contenido se filtrará automáticamente por categoría */}
-          </div>
-        </TabsContent>
-      </Tabs>
+                  )}
+                </div>
+                <Button 
+                  variant={integration.status === "connected" ? "outline" : "default"}
+                  className="gap-2"
+                >
+                  {integration.status === "connected" ? "Configurar" : "Conectar"}
+                  <ExternalLink className="h-4 w-4" />
+                </Button>
+              </CardFooter>
+            </Card>
+          ))
+        )}
+      </div>
     </div>
   );
 };
