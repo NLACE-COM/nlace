@@ -83,7 +83,7 @@ const Index = () => {
           
           <div className="p-6 rounded-xl bg-white/50 backdrop-blur-sm border border-muted">
             <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <span className="text-2xl">🎯</span>
+              <span className="text-2xl">💻</span>
             </div>
             <h3 className="text-xl font-semibold mb-2">Toda la IA en un solo lugar</h3>
             <p className="text-muted-foreground">
@@ -97,9 +97,12 @@ const Index = () => {
             <span className="text-2xl">💡</span>
           </div>
           <h3 className="text-xl font-semibold mb-2">Acceso anticipado</h3>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mb-4">
             Estamos en Alpha cerrada. Únete a la lista de espera y sé de los primeros en probarlo.
           </p>
+          <Button onClick={() => window.open('https://nlace.com', '_blank')} variant="outline">
+            Solicitar acceso
+          </Button>
         </div>
       </div>
     </div>
