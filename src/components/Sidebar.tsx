@@ -2,8 +2,6 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
-  BarChart3,
-  BrainCircuit,
   ChevronLeft,
   ChevronRight,
   FileText,
@@ -11,6 +9,7 @@ import {
   LayoutDashboard,
   LogOut,
   MessageSquare,
+  Robot,
   Settings,
   Users,
 } from "lucide-react";
@@ -58,15 +57,15 @@ const SidebarItem = ({
               isActive
                 ? "bg-sidebar-accent text-sidebar-accent-foreground"
                 : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
-            } ${collapsed ? "justify-center px-2" : "px-5"}`
+            } ${collapsed ? "justify-center px-2" : "px-4"}`
           }
           onClick={onClick}
         >
           <div className="flex items-center">
-            <div className="w-8 h-8 flex items-center justify-center">
+            <div className={`w-8 h-8 flex items-center ${collapsed ? "justify-center" : ""}`}>
               {icon}
             </div>
-            {!collapsed && <span className="text-[16px] ml-5">{label}</span>}
+            {!collapsed && <span className="text-[16px] ml-3">{label}</span>}
           </div>
         </NavLink>
       </TooltipTrigger>
@@ -143,6 +142,17 @@ const Sidebar = ({
         }`}
       >
         <div className="h-full flex flex-col">
+          {/* Logo */}
+          {!collapsed && (
+            <div className="flex justify-center py-4">
+              <img 
+                src="/lovable-uploads/05c5cd91-9e77-4776-8acd-174e7510a439.png" 
+                alt="NLACE Logo" 
+                className="h-12"
+              />
+            </div>
+          )}
+
           {/* Company selector */}
           <div className="px-4 py-2">
             {!collapsed && <CompanySelector />}
@@ -160,7 +170,7 @@ const Sidebar = ({
               />
               <SidebarItem
                 to="/agents"
-                icon={<BrainCircuit size={22} strokeWidth={1.5} />}
+                icon={<Robot size={22} strokeWidth={1.5} />}
                 label="Agentes"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
@@ -193,13 +203,6 @@ const Sidebar = ({
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
-              <SidebarItem
-                to="/analytics"
-                icon={<BarChart3 size={22} strokeWidth={1.5} />}
-                label="Análisis"
-                collapsed={collapsed}
-                onClick={isMobile ? onClose : undefined}
-              />
             </nav>
           </ScrollArea>
 
@@ -213,12 +216,12 @@ const Sidebar = ({
               collapsed={collapsed}
               onClick={isMobile ? onClose : undefined}
             />
-            <div className={`h-12 flex items-center ${collapsed ? "justify-center px-2" : "px-5"}`}>
+            <div className={`h-12 flex items-center ${collapsed ? "justify-center px-2" : "px-4"}`}>
               <div className="flex items-center cursor-pointer hover:bg-sidebar-accent/50 w-full rounded-md">
-                <div className="w-8 h-8 flex items-center justify-center">
+                <div className={`w-8 h-8 flex items-center ${collapsed ? "justify-center" : ""}`}>
                   <LogOut size={22} strokeWidth={1.5} />
                 </div>
-                {!collapsed && <span className="text-[16px] ml-5">Cerrar Sesión</span>}
+                {!collapsed && <span className="text-[16px] ml-3">Cerrar Sesión</span>}
               </div>
             </div>
           </div>
