@@ -17,8 +17,8 @@ import Chat from "@/pages/Chat";
 import Users from "@/pages/Users";
 import Settings from "@/pages/Settings";
 import NotFound from "@/pages/NotFound";
-// Importamos CreateUser directamente con ruta relativa
 import CreateUser from "./pages/CreateUser";
+import Index from "./pages/Index";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
 // Inicializar el queryClient para React Query
@@ -55,6 +55,11 @@ const AppLayout = ({ children }: AppLayoutProps) => {
   );
 };
 
+// Layout para la página de inicio (sin sidebar ni navbar)
+const HomeLayout = ({ children }: AppLayoutProps) => {
+  return <>{children}</>;
+};
+
 function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="light">
@@ -62,21 +67,22 @@ function App() {
         <TooltipProvider>
           <QueryClientProvider client={queryClient}>
             <Router>
-              <AppLayout>
-                <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/agents" element={<Agents />} />
-                  <Route path="/agents/create" element={<CreateAgent />} />
-                  <Route path="/chat" element={<Chat />} />
-                  <Route path="/knowledge" element={<Knowledge />} />
-                  <Route path="/integrations" element={<Integrations />} />
-                  <Route path="/users" element={<Users />} />
-                  <Route path="/users/create" element={<CreateUser />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </AppLayout>
+              <Routes>
+                {/* Ruta de inicio con layout especial */}
+                <Route path="/" element={<HomeLayout><Index /></HomeLayout>} />
+                
+                {/* Rutas con layout principal (con sidebar) */}
+                <Route path="/dashboard" element={<AppLayout><Dashboard /></AppLayout>} />
+                <Route path="/agents" element={<AppLayout><Agents /></AppLayout>} />
+                <Route path="/agents/create" element={<AppLayout><CreateAgent /></AppLayout>} />
+                <Route path="/chat" element={<AppLayout><Chat /></AppLayout>} />
+                <Route path="/knowledge" element={<AppLayout><Knowledge /></AppLayout>} />
+                <Route path="/integrations" element={<AppLayout><Integrations /></AppLayout>} />
+                <Route path="/users" element={<AppLayout><Users /></AppLayout>} />
+                <Route path="/users/create" element={<AppLayout><CreateUser /></AppLayout>} />
+                <Route path="/settings" element={<AppLayout><Settings /></AppLayout>} />
+                <Route path="*" element={<AppLayout><NotFound /></AppLayout>} />
+              </Routes>
               <Toaster />
             </Router>
           </QueryClientProvider>
