@@ -89,7 +89,7 @@ const Index = () => {
           <div className="flex justify-center lg:justify-end">
             <div className="bg-[#2A2A2A] p-6 rounded-xl shadow-lg">
               <img 
-                src="/lovable-uploads/983cd522-eea8-41e4-baa9-7480da7dfaa7.png" 
+                src="/lovable-uploads/1907d299-ea0e-463c-8146-6411f33028a0.png" 
                 alt="Dashboard Analytics" 
                 className="w-full max-w-md rounded-lg"
               />
