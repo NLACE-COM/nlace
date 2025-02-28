@@ -48,6 +48,24 @@ import {
 import { agents, companies, users } from "@/lib/data";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+// Define el tipo para los mensajes
+interface ChatMessage {
+  id: string;
+  content: string;
+  sender: "user" | "ai";
+  timestamp: string;
+}
+
+// Define el tipo para las conversaciones
+interface Conversation {
+  id: string;
+  title: string;
+  preview: string;
+  timestamp: string;
+  model: string;
+  messages: ChatMessage[];
+}
+
 const Chat = () => {
   const { t } = useLanguage();
   const [message, setMessage] = useState("");
@@ -66,7 +84,7 @@ const Chat = () => {
   ];
 
   // Ejemplos de conversaciones activas
-  const activeConversations = [
+  const activeConversations: Conversation[] = [
     {
       id: "chat1",
       title: "Análisis financiero Q2",
