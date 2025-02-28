@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -82,33 +83,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Partner Logos - ahora como carrusel */}
+      {/* Partner Logos - actualizado de acuerdo a la referencia */}
       <div className="w-full border-t border-b border-[#3A3A3A] py-12 overflow-hidden">
-        <div className="relative">
-          {/* Primera fila de logos con animación */}
-          <div className="flex animate-marquee">
-            <div className="flex space-x-16 mx-8">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" className="h-8 opacity-70 brightness-0 invert" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Google_Bard_logo.svg" alt="Gemini" className="h-8 opacity-70 brightness-0 invert" />
-              <img src="https://python.langchain.com/img/langchain_icon.png" alt="LangChain" className="h-9 opacity-70 brightness-0 invert" />
-              <img src="https://lovable.dev/lovable-light.svg" alt="Lovable" className="h-8 opacity-70 brightness-0 invert" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Meta-logo-black.svg" alt="Meta" className="h-8 opacity-70 brightness-0 invert" />
-              <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" alt="Vercel" className="h-8 opacity-70 brightness-0 invert" />
-              <img src="https://n8n.io/images/n8n-logo.svg" alt="n8n" className="h-9 opacity-70 brightness-0 invert" />
-              <img src="https://metricool.com/wp-content/uploads/2021/11/cropped-LOGO-METRICOOL-1.png" alt="Metricool" className="h-8 opacity-70 brightness-0 invert" />
-            </div>
-            
-            {/* Duplicado para crear efecto continuo */}
-            <div className="flex space-x-16 mx-8">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" className="h-8 opacity-70 brightness-0 invert" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Google_Bard_logo.svg" alt="Gemini" className="h-8 opacity-70 brightness-0 invert" />
-              <img src="https://python.langchain.com/img/langchain_icon.png" alt="LangChain" className="h-9 opacity-70 brightness-0 invert" />
-              <img src="https://lovable.dev/lovable-light.svg" alt="Lovable" className="h-8 opacity-70 brightness-0 invert" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Meta-logo-black.svg" alt="Meta" className="h-8 opacity-70 brightness-0 invert" />
-              <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" alt="Vercel" className="h-8 opacity-70 brightness-0 invert" />
-              <img src="https://n8n.io/images/n8n-logo.svg" alt="n8n" className="h-9 opacity-70 brightness-0 invert" />
-              <img src="https://metricool.com/wp-content/uploads/2021/11/cropped-LOGO-METRICOOL-1.png" alt="Metricool" className="h-8 opacity-70 brightness-0 invert" />
-            </div>
+        <div className="container mx-auto">
+          <div className="w-full xl:w-2/3 xl:mx-auto flex items-center justify-around flex-wrap md:flex-nowrap gap-8 md:gap-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" className="h-8 opacity-70 brightness-0 invert" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Google_Bard_logo.svg" alt="Gemini" className="h-8 opacity-70 brightness-0 invert" />
+            <img src="https://python.langchain.com/img/langchain_icon.png" alt="LangChain" className="h-9 opacity-70 brightness-0 invert" />
+            <img src="https://n8n.io/images/n8n-logo.svg" alt="n8n" className="h-9 opacity-70 brightness-0 invert" />
+            <img src="https://metricool.com/wp-content/uploads/2021/11/cropped-LOGO-METRICOOL-1.png" alt="Metricool" className="h-8 opacity-70 brightness-0 invert" />
           </div>
         </div>
       </div>
