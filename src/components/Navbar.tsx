@@ -56,13 +56,17 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
           <div className="flex items-center">
             <a href="/" className="flex items-center">
               {isSidebarCollapsed ? (
-                <img 
-                  src="/lovable-uploads/644cd2ec-220b-45d7-b003-72e91fe020d3.png" 
-                  alt="NLACE" 
+                <img
+                  src="/lovable-uploads/644cd2ec-220b-45d7-b003-72e91fe020d3.png"
+                  alt="NLACE"
                   className="h-8 md:h-10"
                 />
               ) : (
-                <span className="sr-only">NLACE AI Studio</span>
+                <img
+                  src="/lovable-uploads/ce52e81f-b486-4b1c-a6db-ed96bebf8482.png"
+                  alt="NLACE AI Studio"
+                  className="h-8 md:h-10"
+                />
               )}
             </a>
           </div>

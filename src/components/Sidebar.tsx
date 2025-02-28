@@ -150,7 +150,7 @@ const Sidebar = ({
 
           {/* Navigation */}
           <ScrollArea className="flex-1">
-            <nav className="py-2 space-y-1">
+            <nav className="py-2 space-y-0.5">
               <SidebarItem
                 to="/dashboard"
                 icon={<LayoutDashboard size={22} strokeWidth={1.5} />}
@@ -214,7 +214,7 @@ const Sidebar = ({
               onClick={isMobile ? onClose : undefined}
             />
             <div className={`h-12 flex items-center ${collapsed ? "justify-center px-2" : "px-5"}`}>
-              <div className="flex items-center">
+              <div className="flex items-center cursor-pointer hover:bg-sidebar-accent/50 w-full rounded-md">
                 <div className="w-8 h-8 flex items-center justify-center">
                   <LogOut size={22} strokeWidth={1.5} />
                 </div>
