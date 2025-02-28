@@ -15,9 +15,10 @@ import Knowledge from "@/pages/Knowledge";
 import Integrations from "@/pages/Integrations";
 import Chat from "@/pages/Chat";
 import Users from "@/pages/Users";
-import CreateUser from "@/pages/CreateUser";
 import Settings from "@/pages/Settings";
 import NotFound from "@/pages/NotFound";
+// Importamos CreateUser directamente con ruta relativa
+import CreateUser from "./pages/CreateUser";
 
 // Inicializar el queryClient para React Query
 const queryClient = new QueryClient();
