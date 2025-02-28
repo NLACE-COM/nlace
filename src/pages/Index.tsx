@@ -10,10 +10,24 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Globe, Lock, Zap, BarChart } from "lucide-react";
+import { useEffect } from "react";
 
 const Index = () => {
   const navigate = useNavigate();
   const { language, setLanguage, t } = useLanguage();
+
+  // Cargar el script de HubSpot una vez que el componente esté montado
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://js.hsforms.net/forms/embed/39533233.js";
+    script.defer = true;
+    document.head.appendChild(script);
+
+    // Limpieza al desmontar
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#2B2B2B] text-white">
@@ -174,19 +188,17 @@ const Index = () => {
                   ? "Estamos en Alpha cerrada, únete a la lista de espera y sé de los primeros en probarlo."
                   : "We're in closed Alpha, join the waitlist and be among the first to try it."}
               </p>
-              
-              <Button className="mt-4 bg-white text-[#2B2B2B] hover:bg-gray-100 rounded-md">
-                {language === "es" ? "Unirse a la lista" : "Join waitlist"}
-              </Button>
             </div>
             
             <div className="flex justify-center">
               <div className="bg-gradient-to-br from-[#D6BCFA] to-[#9b87f5] p-8 rounded-xl max-w-md w-full shadow-xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                  alt="Card Illustration" 
-                  className="w-full rounded-lg" 
-                />
+                {/* HubSpot Form integration */}
+                <div 
+                  className="hs-form-frame" 
+                  data-region="na1" 
+                  data-form-id="c830ca7e-0c48-49dd-86d1-2d0a57c5caf4" 
+                  data-portal-id="39533233"
+                ></div>
               </div>
             </div>
           </div>
