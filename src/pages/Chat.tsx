@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   AtSign,
   BarChart3,
@@ -17,6 +17,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Bot,
+  Menu,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -47,6 +49,7 @@ import {
 } from "@/components/ui/select";
 import { agents, companies, users } from "@/lib/data";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Define el tipo para los mensajes
 interface ChatMessage {
@@ -73,7 +76,27 @@ const Chat = () => {
   const [selectedAgent, setSelectedAgent] = useState(agents[0].id);
   const [selectedCompany, setSelectedCompany] = useState(companies[0].id);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [showSidebarMobile, setShowSidebarMobile] = useState(false);
   const [activeChat, setActiveChat] = useState<string | null>("chat-extensive");
+  const isMobile = useIsMobile();
+
+  // Auto-colapsar sidebar en móvil
+  useEffect(() => {
+    if (isMobile) {
+      setSidebarCollapsed(true);
+      setShowSidebarMobile(false);
+    } else {
+      setSidebarCollapsed(false);
+    }
+  }, [isMobile]);
+
+  // Cerrar sidebar mobile al seleccionar un chat
+  const handleChatSelect = (chatId: string) => {
+    setActiveChat(chatId);
+    if (isMobile) {
+      setShowSidebarMobile(false);
+    }
+  };
 
   const llmModels = [
     { id: "gpt-4", name: "GPT-4", provider: "OpenAI" },
@@ -281,22 +304,40 @@ const Chat = () => {
   const currentChat = getCurrentChat();
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex overflow-hidden">
-      {/* Sidebar colapsable */}
+    <div className="h-[calc(100vh-4rem)] flex overflow-hidden relative">
+      {/* Capa de overlay para móvil cuando el sidebar está abierto */}
+      {isMobile && showSidebarMobile && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40"
+          onClick={() => setShowSidebarMobile(false)}
+        />
+      )}
+
+      {/* Sidebar colapsable - en móvil se oculta/muestra completamente */}
       <div 
         className={`border-r bg-card transition-all duration-300 flex flex-col ${
-          sidebarCollapsed ? "w-16" : "w-80"
+          sidebarCollapsed && !isMobile ? "w-20" : "w-80"
+        } ${
+          isMobile 
+            ? showSidebarMobile 
+              ? "fixed left-0 top-0 bottom-0 z-50 h-full shadow-xl" 
+              : "hidden"
+            : "relative"
         }`}
       >
         <div className="p-4 border-b flex items-center justify-between">
-          <h2 className={`font-semibold ${sidebarCollapsed ? "hidden" : "block"}`}>{t("chat")}</h2>
+          <h2 className={`font-semibold ${sidebarCollapsed && !isMobile ? "hidden" : "block"}`}>{t("chat")}</h2>
           <Button 
             variant="ghost" 
             size="icon" 
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            onClick={() => isMobile ? setShowSidebarMobile(false) : setSidebarCollapsed(!sidebarCollapsed)}
             className="h-8 w-8"
           >
-            {sidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+            {isMobile ? (
+              <X className="h-4 w-4" />
+            ) : (
+              sidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />
+            )}
           </Button>
         </div>
         <div className="flex-1 overflow-auto">
@@ -305,10 +346,10 @@ const Chat = () => {
               key={chat.id} 
               className={`p-3 hover:bg-muted/50 cursor-pointer ${
                 activeChat === chat.id ? "bg-muted" : ""
-              } ${sidebarCollapsed ? "px-2" : ""}`}
-              onClick={() => setActiveChat(chat.id)}
+              } ${sidebarCollapsed && !isMobile ? "px-2" : ""}`}
+              onClick={() => handleChatSelect(chat.id)}
             >
-              {sidebarCollapsed ? (
+              {sidebarCollapsed && !isMobile ? (
                 <div className="flex justify-center">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                     <MessageSquare className="h-5 w-5 text-primary" />
@@ -336,17 +377,17 @@ const Chat = () => {
             </div>
           ))}
         </div>
-        <div className={`p-3 border-t ${sidebarCollapsed ? "flex justify-center" : ""}`}>
+        <div className={`p-3 border-t ${sidebarCollapsed && !isMobile ? "flex justify-center" : ""}`}>
           <Button 
-            className={`${sidebarCollapsed ? "w-10 h-10 rounded-full p-0" : "w-full"}`} 
+            className={`${sidebarCollapsed && !isMobile ? "w-10 h-10 rounded-full p-0" : "w-full"}`} 
             onClick={() => setActiveChat(null)}
           >
-            {sidebarCollapsed ? (
+            {sidebarCollapsed && !isMobile ? (
               <MessageSquare className="h-5 w-5" />
             ) : (
               <>
                 <MessageSquare className="h-4 w-4 mr-2" />
-                {t("chat")}
+                {t("newChat")}
               </>
             )}
           </Button>
@@ -355,15 +396,26 @@ const Chat = () => {
 
       {/* Área principal de chat */}
       <div className="flex-1 flex flex-col h-full overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-3 border-b">
+        <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b">
           <div className="flex items-center">
+            {/* Botón para mostrar/ocultar sidebar en móvil */}
+            {isMobile && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => setShowSidebarMobile(true)}
+                className="mr-2"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            )}
             <h1 className="text-xl font-semibold">
               {currentChat ? currentChat.title : "Nueva conversación"}
             </h1>
           </div>
           <div className="flex items-center gap-2">
             <Select value={selectedCompany} onValueChange={setSelectedCompany}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[180px] hidden md:flex">
                 <SelectValue placeholder={t("company")} />
               </SelectTrigger>
               <SelectContent>
@@ -383,7 +435,7 @@ const Chat = () => {
                   <Settings className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-72">
+              <DropdownMenuContent align="end" className="w-72 mt-1 z-40">
                 <div className="p-4 space-y-4">
                   <h3 className="font-medium text-lg">{t("settings")}</h3>
                   
@@ -451,7 +503,7 @@ const Chat = () => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-4 md:p-6">
           {currentChat ? (
             <div className="space-y-6">
               {currentChat.messages.map((msg) => (
@@ -460,7 +512,7 @@ const Chat = () => {
                   className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div 
-                    className={`max-w-[80%] rounded-lg p-4 ${
+                    className={`max-w-[90%] md:max-w-[80%] rounded-lg p-4 ${
                       msg.sender === 'user' 
                         ? 'bg-primary text-primary-foreground' 
                         : 'bg-muted'
@@ -500,7 +552,7 @@ const Chat = () => {
               placeholder="Escribe aquí lo que quieras..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="min-h-[100px] border-0 resize-none pr-12"
+              className="min-h-[80px] md:min-h-[100px] border-0 resize-none pr-12"
             />
             <Button 
               variant="ghost" 
