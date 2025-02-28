@@ -66,19 +66,12 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
           </Button>
           <div className="flex items-center">
             <a href="/" className="flex items-center">
-              {isSidebarCollapsed ? (
-                <img
-                  src="/lovable-uploads/644cd2ec-220b-45d7-b003-72e91fe020d3.png"
-                  alt="NLACE"
-                  className="h-8 md:h-10"
-                />
-              ) : (
-                <img
-                  src="/lovable-uploads/ce52e81f-b486-4b1c-a6db-ed96bebf8482.png"
-                  alt="NLACE AI Studio"
-                  className="h-6 md:h-10"
-                />
-              )}
+              {/* Logo para dispositivos móviles y desktop con menú colapsado */}
+              <img
+                src="https://nlace.com/hubfs/nlace_black.svg"
+                alt="NLACE"
+                className="h-7 md:h-8"
+              />
             </a>
           </div>
         </div>
