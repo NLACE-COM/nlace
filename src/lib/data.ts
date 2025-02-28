@@ -141,6 +141,7 @@ export const agents: Agent[] = [
     },
     createdAt: "2023-09-15T10:30:00Z",
     icon: agentIcons["data-analysis"],
+    active: true,
   },
   {
     id: "a2",
@@ -158,6 +159,7 @@ export const agents: Agent[] = [
     },
     createdAt: "2023-10-05T14:20:00Z",
     icon: agentIcons["content-creation"],
+    active: true,
   },
   {
     id: "a3",
@@ -175,6 +177,7 @@ export const agents: Agent[] = [
     },
     createdAt: "2023-08-22T09:15:00Z",
     icon: agentIcons["content-creation"],
+    active: true,
   },
   {
     id: "a4",
@@ -192,6 +195,7 @@ export const agents: Agent[] = [
     },
     createdAt: "2023-11-10T11:45:00Z",
     icon: agentIcons["document-review"],
+    active: false,
   },
   {
     id: "a5",
@@ -209,6 +213,7 @@ export const agents: Agent[] = [
     },
     createdAt: "2024-01-05T16:30:00Z",
     icon: agentIcons["content-creation"],
+    active: false,
   },
   {
     id: "a6",
@@ -226,6 +231,7 @@ export const agents: Agent[] = [
     },
     createdAt: "2024-02-12T13:10:00Z",
     icon: agentIcons["customer-support"],
+    active: true,
   },
 ];
 

@@ -47,6 +47,7 @@ export interface Agent {
   metrics: AgentMetrics;
   createdAt: string;
   icon: string;
+  active: boolean; // Añadimos la propiedad active
 }
 
 export type AgentType = 
