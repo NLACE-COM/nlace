@@ -15,9 +15,13 @@ const Index = () => {
           </div>
         </div>
         
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-          NLACE AI Studio
-        </h1>
+        <div className="flex justify-center mb-4">
+          <img 
+            src="https://nlace.com/hubfs/nlace_black.svg" 
+            alt="NLACE AI Studio" 
+            className="h-12 mb-2"
+          />
+        </div>
         
         <h2 className="text-2xl md:text-3xl font-semibold mb-4">
           Inteligencia artificial aplicada para tu empresa

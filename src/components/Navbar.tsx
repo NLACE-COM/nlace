@@ -33,9 +33,13 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
             <span className="sr-only">Menú</span>
           </Button>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-semibold tracking-tight">
-              NLACE<span className="text-primary/80">AI Studio</span>
-            </h1>
+            <a href="/" className="flex items-center">
+              <img 
+                src="https://nlace.com/hubfs/nlace_black.svg" 
+                alt="NLACE AI Studio" 
+                className="h-8"
+              />
+            </a>
           </div>
         </div>
 
