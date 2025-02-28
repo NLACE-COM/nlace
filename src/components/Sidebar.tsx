@@ -24,7 +24,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import CompanySelector from "./CompanySelector";
-import { useMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -81,7 +81,7 @@ const Sidebar = ({
   onToggleCollapse,
 }: SidebarProps) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
 
   // Handle clicks outside the sidebar on mobile
