@@ -113,8 +113,8 @@ const Agents = () => {
   };
 
   return (
-    <div className="container py-6 max-w-7xl animate-fade-in">
-      <div className="flex items-center justify-between mb-6">
+    <div className="container py-6 max-w-7xl animate-fade-in pb-20">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
         <div>
           <h1 className="text-2xl font-bold">Agentes</h1>
           <p className="text-muted-foreground">
@@ -128,7 +128,7 @@ const Agents = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
+      <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-6">
         <div className="w-full md:w-72 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
@@ -139,10 +139,10 @@ const Agents = () => {
           />
         </div>
 
-        <div className="flex flex-wrap gap-2 items-center w-full md:w-auto">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-2 items-start w-full md:w-auto">
+          <div className="flex flex-wrap gap-2 items-center">
             <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger className="w-[160px]">
+              <SelectTrigger className="w-full sm:w-[160px]">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Filtrar por tipo" />
               </SelectTrigger>
@@ -159,7 +159,7 @@ const Agents = () => {
             </Select>
 
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[160px]">
+              <SelectTrigger className="w-full sm:w-[160px]">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Filtrar por estado" />
               </SelectTrigger>
@@ -174,7 +174,7 @@ const Agents = () => {
             </Select>
             
             <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-              <SelectTrigger className="w-[160px]">
+              <SelectTrigger className="w-full sm:w-[160px]">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Filtrar por categoría" />
               </SelectTrigger>
@@ -191,7 +191,7 @@ const Agents = () => {
             </Select>
           </div>
 
-          <div className="flex gap-2 ml-auto">
+          <div className="flex gap-2 sm:ml-auto mt-2 sm:mt-0">
             <Button
               variant={view === "grid" ? "default" : "outline"}
               size="icon"
@@ -210,8 +210,8 @@ const Agents = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="all">
-        <TabsList className="mb-6">
+      <Tabs defaultValue="all" className="pb-16">
+        <TabsList className="mb-6 overflow-x-auto flex-nowrap w-full justify-start sm:justify-center">
           <TabsTrigger value="all" className="flex items-center gap-2">
             <BrainCircuit className="h-4 w-4" /> Todos
           </TabsTrigger>
@@ -225,7 +225,7 @@ const Agents = () => {
 
         <TabsContent value="all" className="mt-0">
           {filteredAgents.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
+            <div className="flex flex-col items-center justify-center p-6 sm:p-12 text-center border rounded-lg bg-muted/10">
               <BrainCircuit className="h-12 w-12 text-muted-foreground mb-4" />
               <h3 className="text-xl font-medium mb-2">No se encontraron agentes</h3>
               <p className="text-muted-foreground mb-6">
@@ -241,7 +241,7 @@ const Agents = () => {
             <div
               className={
                 view === "grid"
-                  ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                  ? "grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                   : "flex flex-col gap-4"
               }
             >
@@ -258,7 +258,7 @@ const Agents = () => {
               <div
                 className={
                   view === "grid"
-                    ? "flex items-center justify-center min-h-[250px] border border-dashed rounded-lg animate-fade-in"
+                    ? "flex items-center justify-center min-h-[200px] md:min-h-[250px] border border-dashed rounded-lg animate-fade-in"
                     : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
                 }
               >
@@ -270,8 +270,8 @@ const Agents = () => {
                   <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
                     <Plus className="h-6 w-6 text-muted-foreground" />
                   </div>
-                  <div className="flex flex-col items-center px-6 w-full">
-                    <h3 className="text-lg font-medium mb-1">Añadir Nuevo Agente</h3>
+                  <div className="flex flex-col items-center px-4 sm:px-6 w-full">
+                    <h3 className="text-lg font-medium mb-1 text-center">Añadir Nuevo Agente</h3>
                     <p className="text-sm text-muted-foreground text-center">
                       Configura un nuevo agente de IA para tus necesidades específicas
                     </p>
@@ -286,7 +286,7 @@ const Agents = () => {
           <div
             className={
               view === "grid"
-                ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                ? "grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                 : "flex flex-col gap-4"
             }
           >
@@ -309,7 +309,7 @@ const Agents = () => {
           <div
             className={
               view === "grid"
-                ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                ? "grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                 : "flex flex-col gap-4"
             }
           >
