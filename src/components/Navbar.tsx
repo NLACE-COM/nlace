@@ -51,8 +51,8 @@ const Navbar = ({
 
   return (
     <header className="fixed top-0 left-0 right-0 z-30 h-16 px-4 md:px-6 border-b bg-background/80 backdrop-blur-md">
-      <div className={`h-full flex items-center justify-between ${!isMobile && !isSidebarCollapsed ? 'pl-[100px]' : ''}`}>
-        <div className="flex items-center gap-4">
+      <div className="h-full flex items-center justify-between">
+        <div className={`flex items-center gap-4 ${!isMobile ? 'md:pl-[100px]' : ''}`}>
           <Button variant="ghost" size="icon" className="md:hidden" onClick={onToggleSidebar}>
             <Menu className="h-5 w-5" />
             <span className="sr-only">Menú</span>
