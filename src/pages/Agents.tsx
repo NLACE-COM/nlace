@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -23,12 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import AgentCard from "@/components/AgentCard";
 import { currentCompany, getAgentsByCompany } from "@/lib/data";
@@ -210,102 +203,39 @@ const Agents = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="all" className="pb-16">
-        <TabsList className="mb-6 overflow-x-auto flex-nowrap w-full justify-start sm:justify-center">
-          <TabsTrigger value="all" className="flex items-center gap-2">
-            <BrainCircuit className="h-4 w-4" /> Todos
-          </TabsTrigger>
-          <TabsTrigger value="knowledge" className="flex items-center gap-2">
-            <Book className="h-4 w-4" /> Con Conocimiento
-          </TabsTrigger>
-          <TabsTrigger value="integrations" className="flex items-center gap-2">
-            <Plug className="h-4 w-4" /> Con Integraciones
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="all" className="mt-0">
-          {filteredAgents.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-6 sm:p-12 text-center border rounded-lg bg-muted/10">
-              <BrainCircuit className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-xl font-medium mb-2">No se encontraron agentes</h3>
-              <p className="text-muted-foreground mb-6">
-                {searchTerm || typeFilter !== "all" || statusFilter !== "all" || categoryFilter !== "all"
-                  ? "Prueba a ajustar tus filtros o términos de búsqueda"
-                  : "Crea tu primer agente de IA para comenzar"}
-              </p>
-              <Button onClick={() => navigate("/agents/create")}>
-                <Plus className="mr-2 h-4 w-4" /> Crear Agente
-              </Button>
-            </div>
-          ) : (
-            <div
-              className={
-                view === "grid"
-                  ? "grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                  : "flex flex-col gap-4"
-              }
-            >
-              {filteredAgents.map((agent) => (
-                <AgentCard 
-                  key={agent.id} 
-                  agent={agent} 
-                  onClick={() => {
-                    // Aquí iría la lógica para navegar a los detalles del agente
-                    console.log("Ver detalles del agente:", agent.id);
-                  }} 
-                />
-              ))}
-              {/* Se ha eliminado el módulo de "Añadir Nuevo Agente" que aparecía al final de la lista */}
-            </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="knowledge" className="mt-0">
-          <div
-            className={
-              view === "grid"
-                ? "grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                : "flex flex-col gap-4"
-            }
-          >
-            {filteredAgents
-              .filter(agent => agent.knowledgeBases.length > 0)
-              .map((agent) => (
-                <AgentCard 
-                  key={agent.id} 
-                  agent={agent} 
-                  onClick={() => {
-                    // Aquí iría la lógica para navegar a los detalles del agente
-                    console.log("Ver detalles del agente con conocimiento:", agent.id);
-                  }} 
-                />
-              ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="integrations" className="mt-0">
-          <div
-            className={
-              view === "grid"
-                ? "grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                : "flex flex-col gap-4"
-            }
-          >
-            {filteredAgents
-              .filter(agent => agent.integrations.length > 0)
-              .map((agent) => (
-                <AgentCard 
-                  key={agent.id} 
-                  agent={agent} 
-                  onClick={() => {
-                    // Aquí iría la lógica para navegar a los detalles del agente
-                    console.log("Ver detalles del agente con integraciones:", agent.id);
-                  }} 
-                />
-              ))}
-          </div>
-        </TabsContent>
-      </Tabs>
+      {filteredAgents.length === 0 ? (
+        <div className="flex flex-col items-center justify-center p-6 sm:p-12 text-center border rounded-lg bg-muted/10">
+          <BrainCircuit className="h-12 w-12 text-muted-foreground mb-4" />
+          <h3 className="text-xl font-medium mb-2">No se encontraron agentes</h3>
+          <p className="text-muted-foreground mb-6">
+            {searchTerm || typeFilter !== "all" || statusFilter !== "all" || categoryFilter !== "all"
+              ? "Prueba a ajustar tus filtros o términos de búsqueda"
+              : "Crea tu primer agente de IA para comenzar"}
+          </p>
+          <Button onClick={() => navigate("/agents/create")}>
+            <Plus className="mr-2 h-4 w-4" /> Crear Agente
+          </Button>
+        </div>
+      ) : (
+        <div
+          className={
+            view === "grid"
+              ? "grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+              : "flex flex-col gap-4"
+          }
+        >
+          {filteredAgents.map((agent) => (
+            <AgentCard 
+              key={agent.id} 
+              agent={agent} 
+              onClick={() => {
+                // Aquí iría la lógica para navegar a los detalles del agente
+                console.log("Ver detalles del agente:", agent.id);
+              }} 
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
