@@ -26,10 +26,10 @@ const Index = () => {
               alt="NLACE" 
               className="h-8 brightness-0 invert"
             />
-            <span className="text-xl font-semibold text-white">AI Studio</span>
+            <span className="text-xl font-semibold text-white self-end pb-0.5">AI Studio</span>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div>
           <Select value={language} onValueChange={(value) => setLanguage(value as "es" | "en")}>
             <SelectTrigger className="w-32 bg-transparent border-[#8E9196] text-[#8E9196]">
               <div className="flex items-center gap-2">
@@ -42,12 +42,6 @@ const Index = () => {
               <SelectItem value="en">English</SelectItem>
             </SelectContent>
           </Select>
-          <Button 
-            onClick={() => navigate("/dashboard")}
-            className="bg-[#292E3B] hover:bg-[#373E54] text-white border border-[#8E9196]"
-          >
-            {t("dashboard")}
-          </Button>
         </div>
       </header>
 
