@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bell, ChevronDown, Menu, Settings, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +18,27 @@ interface NavbarProps {
 
 const Navbar = ({ onToggleSidebar }: NavbarProps) => {
   const [notifications] = useState(3);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
+  // Detectar si el sidebar está colapsado usando una clase en el body
+  useEffect(() => {
+    const checkSidebarState = () => {
+      const mainElement = document.querySelector('main');
+      if (mainElement) {
+        setIsSidebarCollapsed(mainElement.className.includes('md:pl-20'));
+      }
+    };
+
+    checkSidebarState();
+    // Crear un observer para detectar cambios en las clases
+    const observer = new MutationObserver(checkSidebarState);
+    const main = document.querySelector('main');
+    if (main) {
+      observer.observe(main, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-30 h-16 px-4 md:px-6 border-b bg-background/80 backdrop-blur-md">
@@ -34,11 +55,15 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
           </Button>
           <div className="flex items-center">
             <a href="/" className="flex items-center">
-              <img 
-                src="https://nlace.com/hubfs/nlace_black.svg" 
-                alt="NLACE AI Studio" 
-                className="h-6 md:h-8 mt-1"
-              />
+              {isSidebarCollapsed ? (
+                <img 
+                  src="/lovable-uploads/644cd2ec-220b-45d7-b003-72e91fe020d3.png" 
+                  alt="NLACE" 
+                  className="h-8 md:h-10"
+                />
+              ) : (
+                <span className="sr-only">NLACE AI Studio</span>
+              )}
             </a>
           </div>
         </div>

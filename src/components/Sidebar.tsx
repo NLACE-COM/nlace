@@ -121,7 +121,13 @@ const Sidebar = ({
                 <Building2 className="h-5 w-5 text-primary" />
               </div>
             ) : (
-              <CompanySelector />
+              <div className="flex items-center mb-4">
+                <img 
+                  src="https://nlace.com/hubfs/nlace_black.svg" 
+                  alt="NLACE AI Studio" 
+                  className="h-8"
+                />
+              </div>
             )}
           </div>
 
