@@ -10,12 +10,15 @@ import {
   FileCheck,
   FileText,
   HelpCircle,
+  Image,
   Lightbulb,
   MessageSquare,
   Puzzle,
   Save,
   Settings,
   Trash,
+  Upload,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -71,6 +74,8 @@ const CreateAgent = () => {
   const [type, setType] = useState<AgentType>("custom");
   const [category, setCategory] = useState<AgentCategory>("other");
   const [prompt, setPrompt] = useState("");
+  const [avatar, setAvatar] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   
   // Estados para la configuración avanzada
   const [temperature, setTemperature] = useState(0.7);
@@ -128,6 +133,23 @@ const CreateAgent = () => {
     { value: "gemini-pro", label: "Gemini Pro", provider: "Google" },
     { value: "llama-3", label: "Llama 3", provider: "Meta" },
   ];
+
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setAvatar(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setAvatarPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeAvatar = () => {
+    setAvatar(null);
+    setAvatarPreview(null);
+  };
 
   const handleCreateAgent = async () => {
     if (!name) {
@@ -202,35 +224,82 @@ const CreateAgent = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">
-                      Nombre <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="name"
-                      placeholder="Ej: Asistente de Marketing"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                    <p className="text-sm text-muted-foreground">
-                      Un nombre descriptivo que identifique claramente la función del agente
-                    </p>
-                  </div>
+                  <div className="flex flex-col md:flex-row gap-4 items-start mb-2">
+                    <div className="w-full md:w-auto flex-shrink-0">
+                      <Label className="mb-2 block">Avatar del Agente</Label>
+                      <div className="relative w-32 h-32 rounded-lg overflow-hidden border flex items-center justify-center">
+                        {avatarPreview ? (
+                          <>
+                            <img 
+                              src={avatarPreview} 
+                              alt="Avatar Preview" 
+                              className="w-full h-full object-cover"
+                            />
+                            <Button
+                              variant="destructive"
+                              size="icon"
+                              className="absolute top-1 right-1 h-6 w-6 rounded-full"
+                              onClick={removeAvatar}
+                            >
+                              <X className="h-3 w-3" />
+                            </Button>
+                          </>
+                        ) : (
+                          <div className="flex flex-col items-center justify-center w-full h-full bg-muted">
+                            <User className="h-10 w-10 text-muted-foreground" />
+                            <Input
+                              type="file"
+                              id="avatar-upload"
+                              className="hidden"
+                              accept="image/*"
+                              onChange={handleAvatarChange}
+                            />
+                            <Label
+                              htmlFor="avatar-upload"
+                              className="mt-2 text-xs text-primary hover:underline cursor-pointer"
+                            >
+                              Subir imagen
+                            </Label>
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Imagen recomendada: 256x256px
+                      </p>
+                    </div>
+                    
+                    <div className="flex-1 space-y-4 w-full">
+                      <div className="space-y-2">
+                        <Label htmlFor="name">
+                          Nombre <span className="text-destructive">*</span>
+                        </Label>
+                        <Input
+                          id="name"
+                          placeholder="Ej: Asistente de Marketing"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                        <p className="text-sm text-muted-foreground">
+                          Un nombre descriptivo que identifique claramente la función del agente
+                        </p>
+                      </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="description">
-                      Descripción <span className="text-destructive">*</span>
-                    </Label>
-                    <Textarea
-                      id="description"
-                      placeholder="Ej: Agente especializado en crear contenido para redes sociales"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      rows={3}
-                    />
-                    <p className="text-sm text-muted-foreground">
-                      Una descripción detallada del propósito y capacidades del agente
-                    </p>
+                      <div className="space-y-2">
+                        <Label htmlFor="description">
+                          Descripción <span className="text-destructive">*</span>
+                        </Label>
+                        <Textarea
+                          id="description"
+                          placeholder="Ej: Agente especializado en crear contenido para redes sociales"
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          rows={3}
+                        />
+                        <p className="text-sm text-muted-foreground">
+                          Una descripción detallada del propósito y capacidades del agente
+                        </p>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -522,8 +591,16 @@ const CreateAgent = () => {
             <CardContent>
               <div className="p-4 bg-muted rounded-lg">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                    <BrainCircuit className="h-6 w-6" />
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary overflow-hidden">
+                    {avatarPreview ? (
+                      <img 
+                        src={avatarPreview} 
+                        alt="Avatar Preview" 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <BrainCircuit className="h-6 w-6" />
+                    )}
                   </div>
                   <div>
                     <h3 className="font-medium text-lg">{name || "Nombre del Agente"}</h3>
