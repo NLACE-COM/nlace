@@ -54,7 +54,7 @@ const SidebarItem = ({
         <NavLink
           to={to}
           className={({ isActive }) =>
-            `flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
+            `flex items-center px-3 py-2 rounded-md transition-colors ${
               isActive
                 ? "bg-sidebar-accent text-sidebar-accent-foreground"
                 : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
@@ -63,7 +63,7 @@ const SidebarItem = ({
           onClick={onClick}
         >
           <div className="flex-shrink-0">{icon}</div>
-          {!collapsed && <div className="flex-grow">{label}</div>}
+          {!collapsed && <div className="ml-3">{label}</div>}
         </NavLink>
       </TooltipTrigger>
       {collapsed && <TooltipContent side="right">{label}</TooltipContent>}
@@ -211,14 +211,14 @@ const Sidebar = ({
             />
             <Button
               variant="ghost"
-              className={`w-full flex items-center gap-3 text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground ${
+              className={`w-full flex items-center text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground ${
                 collapsed ? "justify-center" : "justify-start"
               }`}
             >
               <div className="flex-shrink-0">
                 <LogOut className="h-5 w-5" />
               </div>
-              {!collapsed && <div className="flex-grow">Cerrar Sesión</div>}
+              {!collapsed && <div className="ml-3">Cerrar Sesión</div>}
             </Button>
           </div>
 
