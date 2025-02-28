@@ -57,15 +57,15 @@ const SidebarItem = ({
               isActive
                 ? "bg-sidebar-accent text-sidebar-accent-foreground"
                 : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
-            } ${collapsed ? "justify-center px-2" : "px-4"}`
+            } ${collapsed ? "justify-center px-2" : "px-6"}`
           }
           onClick={onClick}
         >
           <div className="flex items-center">
-            <div className={`w-8 h-8 flex items-center ${collapsed ? "justify-center" : ""}`}>
+            <div className="flex items-center justify-center w-6">
               {icon}
             </div>
-            {!collapsed && <span className="text-[16px] ml-3">{label}</span>}
+            {!collapsed && <span className="text-[16px] ml-4">{label}</span>}
           </div>
         </NavLink>
       </TooltipTrigger>
@@ -144,7 +144,7 @@ const Sidebar = ({
         <div className="h-full flex flex-col">
           {/* Logo */}
           {!collapsed && (
-            <div className="flex justify-center py-4">
+            <div className="flex justify-center py-6">
               <img 
                 src="https://nlace.com/hubfs/nlace_black.svg" 
                 alt="NLACE Logo" 
@@ -154,51 +154,51 @@ const Sidebar = ({
           )}
 
           {/* Company selector */}
-          <div className="px-4 py-2">
+          <div className="px-6 py-2">
             {!collapsed && <CompanySelector />}
           </div>
 
           {/* Navigation */}
-          <ScrollArea className="flex-1">
-            <nav className="py-2 space-y-0.5">
+          <ScrollArea className="flex-1 mt-4">
+            <nav className="py-2 space-y-1">
               <SidebarItem
                 to="/dashboard"
-                icon={<LayoutDashboard size={22} strokeWidth={1.5} />}
+                icon={<LayoutDashboard size={20} strokeWidth={1.5} />}
                 label="Panel Principal"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/agents"
-                icon={<Bot size={22} strokeWidth={1.5} />}
+                icon={<Bot size={20} strokeWidth={1.5} />}
                 label="Agentes"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/chat"
-                icon={<MessageSquare size={22} strokeWidth={1.5} />}
+                icon={<MessageSquare size={20} strokeWidth={1.5} />}
                 label="Chat"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/knowledge"
-                icon={<FileText size={22} strokeWidth={1.5} />}
+                icon={<FileText size={20} strokeWidth={1.5} />}
                 label="Conocimiento"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/integrations"
-                icon={<Globe size={22} strokeWidth={1.5} />}
+                icon={<Globe size={20} strokeWidth={1.5} />}
                 label="Integraciones"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
               <SidebarItem
                 to="/users"
-                icon={<Users size={22} strokeWidth={1.5} />}
+                icon={<Users size={20} strokeWidth={1.5} />}
                 label="Usuarios"
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
@@ -207,21 +207,21 @@ const Sidebar = ({
           </ScrollArea>
 
           {/* Bottom actions */}
-          <div className="mt-auto p-2 space-y-1">
+          <div className="mt-auto p-2">
             <Separator className="bg-sidebar-border my-2" />
             <SidebarItem
               to="/settings"
-              icon={<Settings size={22} strokeWidth={1.5} />}
+              icon={<Settings size={20} strokeWidth={1.5} />}
               label="Configuración"
               collapsed={collapsed}
               onClick={isMobile ? onClose : undefined}
             />
-            <div className={`h-12 flex items-center ${collapsed ? "justify-center px-2" : "px-4"}`}>
+            <div className={`h-12 flex items-center ${collapsed ? "justify-center px-2" : "px-6"}`}>
               <div className="flex items-center cursor-pointer hover:bg-sidebar-accent/50 w-full rounded-md">
-                <div className={`w-8 h-8 flex items-center ${collapsed ? "justify-center" : ""}`}>
-                  <LogOut size={22} strokeWidth={1.5} />
+                <div className="flex items-center justify-center w-6">
+                  <LogOut size={20} strokeWidth={1.5} />
                 </div>
-                {!collapsed && <span className="text-[16px] ml-3">Cerrar Sesión</span>}
+                {!collapsed && <span className="text-[16px] ml-4">Cerrar Sesión</span>}
               </div>
             </div>
           </div>
