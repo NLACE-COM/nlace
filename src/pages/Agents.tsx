@@ -255,29 +255,7 @@ const Agents = () => {
                   }} 
                 />
               ))}
-              <div
-                className={
-                  view === "grid"
-                    ? "flex items-center justify-center min-h-[200px] md:min-h-[250px] border border-dashed rounded-lg animate-fade-in"
-                    : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
-                }
-              >
-                <Button 
-                  variant="ghost" 
-                  className="h-full w-full flex flex-col gap-4 p-6" 
-                  onClick={() => navigate("/agents/create")}
-                >
-                  <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-                    <Plus className="h-6 w-6 text-muted-foreground" />
-                  </div>
-                  <div className="flex flex-col items-center px-4 sm:px-6 w-full">
-                    <h3 className="text-lg font-medium mb-1 text-center">Añadir Nuevo Agente</h3>
-                    <p className="text-sm text-muted-foreground text-center">
-                      Configura un nuevo agente de IA para tus necesidades específicas
-                    </p>
-                  </div>
-                </Button>
-              </div>
+              {/* Se ha eliminado el módulo de "Añadir Nuevo Agente" que aparecía al final de la lista */}
             </div>
           )}
         </TabsContent>

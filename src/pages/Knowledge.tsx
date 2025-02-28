@@ -179,8 +179,8 @@ const Knowledge = () => {
   };
 
   return (
-    <div className="container py-6 max-w-7xl animate-fade-in">
-      <div className="flex items-center justify-between mb-6">
+    <div className="container py-6 max-w-7xl animate-fade-in pb-20">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
         <div>
           <h1 className="heading-1">Base de Conocimiento</h1>
           <p className="text-muted-foreground">
@@ -231,7 +231,7 @@ const Knowledge = () => {
         </Dialog>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
+      <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-6">
         <div className="w-full md:w-72 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
@@ -318,7 +318,7 @@ const Knowledge = () => {
       </div>
 
       {filteredKnowledgeBases.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
+        <div className="flex flex-col items-center justify-center p-6 sm:p-12 text-center border rounded-lg bg-muted/10">
           <FileText className="h-12 w-12 text-muted-foreground mb-4" />
           <h3 className="text-xl font-medium mb-2">No se encontraron bases de conocimiento</h3>
           <p className="text-muted-foreground mb-6">
@@ -450,24 +450,7 @@ const Knowledge = () => {
               </CardFooter>
             </Card>
           ))}
-
-          <Card className="flex items-center justify-center h-full border-dashed animate-fade-in">
-            <Button
-              variant="ghost"
-              className="h-full w-full flex flex-col gap-4 py-12"
-              onClick={() => setIsNewKBDialogOpen(true)}
-            >
-              <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-                <Plus className="h-6 w-6 text-muted-foreground" />
-              </div>
-              <div className="flex flex-col items-center px-6 w-full">
-                <h3 className="text-lg font-medium mb-1">Crear Nueva Base de Conocimiento</h3>
-                <p className="text-sm text-muted-foreground text-center">
-                  Añade una nueva colección de documentos para que tus agentes de IA aprendan
-                </p>
-              </div>
-            </Button>
-          </Card>
+          {/* Se ha eliminado el módulo de "Crear Nueva Base de Conocimiento" que aparecía al final de la lista */}
         </div>
       )}
 
