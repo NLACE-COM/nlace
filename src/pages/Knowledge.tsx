@@ -27,7 +27,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { KnowledgeBase, KnowledgeDocument } from "@/lib/types";
 import { currentCompany, getKnowledgeBasesByCompany } from "@/lib/data";
 
 const Knowledge = () => {
@@ -208,7 +207,7 @@ const Knowledge = () => {
               <span className="text-lg font-medium">
                 Crear Nueva Base de Conocimiento
               </span>
-              <p className="text-sm text-muted-foreground max-w-xs text-center">
+              <p className="text-sm text-muted-foreground max-w-[250px] mx-auto px-4 overflow-hidden break-words">
                 Añade una nueva colección de documentos para que tus agentes de IA aprendan
               </p>
             </Button>
