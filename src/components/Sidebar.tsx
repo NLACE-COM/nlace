@@ -5,6 +5,8 @@ import {
   BarChart3,
   BrainCircuit,
   Building2,
+  ChevronLeft,
+  ChevronRight,
   FileText,
   LayoutDashboard,
   MessageSquare,
@@ -14,6 +16,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import CompanySelector from "./CompanySelector";
+import { Button } from "./ui/button";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -22,6 +25,7 @@ interface SidebarProps {
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
 
   const navItems = [
     {
@@ -61,6 +65,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     },
   ];
 
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
     <>
       {/* Mobile overlay */}
@@ -74,11 +82,12 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 z-40 w-72 h-full border-r bg-background transition-transform duration-300 ease-in-out transform md:translate-x-0 pt-16",
+          "fixed top-0 left-0 z-40 h-full border-r bg-background transition-all duration-300 ease-in-out transform md:translate-x-0 pt-16",
+          collapsed ? "w-20" : "w-72",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="h-full overflow-y-auto py-6 px-4">
+        <div className="h-full overflow-y-auto py-6 px-4 relative">
           <div className="md:hidden absolute top-4 right-4">
             <button
               onClick={onClose}
@@ -89,8 +98,27 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             </button>
           </div>
 
-          <div className="mb-8">
-            <CompanySelector />
+          {/* Toggle Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-2 -right-4 z-50 h-8 w-8 rounded-full border bg-background shadow-md hidden md:flex"
+            onClick={toggleCollapse}
+          >
+            {collapsed ? 
+              <ChevronRight className="h-4 w-4" /> : 
+              <ChevronLeft className="h-4 w-4" />
+            }
+          </Button>
+
+          <div className={cn("mb-8", collapsed && "flex justify-center")}>
+            {collapsed ? (
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Building2 className="h-5 w-5 text-primary" />
+              </div>
+            ) : (
+              <CompanySelector />
+            )}
           </div>
 
           <nav className="flex flex-col gap-2">
@@ -101,13 +129,14 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 onClick={onClose}
                 className={({ isActive }) =>
                   cn(
-                    "nav-link hover:bg-muted",
-                    isActive && "nav-link active"
+                    "nav-link hover:bg-muted flex items-center px-3 py-2 rounded-lg transition-all duration-200",
+                    collapsed && "justify-center px-2",
+                    isActive && "nav-link active bg-secondary text-primary font-medium"
                   )
                 }
               >
                 {item.icon}
-                <span>{item.name}</span>
+                {!collapsed && <span className="ml-2">{item.name}</span>}
               </NavLink>
             ))}
           </nav>
