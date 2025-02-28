@@ -61,12 +61,12 @@ const SidebarItem = ({
               isActive
                 ? "bg-sidebar-accent text-sidebar-accent-foreground"
                 : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
-            } ${collapsed ? "justify-center" : "flex-row"}`
+            } ${collapsed ? "justify-center" : ""}`
           }
           onClick={onClick}
         >
-          {icon}
-          {!collapsed && <span>{label}</span>}
+          <span className="inline-flex">{icon}</span>
+          {!collapsed && <span className="inline-block">{label}</span>}
         </NavLink>
       </TooltipTrigger>
       {collapsed && <TooltipContent side="right">{label}</TooltipContent>}
@@ -214,8 +214,8 @@ const Sidebar = ({
             />
             <Button
               variant="ghost"
-              className={`w-full text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground ${
-                collapsed ? "justify-center" : "justify-start flex-row"
+              className={`w-full flex items-center text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground ${
+                collapsed ? "justify-center" : "justify-start"
               }`}
             >
               <LogOut className="h-5 w-5" />
