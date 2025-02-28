@@ -21,11 +21,17 @@ import { Button } from "./ui/button";
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  collapsed?: boolean;
+  onToggleCollapse?: () => void;
 }
 
-const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+const Sidebar = ({ 
+  isOpen, 
+  onClose, 
+  collapsed = false, 
+  onToggleCollapse 
+}: SidebarProps) => {
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
 
   const navItems = [
     {
@@ -65,10 +71,6 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     },
   ];
 
-  const toggleCollapse = () => {
-    setCollapsed(!collapsed);
-  };
-
   return (
     <>
       {/* Mobile overlay */}
@@ -99,17 +101,19 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           </div>
 
           {/* Toggle Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute top-2 -right-4 z-50 h-8 w-8 rounded-full border bg-background shadow-md hidden md:flex"
-            onClick={toggleCollapse}
-          >
-            {collapsed ? 
-              <ChevronRight className="h-4 w-4" /> : 
-              <ChevronLeft className="h-4 w-4" />
-            }
-          </Button>
+          {onToggleCollapse && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-2 -right-4 z-50 h-8 w-8 rounded-full border bg-background shadow-md hidden md:flex"
+              onClick={onToggleCollapse}
+            >
+              {collapsed ? 
+                <ChevronRight className="h-4 w-4" /> : 
+                <ChevronLeft className="h-4 w-4" />
+              }
+            </Button>
+          )}
 
           <div className={cn("mb-8", collapsed && "flex justify-center")}>
             {collapsed ? (
