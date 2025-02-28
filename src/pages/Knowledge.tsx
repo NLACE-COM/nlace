@@ -199,17 +199,17 @@ const Knowledge = () => {
           <Card className="flex items-center justify-center h-full border-dashed animate-fade-in">
             <Button
               variant="ghost"
-              className="h-full w-full flex flex-col gap-2 py-12"
+              className="h-full w-full flex flex-col gap-4 py-12"
             >
               <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
                 <Plus className="h-6 w-6 text-muted-foreground" />
               </div>
-              <span className="text-lg font-medium text-center px-4">
-                Crear Nueva Base de Conocimiento
-              </span>
-              <p className="text-sm text-muted-foreground text-center w-full px-6 max-w-xs mx-auto line-clamp-3">
-                Añade una nueva colección de documentos para que tus agentes de IA aprendan
-              </p>
+              <div className="flex flex-col items-center px-6 w-full">
+                <h3 className="text-lg font-medium mb-1">Crear Nueva Base de Conocimiento</h3>
+                <p className="text-sm text-muted-foreground text-center">
+                  Añade una nueva colección de documentos para que tus agentes de IA aprendan
+                </p>
+              </div>
             </Button>
           </Card>
         </div>

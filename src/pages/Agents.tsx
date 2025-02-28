@@ -469,14 +469,16 @@ const Agents = () => {
                     : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
                 }
               >
-                <Button variant="ghost" className="h-full w-full flex flex-col gap-2 p-6" onClick={() => setNewAgentDialogOpen(true)}>
+                <Button variant="ghost" className="h-full w-full flex flex-col gap-4 p-6" onClick={() => setNewAgentDialogOpen(true)}>
                   <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
                     <Plus className="h-6 w-6 text-muted-foreground" />
                   </div>
-                  <span className="text-lg font-medium text-center px-4">Añadir Nuevo Agente</span>
-                  <p className="text-sm text-muted-foreground text-center w-full px-6 max-w-xs mx-auto line-clamp-3">
-                    Configura un nuevo agente de IA para tus necesidades específicas
-                  </p>
+                  <div className="flex flex-col items-center px-6 w-full">
+                    <h3 className="text-lg font-medium mb-1">Añadir Nuevo Agente</h3>
+                    <p className="text-sm text-muted-foreground text-center">
+                      Configura un nuevo agente de IA para tus necesidades específicas
+                    </p>
+                  </div>
                 </Button>
               </div>
             </div>
@@ -523,14 +525,16 @@ const Agents = () => {
                     : "flex items-center justify-center p-6 border border-dashed rounded-lg animate-fade-in"
                 }
               >
-                <Button variant="ghost" className="h-full w-full flex flex-col gap-2 p-6" onClick={() => setNewBrandDialogOpen(true)}>
+                <Button variant="ghost" className="h-full w-full flex flex-col gap-4 p-6" onClick={() => setNewBrandDialogOpen(true)}>
                   <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
                     <Plus className="h-6 w-6 text-muted-foreground" />
                   </div>
-                  <span className="text-lg font-medium text-center px-4">Añadir Nueva Marca</span>
-                  <p className="text-sm text-muted-foreground text-center w-full px-6 max-w-xs mx-auto line-clamp-3">
-                    Crea una nueva marca para asociar con tus agentes
-                  </p>
+                  <div className="flex flex-col items-center px-6 w-full">
+                    <h3 className="text-lg font-medium mb-1">Añadir Nueva Marca</h3>
+                    <p className="text-sm text-muted-foreground text-center">
+                      Crea una nueva marca para asociar con tus agentes
+                    </p>
+                  </div>
                 </Button>
               </div>
             </div>
