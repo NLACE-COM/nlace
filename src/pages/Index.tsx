@@ -20,13 +20,13 @@ const Index = () => {
       {/* Header con logo y selector de idioma */}
       <header className="container max-w-7xl mx-auto py-6 px-4 flex justify-between items-center">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-end gap-2">
             <img 
               src="https://nlace.com/hubfs/nlace_black.svg" 
               alt="NLACE" 
               className="h-8 brightness-0 invert"
             />
-            <span className="text-xl font-semibold text-white self-end pb-0.5">AI Studio</span>
+            <span className="text-xl font-semibold text-white pb-0.5">AI Studio</span>
           </div>
         </div>
         <div>
