@@ -34,9 +34,7 @@ const Index = () => {
             {/* Logo para móvil */}
             <div className="flex items-bottom">
               <img src="https://nlace.com/hubfs/nlace_black.svg" alt="NLACE" className="h-12 brightness-0 invert" />
-              <span className="text-2xl font-semibold text-white ml-3">
-                AI Studio
-              </span>
+              <span className="text-2xl font-semibold text-white ml-3 py-0 my-[20px]">AI Studio</span>
             </div>
           </div>
           <div className="mt-4 md:mt-0">
