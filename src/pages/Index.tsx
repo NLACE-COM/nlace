@@ -11,10 +11,12 @@ import {
 } from "@/components/ui/select";
 import { Globe, Shield, Zap, BarChart, CreditCard } from "lucide-react";
 import { useEffect } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const navigate = useNavigate();
   const { language, setLanguage, t } = useLanguage();
+  const isMobile = useIsMobile();
 
   // Cargar el script de HubSpot una vez que el componente esté montado
   useEffect(() => {
@@ -33,18 +35,23 @@ const Index = () => {
     <div className="min-h-screen bg-[#212121] text-white">
       {/* Header con logo y selector de idioma */}
       <header className="container max-w-6xl mx-auto py-8 px-6">
-        <div className="flex justify-between items-center">
-          <div className="flex items-end gap-3">
-            <img 
-              src="https://nlace.com/hubfs/nlace_black.svg" 
-              alt="NLACE" 
-              className="h-9 brightness-0 invert"
-            />
-            <span className="text-2xl font-semibold text-white pb-0.5">AI Studio</span>
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+          <div className="flex items-center">
+            {/* Logo para móvil */}
+            <div className="flex items-center">
+              <img 
+                src="https://nlace.com/hubfs/nlace_black.svg" 
+                alt="NLACE" 
+                className="h-12 brightness-0 invert"
+              />
+              <span className="text-2xl font-semibold text-white ml-3">
+                AI Studio
+              </span>
+            </div>
           </div>
-          <div>
+          <div className="mt-4 md:mt-0">
             <Select value={language} onValueChange={(value) => setLanguage(value as "es" | "en")}>
-              <SelectTrigger className="w-32 bg-transparent border-[#4D4D4D] text-[#9E9E9E]">
+              <SelectTrigger className="w-36 bg-transparent border-[#4D4D4D] text-[#9E9E9E]">
                 <div className="flex items-center gap-2">
                   <Globe className="h-4 w-4" />
                   <SelectValue>{language === "es" ? "Español" : "English"}</SelectValue>
