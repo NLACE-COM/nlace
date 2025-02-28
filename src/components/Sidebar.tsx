@@ -16,12 +16,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import CompanySelector from "./CompanySelector";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -48,29 +42,20 @@ const SidebarItem = ({
   onClick,
 }: SidebarItemProps) => {
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <NavLink
-          to={to}
-          className={({ isActive }) =>
-            `flex items-center h-12 transition-colors ${
-              isActive
-                ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                : "text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
-            } ${collapsed ? "justify-center px-2" : "px-6"}`
-          }
-          onClick={onClick}
-        >
-          <div className="flex items-center">
-            <div className="flex items-center justify-center w-6">
-              {icon}
-            </div>
-            {!collapsed && <span className="text-[16px] ml-4">{label}</span>}
-          </div>
-        </NavLink>
-      </TooltipTrigger>
-      {collapsed && <TooltipContent side="right">{label}</TooltipContent>}
-    </Tooltip>
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `flex items-center h-12 px-4 rounded-md transition-colors ${
+          isActive
+            ? "bg-accent text-accent-foreground font-medium"
+            : "text-sidebar-foreground hover:bg-muted/50"
+        } ${collapsed ? "justify-center" : "gap-3"}`
+      }
+      onClick={onClick}
+    >
+      <div className="flex-shrink-0">{icon}</div>
+      {!collapsed && <span className="text-[15px]">{label}</span>}
+    </NavLink>
   );
 };
 
@@ -131,7 +116,7 @@ const Sidebar = ({
       {/* Sidebar */}
       <div
         ref={sidebarRef}
-        className={`fixed top-0 left-0 z-40 h-full bg-sidebar border-r border-sidebar-border pt-16 transition-all duration-300 ${
+        className={`fixed top-0 left-0 z-40 h-full bg-background border-r border-border pt-16 transition-all duration-300 ${
           collapsed && !isMobile ? "w-20" : "w-72"
         } ${
           isMobile
@@ -148,19 +133,22 @@ const Sidebar = ({
               <img 
                 src="https://nlace.com/hubfs/nlace_black.svg" 
                 alt="NLACE Logo" 
-                className="h-10"
+                className="h-12"
               />
             </div>
           )}
 
           {/* Company selector */}
-          <div className="px-6 py-2">
-            {!collapsed && <CompanySelector />}
-          </div>
+          {!collapsed && (
+            <div className="px-4 py-2 mb-6">
+              <p className="text-sm font-medium text-muted-foreground ml-1 mb-2">Empresa</p>
+              <CompanySelector />
+            </div>
+          )}
 
           {/* Navigation */}
-          <ScrollArea className="flex-1 mt-4">
-            <nav className="py-2 space-y-1">
+          <ScrollArea className="flex-1">
+            <div className="px-3 py-2 space-y-1">
               <SidebarItem
                 to="/dashboard"
                 icon={<LayoutDashboard size={20} strokeWidth={1.5} />}
@@ -203,12 +191,12 @@ const Sidebar = ({
                 collapsed={collapsed}
                 onClick={isMobile ? onClose : undefined}
               />
-            </nav>
+            </div>
           </ScrollArea>
 
           {/* Bottom actions */}
-          <div className="mt-auto p-2">
-            <Separator className="bg-sidebar-border my-2" />
+          <div className="mt-auto p-3 space-y-1">
+            <Separator className="my-2" />
             <SidebarItem
               to="/settings"
               icon={<Settings size={20} strokeWidth={1.5} />}
@@ -216,13 +204,13 @@ const Sidebar = ({
               collapsed={collapsed}
               onClick={isMobile ? onClose : undefined}
             />
-            <div className={`h-12 flex items-center ${collapsed ? "justify-center px-2" : "px-6"}`}>
-              <div className="flex items-center cursor-pointer hover:bg-sidebar-accent/50 w-full rounded-md">
-                <div className="flex items-center justify-center w-6">
-                  <LogOut size={20} strokeWidth={1.5} />
-                </div>
-                {!collapsed && <span className="text-[16px] ml-4">Cerrar Sesión</span>}
-              </div>
+            <div
+              className={`flex items-center h-12 px-4 rounded-md cursor-pointer transition-colors hover:bg-muted/50 ${
+                collapsed ? "justify-center" : "gap-3"
+              }`}
+            >
+              <LogOut size={20} strokeWidth={1.5} />
+              {!collapsed && <span className="text-[15px]">Cerrar Sesión</span>}
             </div>
           </div>
 

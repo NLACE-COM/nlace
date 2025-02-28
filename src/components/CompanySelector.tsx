@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Check, ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,82 +24,79 @@ const CompanySelector = () => {
   );
 
   return (
-    <div className="space-y-2">
-      <p className="text-sm font-medium text-muted-foreground">Empresa</p>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="w-full justify-between border-muted bg-secondary/50 hover:bg-secondary h-auto py-3"
-          >
-            <div className="flex items-center gap-2 overflow-hidden">
-              <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden">
-                {selectedCompany?.logo && (
-                  <img
-                    src={selectedCompany.logo}
-                    alt={selectedCompany.name}
-                    className="h-full w-full object-cover"
-                  />
-                )}
-              </div>
-              <span className="truncate font-medium">
-                {selectedCompany?.name || "Seleccionar empresa"}
-              </span>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between border-muted bg-background hover:bg-muted/50 h-auto py-3"
+        >
+          <div className="flex items-center gap-2 overflow-hidden">
+            <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden">
+              {selectedCompany?.logo && (
+                <img
+                  src={selectedCompany.logo}
+                  alt={selectedCompany.name}
+                  className="h-full w-full object-cover"
+                />
+              )}
             </div>
-            {open ? (
-              <ChevronUp className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 animate-scale-in">
-          <Command>
-            <CommandInput placeholder="Buscar empresa..." className="h-9" />
-            <CommandEmpty>No se encontraron empresas.</CommandEmpty>
-            <CommandGroup className="max-h-[300px] overflow-auto">
-              {companies.map((company) => (
-                <CommandItem
-                  key={company.id}
-                  value={company.name}
-                  onSelect={() => {
-                    setSelectedCompany(company);
-                    setOpen(false);
-                  }}
-                  className="flex items-center gap-2 py-2"
-                >
-                  <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden">
-                    {company.logo && (
-                      <img
-                        src={company.logo}
-                        alt={company.name}
-                        className="h-full w-full object-cover"
-                      />
-                    )}
-                  </div>
-                  <span>{company.name}</span>
-                  {selectedCompany?.id === company.id && (
-                    <Check className="ml-auto h-4 w-4 opacity-70" />
-                  )}
-                </CommandItem>
-              ))}
+            <span className="truncate font-medium">
+              {selectedCompany?.name || "Seleccionar empresa"}
+            </span>
+          </div>
+          {open ? (
+            <ChevronUp className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          ) : (
+            <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          )}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 animate-scale-in">
+        <Command>
+          <CommandInput placeholder="Buscar empresa..." className="h-9" />
+          <CommandEmpty>No se encontraron empresas.</CommandEmpty>
+          <CommandGroup className="max-h-[300px] overflow-auto">
+            {companies.map((company) => (
               <CommandItem
-                value="add-new"
+                key={company.id}
+                value={company.name}
                 onSelect={() => {
+                  setSelectedCompany(company);
                   setOpen(false);
                 }}
-                className="flex items-center gap-2 py-2 text-primary"
+                className="flex items-center gap-2 py-2"
               >
-                <Plus className="h-4 w-4" />
-                <span>Agregar nueva empresa</span>
+                <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden">
+                  {company.logo && (
+                    <img
+                      src={company.logo}
+                      alt={company.name}
+                      className="h-full w-full object-cover"
+                    />
+                  )}
+                </div>
+                <span>{company.name}</span>
+                {selectedCompany?.id === company.id && (
+                  <Check className="ml-auto h-4 w-4 opacity-70" />
+                )}
               </CommandItem>
-            </CommandGroup>
-          </Command>
-        </PopoverContent>
-      </Popover>
-    </div>
+            ))}
+            <CommandItem
+              value="add-new"
+              onSelect={() => {
+                setOpen(false);
+              }}
+              className="flex items-center gap-2 py-2 text-primary"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Agregar nueva empresa</span>
+            </CommandItem>
+          </CommandGroup>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
 };
 
