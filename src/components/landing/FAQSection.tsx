@@ -79,7 +79,7 @@ export const FAQSection = () => {
         </Accordion>
         
         <p className="text-[#9E9E9E] text-center mt-8">
-          Si tienes más dudas, contáctanos y con gusto te ayudaremos.
+          Si tienes más dudas, <a href="https://nlace.com/contacto" target="_blank" rel="noopener noreferrer" className="text-[#9E9E9E] underline hover:text-white transition-colors">contáctanos</a> y con gusto te ayudaremos.
         </p>
       </div>
     </section>
