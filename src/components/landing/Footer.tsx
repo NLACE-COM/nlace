@@ -17,10 +17,10 @@ export const Footer = () => {
           
           <div className="mt-4 md:mt-0">
             <div className="flex gap-8">
-              <a href="#" className="text-[#9E9E9E] hover:text-white">
+              <a href="https://nlace.com/politica" target="_blank" rel="noopener noreferrer" className="text-[#9E9E9E] hover:text-white">
                 {language === "es" ? "Política de Privacidad" : "Privacy Policy"}
               </a>
-              <a href="#" className="text-[#9E9E9E] hover:text-white">
+              <a href="https://nlace.com/condiciones" target="_blank" rel="noopener noreferrer" className="text-[#9E9E9E] hover:text-white">
                 {language === "es" ? "Términos de Uso" : "Terms of Use"}
               </a>
             </div>
