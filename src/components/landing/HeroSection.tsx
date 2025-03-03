@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 export const HeroSection = () => {
@@ -27,7 +26,7 @@ export const HeroSection = () => {
         
         <div className="flex justify-center lg:justify-end">
           <div className="bg-[#2A2A2A] p-6 rounded-xl shadow-lg">
-            <img alt="Dashboard Analytics" className="w-full max-w-md rounded-lg" src="/lovable-uploads/9dd64d25-f651-4bee-9982-07d4c39a1989.png" />
+            <img alt="Dashboard Analytics" className="w-full max-w-md rounded-lg" src="/lovable-uploads/7a3c05a8-0800-4f88-9dcf-ae3374c51367.png" />
           </div>
         </div>
       </div>
