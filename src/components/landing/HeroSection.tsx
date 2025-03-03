@@ -26,7 +26,7 @@ export const HeroSection = () => {
         
         <div className="flex justify-center lg:justify-end">
           <div className="bg-[#2A2A2A] p-6 rounded-xl shadow-lg">
-            <img alt="Dashboard Analytics" className="w-full max-w-md rounded-lg" src="/lovable-uploads/982ff367-0723-4e1d-ae10-8a7ca082f8ff.png" />
+            <img alt="Dashboard Analytics" className="w-full max-w-md rounded-lg" src="/lovable-uploads/b1aeaeb4-92f2-479d-90ba-6ed08d29475e.png" />
           </div>
         </div>
       </div>
