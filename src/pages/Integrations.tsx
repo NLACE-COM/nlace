@@ -17,6 +17,8 @@ import {
   ShoppingBag,
   Phone,
   Bookmark,
+  Slack,
+  Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,6 +50,24 @@ const Integrations = () => {
 
   // Lista de integraciones disponibles
   const integrationsList: Integration[] = [
+    {
+      id: "slack",
+      name: "Slack",
+      description: "Integra tus agentes con canales de Slack para automatizar respuestas y notificaciones",
+      icon: <Slack className="h-8 w-8 text-purple-500" />,
+      status: "disconnected",
+      category: "productivity",
+      popularityScore: 94,
+    },
+    {
+      id: "office365",
+      name: "Office 365",
+      description: "Conecta con Microsoft Office 365 para automatizar tareas en Outlook, Teams y más",
+      icon: <Mail className="h-8 w-8 text-blue-400" />,
+      status: "disconnected",
+      category: "productivity",
+      popularityScore: 89,
+    },
     {
       id: "meta-ads",
       name: "Meta Ads",
