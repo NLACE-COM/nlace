@@ -20,11 +20,11 @@ export const AlphaAccessSection = () => {
   }, []);
   
   return (
-    <section className="py-24 bg-[#212121]">
+    <section className="py-12 md:py-24 bg-[#212121]">
       <div className="container max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div>
-            <h2 className="text-4xl font-bold text-white mb-4 flex items-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center">
               <div className="bg-[#A347F0]/10 w-12 h-12 rounded-full flex items-center justify-center mr-4">
                 <Rocket className="h-6 w-6 text-[#A347F0]" />
               </div>

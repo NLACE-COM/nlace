@@ -7,9 +7,9 @@ export const FeaturesSection = () => {
   const { language } = useLanguage();
   
   return (
-    <section className="py-24 bg-[#1A1A1A]">
+    <section className="py-12 md:py-24 bg-[#1A1A1A]">
       <div className="container max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-3 gap-16">
+        <div className="grid md:grid-cols-3 gap-8 md:gap-16">
           <FeatureCard 
             icon={Shield}
             iconColor="text-[#2A7DDA]"

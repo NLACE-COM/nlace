@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
@@ -99,9 +98,9 @@ export const FAQSection = () => {
   };
 
   return (
-    <section className="py-20 bg-[#1D1D1D]">
+    <section className="py-12 md:py-20 bg-[#1D1D1D]">
       <div className="container max-w-4xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-8 md:mb-12">
           {language === "es" ? "Preguntas Frecuentes" : "Frequently Asked Questions"}
         </h2>
         
@@ -137,4 +136,3 @@ export const FAQSection = () => {
     </section>
   );
 };
-

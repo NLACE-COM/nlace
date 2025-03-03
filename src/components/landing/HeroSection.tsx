@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 export const HeroSection = () => {
@@ -5,8 +6,8 @@ export const HeroSection = () => {
   const {
     language
   } = useLanguage();
-  return <section className="container max-w-6xl mx-auto px-6 py-20">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+  return <section className="container max-w-6xl mx-auto px-6 py-12 md:py-20">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
         <div>
           <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
             {language === "es" ? "Inteligencia artificial aplicada para tu empresa" : "Applied artificial intelligence for your business"}

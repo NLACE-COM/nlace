@@ -1,5 +1,6 @@
+
 export const DemoVideo = () => {
-  return <section className="py-24 bg-[#212121]">
+  return <section className="py-12 md:py-24 bg-[#212121]">
       <div className="container max-w-6xl mx-auto px-6">
         <div className="bg-[#FAEAD7] rounded-xl p-6 md:p-8 shadow-lg flex items-end">
           <div className="w-full max-w-4xl mx-auto rounded-lg shadow-lg overflow-hidden">
