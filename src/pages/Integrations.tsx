@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   Facebook,
@@ -11,8 +10,6 @@ import {
   MessageSquare,
   ExternalLink,
   Search,
-  ThumbsUp,
-  ThumbsDown,
   Headphones,
   ShoppingBag,
   Phone,
@@ -269,17 +266,11 @@ const Integrations = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center text-sm gap-4">
-                  <div className="flex items-center gap-1">
-                    <ThumbsUp className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">{integration.popularityScore}% popularidad</span>
+                {integration.status === "connected" && integration.connectedDate && (
+                  <div className="flex items-center gap-1 text-sm">
+                    <span className="text-muted-foreground">Conectado desde: {formatDate(integration.connectedDate)}</span>
                   </div>
-                  {integration.status === "connected" && integration.connectedDate && (
-                    <div className="flex items-center gap-1">
-                      <span className="text-muted-foreground">Conectado desde: {formatDate(integration.connectedDate)}</span>
-                    </div>
-                  )}
-                </div>
+                )}
               </CardContent>
               <CardFooter className="flex justify-between items-center">
                 <div className="flex items-center">
