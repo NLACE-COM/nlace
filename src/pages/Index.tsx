@@ -18,18 +18,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#212121] text-white">
       <Header />
-      <style jsx global>{`
-        @media (max-width: 768px) {
-          section {
-            padding-top: 2rem !important;
-            padding-bottom: 2rem !important;
-          }
-          .py-24, .py-20 {
-            padding-top: 2rem !important;
-            padding-bottom: 2rem !important;
-          }
-        }
-      `}</style>
       <HeroSection />
       <PartnerLogos />
       <DemoVideo />
