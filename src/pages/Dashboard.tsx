@@ -1,85 +1,48 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Activity,
-  BarChart3,
-  BrainCircuit,
-  ChevronDown,
-  Clock,
-  CreditCard,
-  FileText,
-  ListChecks,
-  MessageSquare,
-  Plus,
-  RefreshCw,
-  Users,
-  User,
-} from "lucide-react";
+import { Activity, BarChart3, BrainCircuit, ChevronDown, Clock, CreditCard, FileText, ListChecks, MessageSquare, Plus, RefreshCw, Users, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MetricsCard } from "@/components/MetricsCard";
 import AgentCard from "@/components/AgentCard";
-import { 
-  agents, 
-  currentCompany, 
-  currentUser, 
-  getAgentsByCompany, 
-  tasks, 
-  usageMetrics,
-  users,
-} from "@/lib/data";
-import { 
-  Area, 
-  AreaChart, 
-  Bar, 
-  BarChart, 
-  CartesianGrid, 
-  Legend, 
-  ResponsiveContainer, 
-  Tooltip, 
-  XAxis, 
-  YAxis 
-} from "recharts";
+import { agents, currentCompany, currentUser, getAgentsByCompany, tasks, usageMetrics, users } from "@/lib/data";
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 const Dashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [timeRange, setTimeRange] = useState("14d");
   const [chartMetric, setChartMetric] = useState("tokens");
-  
   const companyAgents = currentCompany ? getAgentsByCompany(currentCompany.id) : [];
   const activeAgents = companyAgents.filter(agent => agent.status === "active");
-  
-  const timeRangeOptions = [
-    { value: "7d", label: "7 días" },
-    { value: "14d", label: "14 días" },
-    { value: "30d", label: "30 días" },
-    { value: "90d", label: "90 días" },
-    { value: "1y", label: "1 año" },
-  ];
-
-  const chartMetricOptions = [
-    { value: "tokens", label: "Tokens utilizados" },
-    { value: "conversations", label: "Conversaciones" },
-    { value: "users", label: "Usuarios activos" },
-  ];
-
+  const timeRangeOptions = [{
+    value: "7d",
+    label: "7 días"
+  }, {
+    value: "14d",
+    label: "14 días"
+  }, {
+    value: "30d",
+    label: "30 días"
+  }, {
+    value: "90d",
+    label: "90 días"
+  }, {
+    value: "1y",
+    label: "1 año"
+  }];
+  const chartMetricOptions = [{
+    value: "tokens",
+    label: "Tokens utilizados"
+  }, {
+    value: "conversations",
+    label: "Conversaciones"
+  }, {
+    value: "users",
+    label: "Usuarios activos"
+  }];
   const formatTime = (time: number): string => {
     const hours = Math.floor(time);
     const minutes = Math.round((time - hours) * 60);
@@ -89,12 +52,12 @@ const Dashboard = () => {
   // Datos para gráficas
   const tokenUsageData = usageMetrics.tokenUsageByDay;
   const conversationsData = usageMetrics.conversationsByDay;
-  
+
   // Calcular métricas importantes
   const totalTokensUsed = usageMetrics.totalTokensUsed;
   const tokenLimit = currentUser.tokenLimit;
-  const tokenPercentage = Math.round((totalTokensUsed / tokenLimit) * 100);
-  
+  const tokenPercentage = Math.round(totalTokensUsed / tokenLimit * 100);
+
   // Funciones de ayuda para gráficas
   const formatChartYAxis = (value: number): string => {
     if (chartMetric === "tokens") {
@@ -102,7 +65,6 @@ const Dashboard = () => {
     }
     return value.toString();
   };
-
   const getChartData = () => {
     if (chartMetric === "tokens") {
       return tokenUsageData;
@@ -110,41 +72,59 @@ const Dashboard = () => {
       return conversationsData;
     }
     // Datos de ejemplo para usuarios activos
-    return [
-      { date: "2024-04-01", count: 8 },
-      { date: "2024-04-02", count: 10 },
-      { date: "2024-04-03", count: 9 },
-      { date: "2024-04-04", count: 12 },
-      { date: "2024-04-05", count: 11 },
-      { date: "2024-04-06", count: 7 },
-      { date: "2024-04-07", count: 6 },
-      { date: "2024-04-08", count: 13 },
-      { date: "2024-04-09", count: 14 },
-      { date: "2024-04-10", count: 16 },
-      { date: "2024-04-11", count: 15 },
-      { date: "2024-04-12", count: 14 },
-      { date: "2024-04-13", count: 10 },
-      { date: "2024-04-14", count: 8 },
-    ];
+    return [{
+      date: "2024-04-01",
+      count: 8
+    }, {
+      date: "2024-04-02",
+      count: 10
+    }, {
+      date: "2024-04-03",
+      count: 9
+    }, {
+      date: "2024-04-04",
+      count: 12
+    }, {
+      date: "2024-04-05",
+      count: 11
+    }, {
+      date: "2024-04-06",
+      count: 7
+    }, {
+      date: "2024-04-07",
+      count: 6
+    }, {
+      date: "2024-04-08",
+      count: 13
+    }, {
+      date: "2024-04-09",
+      count: 14
+    }, {
+      date: "2024-04-10",
+      count: 16
+    }, {
+      date: "2024-04-11",
+      count: 15
+    }, {
+      date: "2024-04-12",
+      count: 14
+    }, {
+      date: "2024-04-13",
+      count: 10
+    }, {
+      date: "2024-04-14",
+      count: 8
+    }];
   };
-
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     return `${date.getDate()}/${date.getMonth() + 1}`;
   };
 
   // Datos para los nuevos componentes
-  const mostUsedAgents = [...companyAgents]
-    .sort((a, b) => (b.conversationCount || 0) - (a.conversationCount || 0))
-    .slice(0, 5);
-
-  const mostActiveUsers = [...users]
-    .filter(user => user.companyId === currentCompany?.id)
-    .sort((a, b) => (b.activityCount || 0) - (a.activityCount || 0))
-    .slice(0, 5);
-
-  return (
-    <div className="container py-6 max-w-7xl animate-fade-in">
+  const mostUsedAgents = [...companyAgents].sort((a, b) => (b.conversationCount || 0) - (a.conversationCount || 0)).slice(0, 5);
+  const mostActiveUsers = [...users].filter(user => user.companyId === currentCompany?.id).sort((a, b) => (b.activityCount || 0) - (a.activityCount || 0)).slice(0, 5);
+  return <div className="container py-6 max-w-7xl animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold">Panel Principal</h1>
@@ -157,12 +137,7 @@ const Dashboard = () => {
         </Button>
       </div>
 
-      <Tabs
-        defaultValue="overview"
-        value={activeTab}
-        onValueChange={setActiveTab}
-        className="space-y-6"
-      >
+      <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="grid w-full grid-cols-2 md:w-auto md:inline-flex">
           <TabsTrigger value="overview">Resumen</TabsTrigger>
           <TabsTrigger value="agents">Agentes</TabsTrigger>
@@ -170,31 +145,22 @@ const Dashboard = () => {
 
         <TabsContent value="overview" className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <MetricsCard
-              title="Conversaciones Abiertas"
-              value={usageMetrics.activeConversations}
-              icon={<MessageSquare className="h-4 w-4" />}
-              trend={{ value: 8, positive: true }}
-            />
-            <MetricsCard
-              title="Usuarios Registrados"
-              value={usageMetrics.totalUsers}
-              icon={<Users className="h-4 w-4" />}
-              trend={{ value: 5, positive: true }}
-            />
-            <MetricsCard
-              title="Tokens Utilizados"
-              value={`${(totalTokensUsed / 1000).toFixed(1)}K`}
-              description={`${tokenPercentage}% del límite`}
-              icon={<CreditCard className="h-4 w-4" />}
-              trend={{ value: 12, positive: true }}
-            />
-            <MetricsCard
-              title="Agentes Activos"
-              value={activeAgents.length}
-              icon={<Activity className="h-4 w-4" />}
-              trend={{ value: 2, positive: true }}
-            />
+            <MetricsCard title="Conversaciones Abiertas" value={usageMetrics.activeConversations} icon={<MessageSquare className="h-4 w-4" />} trend={{
+            value: 8,
+            positive: true
+          }} />
+            <MetricsCard title="Usuarios Registrados" value={usageMetrics.totalUsers} icon={<Users className="h-4 w-4" />} trend={{
+            value: 5,
+            positive: true
+          }} />
+            <MetricsCard title="Tokens Utilizados" value={`${(totalTokensUsed / 1000).toFixed(1)}K`} description={`${tokenPercentage}% del límite`} icon={<CreditCard className="h-4 w-4" />} trend={{
+            value: 12,
+            positive: true
+          }} />
+            <MetricsCard title="Agentes Activos" value={activeAgents.length} icon={<Activity className="h-4 w-4" />} trend={{
+            value: 2,
+            positive: true
+          }} />
           </div>
 
           {/* Gráfico principal */}
@@ -211,11 +177,9 @@ const Dashboard = () => {
                       <SelectValue placeholder="Periodo" />
                     </SelectTrigger>
                     <SelectContent>
-                      {timeRangeOptions.map(option => (
-                        <SelectItem key={option.value} value={option.value}>
+                      {timeRangeOptions.map(option => <SelectItem key={option.value} value={option.value}>
                           {option.label}
-                        </SelectItem>
-                      ))}
+                        </SelectItem>)}
                     </SelectContent>
                   </Select>
                   <Select value={chartMetric} onValueChange={setChartMetric}>
@@ -223,11 +187,9 @@ const Dashboard = () => {
                       <SelectValue placeholder="Métrica" />
                     </SelectTrigger>
                     <SelectContent>
-                      {chartMetricOptions.map(option => (
-                        <SelectItem key={option.value} value={option.value}>
+                      {chartMetricOptions.map(option => <SelectItem key={option.value} value={option.value}>
                           {option.label}
-                        </SelectItem>
-                      ))}
+                        </SelectItem>)}
                     </SelectContent>
                   </Select>
                   <Button variant="outline" size="icon" className="ml-auto sm:ml-0">
@@ -241,27 +203,14 @@ const Dashboard = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={getChartData()}>
                     <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                    <XAxis 
-                      dataKey="date" 
-                      tickFormatter={formatDate} 
-                      tick={{ fontSize: 12 }} 
-                    />
-                    <YAxis 
-                      tickFormatter={formatChartYAxis} 
-                      tick={{ fontSize: 12 }} 
-                    />
-                    <Tooltip 
-                      formatter={(value) => [`${value} ${chartMetric === "tokens" ? "tokens" : chartMetric === "conversations" ? "conversaciones" : "usuarios"}`, ""]}
-                      labelFormatter={(label) => formatDate(label)}
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="count" 
-                      name={chartMetric === "tokens" ? "Tokens" : chartMetric === "conversations" ? "Conversaciones" : "Usuarios"}
-                      stroke="var(--primary)" 
-                      fill="var(--primary)" 
-                      fillOpacity={0.2} 
-                    />
+                    <XAxis dataKey="date" tickFormatter={formatDate} tick={{
+                    fontSize: 12
+                  }} />
+                    <YAxis tickFormatter={formatChartYAxis} tick={{
+                    fontSize: 12
+                  }} />
+                    <Tooltip formatter={value => [`${value} ${chartMetric === "tokens" ? "tokens" : chartMetric === "conversations" ? "conversaciones" : "usuarios"}`, ""]} labelFormatter={label => formatDate(label)} />
+                    <Area type="monotone" dataKey="count" name={chartMetric === "tokens" ? "Tokens" : chartMetric === "conversations" ? "Conversaciones" : "Usuarios"} stroke="var(--primary)" fill="var(--primary)" fillOpacity={0.2} />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -277,22 +226,10 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent className="p-0">
                 <div className="px-6">
-                  {mostUsedAgents.map((agent) => (
-                    <div
-                      key={agent.id}
-                      className="flex items-center justify-between py-3 border-b last:border-0"
-                    >
+                  {mostUsedAgents.map(agent => <div key={agent.id} className="flex items-center justify-between py-3 border-b last:border-0">
                       <div className="flex items-start gap-3">
                         <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary overflow-hidden">
-                          {agent.avatar ? (
-                            <img 
-                              src={agent.avatar} 
-                              alt={agent.name} 
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <BrainCircuit className="h-4 w-4" />
-                          )}
+                          {agent.avatar ? <img src={agent.avatar} alt={agent.name} className="w-full h-full object-cover" /> : <BrainCircuit className="h-4 w-4" />}
                         </div>
                         <div>
                           <p className="font-medium">{agent.name}</p>
@@ -306,8 +243,7 @@ const Dashboard = () => {
                       <Button variant="ghost" size="sm" onClick={() => navigate("/agents")}>
                         Ver
                       </Button>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </CardContent>
             </Card>
@@ -320,8 +256,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {mostActiveUsers.map((user) => (
-                    <div key={user.id} className="flex items-center gap-3">
+                  {mostActiveUsers.map(user => <div key={user.id} className="flex items-center gap-3">
                       <Avatar>
                         <AvatarImage src={user.avatar} alt={user.name} />
                         <AvatarFallback>
@@ -334,16 +269,12 @@ const Dashboard = () => {
                           <span className="text-sm text-muted-foreground">{user.activityCount || 0} acciones</span>
                         </div>
                         <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-primary" 
-                            style={{ 
-                              width: `${Math.min(100, ((user.activityCount || 0) / 100) * 100)}%`
-                            }}
-                          />
+                          <div className="h-full bg-primary" style={{
+                        width: `${Math.min(100, (user.activityCount || 0) / 100 * 100)}%`
+                      }} />
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </CardContent>
             </Card>
@@ -362,33 +293,11 @@ const Dashboard = () => {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {companyAgents.map((agent) => (
-              <AgentCard
-                key={agent.id}
-                agent={agent}
-                onClick={() => navigate("/agents")}
-              />
-            ))}
-            <Card className="flex items-center justify-center h-full min-h-[250px] border-dashed animate-fade-in">
-              <Button
-                variant="ghost"
-                className="h-full w-full flex flex-col gap-2 p-6"
-                onClick={() => navigate("/agents")}
-              >
-                <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-                  <Plus className="h-6 w-6 text-muted-foreground" />
-                </div>
-                <span className="text-lg font-medium">Añadir Nuevo Agente</span>
-                <p className="text-sm text-muted-foreground">
-                  Configura un nuevo agente de IA para tus necesidades específicas
-                </p>
-              </Button>
-            </Card>
+            {companyAgents.map(agent => <AgentCard key={agent.id} agent={agent} onClick={() => navigate("/agents")} />)}
+            
           </div>
         </TabsContent>
       </Tabs>
-    </div>
-  );
+    </div>;
 };
-
 export default Dashboard;
