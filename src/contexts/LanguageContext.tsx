@@ -15,16 +15,31 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>(() => {
-    const savedLanguage = localStorage.getItem("language");
-    return (savedLanguage as Language) || "es";
-  });
+const getDefaultLanguage = (): Language => {
+  // Intentar obtener el idioma guardado
+  const savedLanguage = localStorage.getItem("language") as Language;
+  if (savedLanguage) return savedLanguage;
+
+  // Detectar idioma del navegador
+  const browserLanguage = navigator.language.toLowerCase().split('-')[0];
   
-  const [country, setCountryState] = useState<Country>(() => {
-    const savedCountry = localStorage.getItem("country");
-    return (savedCountry as Country) || "españa";
-  });
+  // Convertir a los idiomas soportados
+  if (browserLanguage === 'es') return 'es';
+  return 'en'; // Idioma por defecto si no es español
+};
+
+const getDefaultCountry = (language: Language): Country => {
+  // Intentar obtener el país guardado
+  const savedCountry = localStorage.getItem("country") as Country;
+  if (savedCountry) return savedCountry;
+
+  // Asignar país por defecto según el idioma
+  return language === 'es' ? 'españa' : 'eeuu';
+};
+
+export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) => {
+  const [language, setLanguageState] = useState<Language>(getDefaultLanguage);
+  const [country, setCountryState] = useState<Country>(() => getDefaultCountry(getDefaultLanguage()));
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
