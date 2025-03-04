@@ -34,13 +34,13 @@ export function useSendMessage() {
       content, 
       model, 
       agentId, 
-      companyId 
+      companyId = "default-company" 
     }: { 
       conversationId: string; 
       content: string; 
       model: string; 
       agentId: string; 
-      companyId: string; 
+      companyId?: string; 
     }) => {
       return sendMessage(conversationId, content, model, agentId, companyId);
     },

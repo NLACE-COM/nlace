@@ -92,7 +92,7 @@ export async function sendMessage(
   content: string,
   model: string,
   agentId: string,
-  companyId: string
+  companyId: string = "default-company"
 ): Promise<ChatMessage> {
   // Simulate network request
   await delay(800);

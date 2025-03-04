@@ -73,6 +73,7 @@ const Chat = () => {
       content: messageText,
       model: selectedModel,
       agentId: selectedAgent,
+      companyId: "default-company", // Provide a default company ID
     });
   };
 
