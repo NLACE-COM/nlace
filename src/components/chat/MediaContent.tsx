@@ -1,7 +1,13 @@
 
 import React from 'react';
-import { Volume2 } from 'lucide-react';
 import { extractYoutubeVideoId } from '@/utils/contentUtils';
+
+// Individual media components
+import ImageMedia from './media/ImageMedia';
+import VideoMedia from './media/VideoMedia';
+import AudioMedia from './media/AudioMedia';
+import YoutubeMedia from './media/YoutubeMedia';
+import LinkMedia from './media/LinkMedia';
 
 interface MediaContentProps {
   url: string;
@@ -12,76 +18,20 @@ interface MediaContentProps {
 const MediaContent: React.FC<MediaContentProps> = ({ url, mediaType, index }) => {
   switch (mediaType) {
     case 'image':
-      return (
-        <div key={`img-${index}`} className="my-2">
-          <img src={url} alt="Imagen" className="max-w-full rounded" />
-        </div>
-      );
+      return <ImageMedia url={url} index={index} />;
       
     case 'video':
-      return (
-        <div key={`video-${index}`} className="my-2">
-          <video className="w-full rounded" controls>
-            <source src={url} />
-            Tu navegador no soporta el tag de video.
-          </video>
-        </div>
-      );
+      return <VideoMedia url={url} index={index} />;
       
     case 'audio':
-      return (
-        <div key={`audio-${index}`} className="my-2 flex items-center gap-2">
-          <Volume2 className="h-4 w-4" />
-          <audio controls className="h-8">
-            <source src={url} />
-            Tu navegador no soporta el tag de audio.
-          </audio>
-        </div>
-      );
+      return <AudioMedia url={url} index={index} />;
       
     case 'youtube':
-      const videoId = extractYoutubeVideoId(url);
-      if (videoId) {
-        return (
-          <div key={`yt-${index}`} className="my-2">
-            <iframe 
-              className="w-full rounded"
-              height="200"
-              src={`https://www.youtube.com/embed/${videoId}`}
-              title="Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        );
-      }
-      // Fallback to regular link if YouTube parsing failed
-      return (
-        <a 
-          key={`link-${index}`}
-          href={url} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
-        >
-          {url}
-        </a>
-      );
+      return <YoutubeMedia url={url} index={index} />;
       
     case 'link':
     default:
-      return (
-        <a 
-          key={`link-${index}`}
-          href={url} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
-        >
-          {url}
-        </a>
-      );
+      return <LinkMedia url={url} index={index} />;
   }
 };
 
