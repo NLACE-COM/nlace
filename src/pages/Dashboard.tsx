@@ -10,6 +10,7 @@ import AgentCard from "@/components/AgentCard";
 import { agents, currentCompany, currentUser, getAgentsByCompany, tasks, usageMetrics, users } from "@/lib/data";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
@@ -65,6 +66,7 @@ const Dashboard = () => {
     }
     return value.toString();
   };
+  
   const getChartData = () => {
     if (chartMetric === "tokens") {
       return tokenUsageData;
@@ -116,14 +118,25 @@ const Dashboard = () => {
       count: 8
     }];
   };
+  
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     return `${date.getDate()}/${date.getMonth() + 1}`;
   };
 
+  // Colores personalizados para el gráfico
+  const chartColors = {
+    area: "var(--primary)",
+    areaFill: "url(#greenGradient)",
+    stroke: "var(--primary)",
+    grid: "rgba(20, 184, 116, 0.1)",
+    tooltip: "rgba(20, 184, 116, 0.05)"
+  };
+
   // Datos para los nuevos componentes
   const mostUsedAgents = [...companyAgents].sort((a, b) => (b.conversationCount || 0) - (a.conversationCount || 0)).slice(0, 5);
   const mostActiveUsers = [...users].filter(user => user.companyId === currentCompany?.id).sort((a, b) => (b.activityCount || 0) - (a.activityCount || 0)).slice(0, 5);
+  
   return <div className="container py-6 max-w-7xl animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -202,15 +215,53 @@ const Dashboard = () => {
               <div className="h-[300px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={getChartData()}>
-                    <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                    <XAxis dataKey="date" tickFormatter={formatDate} tick={{
-                    fontSize: 12
-                  }} />
-                    <YAxis tickFormatter={formatChartYAxis} tick={{
-                    fontSize: 12
-                  }} />
-                    <Tooltip formatter={value => [`${value} ${chartMetric === "tokens" ? "tokens" : chartMetric === "conversations" ? "conversaciones" : "usuarios"}`, ""]} labelFormatter={label => formatDate(label)} />
-                    <Area type="monotone" dataKey="count" name={chartMetric === "tokens" ? "Tokens" : chartMetric === "conversations" ? "Conversaciones" : "Usuarios"} stroke="var(--primary)" fill="var(--primary)" fillOpacity={0.2} />
+                    <defs>
+                      <linearGradient id="greenGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.4} />
+                        <stop offset="95%" stopColor="var(--primary)" stopOpacity={0.01} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke={chartColors.grid} opacity={0.4} />
+                    <XAxis 
+                      dataKey="date" 
+                      tickFormatter={formatDate} 
+                      tick={{fontSize: 12}} 
+                      stroke="var(--muted-foreground)"
+                      axisLine={{ stroke: 'var(--border)' }}
+                    />
+                    <YAxis 
+                      tickFormatter={formatChartYAxis} 
+                      tick={{fontSize: 12}} 
+                      stroke="var(--muted-foreground)"
+                      axisLine={{ stroke: 'var(--border)' }}
+                    />
+                    <Tooltip 
+                      formatter={value => [`${value} ${chartMetric === "tokens" ? "tokens" : chartMetric === "conversations" ? "conversaciones" : "usuarios"}`, ""]} 
+                      labelFormatter={label => formatDate(label)}
+                      contentStyle={{ 
+                        backgroundColor: 'var(--background)', 
+                        borderColor: 'var(--border)',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                        borderRadius: '0.5rem',
+                        padding: '0.75rem'
+                      }}
+                      itemStyle={{ color: 'var(--primary)' }}
+                      labelStyle={{ fontWeight: 'bold', color: 'var(--foreground)' }}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="count" 
+                      name={chartMetric === "tokens" ? "Tokens" : chartMetric === "conversations" ? "Conversaciones" : "Usuarios"} 
+                      stroke={chartColors.stroke} 
+                      strokeWidth={2}
+                      fill={chartColors.areaFill}
+                      activeDot={{ 
+                        r: 6, 
+                        stroke: 'var(--background)', 
+                        strokeWidth: 2,
+                        fill: 'var(--primary)'
+                      }}
+                    />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
