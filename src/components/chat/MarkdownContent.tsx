@@ -3,6 +3,8 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface MarkdownContentProps {
   content: string;
@@ -14,20 +16,25 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => {
       rehypePlugins={[rehypeRaw]}
       remarkPlugins={[remarkGfm]}
       components={{
-        // Customize how code blocks are rendered
-        code: ({node, className, children, ...props}: any) => {
+        code: ({node, inline, className, children, ...props}: any) => {
           const match = /language-(\w+)/.exec(className || '');
-          return !props.inline ? (
-            <pre className="bg-gray-100 dark:bg-gray-900 p-3 my-2 overflow-auto rounded">
-              <code className={className} {...props}>
-                {children}
-              </code>
-            </pre>
+          const language = match ? match[1] : '';
+          
+          return !inline ? (
+            <SyntaxHighlighter
+              style={atomDark}
+              language={language}
+              PreTag="div"
+              className="rounded-md my-2"
+              {...props}
+            >
+              {String(children).replace(/\n$/, '')}
+            </SyntaxHighlighter>
           ) : (
             <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>
               {children}
             </code>
-          )
+          );
         },
         // Customize image rendering
         img: ({node, ...props}: any) => (
