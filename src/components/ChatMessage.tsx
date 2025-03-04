@@ -77,6 +77,18 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
                 </div>
               );
             }
+            // Si no se puede extraer el ID del video, mostrar como enlace normal
+            return (
+              <a 
+                key={`link-${lineIndex}-${partIndex}`}
+                href={part} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline"
+              >
+                {part}
+              </a>
+            );
           }
           
           // Enlace normal
