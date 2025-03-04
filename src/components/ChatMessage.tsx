@@ -9,29 +9,38 @@ interface ChatMessageProps {
 }
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp }) => {
-  // Función simple para convertir enlaces en elementos clicables
+  // Function to convert links to clickable elements
   const formatText = (text: string) => {
-    // Dividir por líneas para manejar saltos
+    // Split by lines to handle line breaks
     const lines = text.split('\n');
     
     return lines.map((line, lineIndex) => {
-      // Expresión regular para detectar URLs
+      // Regular expression to detect URLs
       const urlRegex = /(https?:\/\/[^\s]+)/g;
       
-      // Si la línea está vacía, devolver un salto de línea
+      // If the line is empty, return a line break
       if (!line.trim()) {
         return <br key={`br-${lineIndex}`} />;
       }
       
-      // Dividir la línea por URLs
-      const parts = line.split(urlRegex);
-      const matches = line.match(urlRegex) || [];
+      // Find all URL matches in the line
+      const matches: string[] = line.match(urlRegex) || [];
       
-      // Combinar partes con enlaces cuando corresponda
+      // If no URLs in the line, return the line as is
+      if (matches.length === 0) {
+        return <div key={`line-${lineIndex}`} className="mb-2">{line}</div>;
+      }
+      
+      // Split the line by URLs
+      const parts = line.split(urlRegex);
+      
+      // Combine parts with links when appropriate
       const formattedParts = parts.map((part, partIndex) => {
-        // Si esta parte coincide con una URL, convertirla en un enlace
-        if (matches.includes(part)) {
-          // Comprobar si es una imagen, video o audio
+        // Check if this part is a URL (matched in our regex)
+        const isUrl = matches.includes(part);
+        
+        if (isUrl) {
+          // Check if it's an image, video or audio
           if (/\.(jpg|jpeg|png|gif|webp)$/i.test(part)) {
             return (
               <div key={`img-${lineIndex}-${partIndex}`} className="my-2">
