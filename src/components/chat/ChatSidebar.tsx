@@ -50,7 +50,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
   );
 
   return (
-    <div className={`bg-indigo-50 border-r border-indigo-100 ${sidebarStyle}`}>
+    <div className={`bg-[#f1f0fb] border-r border-slate-200 ${sidebarStyle}`}>
       {/* Mobile close button */}
       {isMobile && showSidebarMobile && (
         <Button
@@ -64,7 +64,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
       )}
 
       {/* Sidebar header with toggle button */}
-      <div className="flex items-center justify-between p-4 border-b border-indigo-100">
+      <div className="flex items-center justify-between p-4 border-b border-slate-200">
         {!sidebarCollapsed && (
           <h2 className="text-xl font-bold text-indigo-800">Chats</h2>
         )}
@@ -88,7 +88,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
               placeholder="Search conversations..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 h-9 text-sm border-indigo-200 focus-visible:ring-indigo-500"
+              className="pl-9 h-9 text-sm border-slate-200 focus-visible:ring-indigo-500"
             />
             {searchQuery && (
               <button 
@@ -105,7 +105,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
       {/* New chat button */}
       <div className="p-2">
         <Button 
-          className="w-full justify-start gap-2 bg-white hover:bg-indigo-100 text-indigo-700 border border-indigo-200" 
+          className="w-full justify-start gap-2 bg-white hover:bg-slate-100 text-indigo-700 border border-slate-200" 
           variant="outline"
         >
           <Plus className="h-4 w-4" />
@@ -126,13 +126,13 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   onClick={() => onChatSelect(chat.id)}
                   className={`w-full text-left p-2 rounded-lg ${
                     activeChat === chat.id
-                      ? 'bg-indigo-200 text-indigo-900'
-                      : 'hover:bg-indigo-100 text-indigo-700'
+                      ? 'bg-indigo-100 text-indigo-900'
+                      : 'hover:bg-indigo-50 text-indigo-700'
                   } transition-colors`}
                 >
                   {sidebarCollapsed ? (
                     <div className="flex justify-center">
-                      <span className="w-8 h-8 rounded-full bg-indigo-200 flex items-center justify-center text-indigo-700 text-xs">
+                      <span className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 text-xs">
                         {chat.title.charAt(0)}
                       </span>
                     </div>
