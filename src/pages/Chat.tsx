@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { agents, companies } from "@/lib/data";
+import { agents } from "@/lib/data";
 import ChatSidebar from "@/components/chat/ChatSidebar";
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatMessages from "@/components/chat/ChatMessages";
@@ -14,7 +14,6 @@ const Chat = () => {
   const { t } = useLanguage();
   const [selectedModel, setSelectedModel] = useState("gpt-4");
   const [selectedAgent, setSelectedAgent] = useState(agents[0].id);
-  const [selectedCompany, setSelectedCompany] = useState(companies[0].id);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const [showSidebarMobile, setShowSidebarMobile] = useState(false);
   const [activeChat, setActiveChat] = useState<string | null>("rich-formatted");
@@ -67,7 +66,6 @@ const Chat = () => {
       content: messageText,
       model: selectedModel,
       agent: selectedAgent,
-      company: selectedCompany,
     });
     
     sendMessageMutation.mutate({
@@ -75,7 +73,6 @@ const Chat = () => {
       content: messageText,
       model: selectedModel,
       agentId: selectedAgent,
-      companyId: selectedCompany,
     });
   };
 
@@ -114,20 +111,17 @@ const Chat = () => {
 
       {/* Main content */}
       <div className="flex-1 flex flex-col h-full overflow-hidden bg-white">
-        {/* Header Component with agent and company selectors */}
+        {/* Header Component with agent selector */}
         <ChatHeader
           title={currentConversation?.title || "New conversation"}
           selectedModel={selectedModel}
           selectedAgent={selectedAgent}
-          selectedCompany={selectedCompany}
           isMobile={isMobile}
           llmModels={llmModels}
           agents={agents}
-          companies={companies}
           isLoading={isLoadingModels}
           onModelSelect={setSelectedModel}
           onAgentChange={setSelectedAgent}
-          onCompanyChange={setSelectedCompany}
           onMobileSidebarToggle={() => setShowSidebarMobile(true)}
         />
 

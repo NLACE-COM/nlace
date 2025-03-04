@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Sparkles, Settings, Menu, ChevronDown, Bot, User, AtSign } from 'lucide-react';
+import { Sparkles, Settings, Menu, ChevronDown, Bot } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -23,15 +23,12 @@ interface ChatHeaderProps {
   title: string;
   selectedModel: string;
   selectedAgent: string;
-  selectedCompany: string;
   isMobile: boolean;
   llmModels: LLMModel[];
   agents: { id: string; name: string; avatar?: string }[];
-  companies: { id: string; name: string; logo?: string }[];
   isLoading: boolean;
   onModelSelect: (modelId: string) => void;
   onAgentChange: (agentId: string) => void;
-  onCompanyChange: (companyId: string) => void;
   onMobileSidebarToggle: () => void;
 }
 
@@ -39,15 +36,12 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
   title,
   selectedModel,
   selectedAgent,
-  selectedCompany,
   isMobile,
   llmModels,
   agents,
-  companies,
   isLoading,
   onModelSelect,
   onAgentChange,
-  onCompanyChange,
   onMobileSidebarToggle
 }) => {
   // Function to get selected model name
@@ -117,7 +111,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
         </div>
       </div>
 
-      {/* Agent and company selectors row */}
+      {/* Agent selector row */}
       <div className="flex flex-wrap gap-2 px-4 pb-4">
         <Select value={selectedAgent} onValueChange={onAgentChange}>
           <SelectTrigger className="w-full sm:w-auto bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100">
@@ -131,27 +125,9 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
               {agents.map((agent) => (
                 <SelectItem key={agent.id} value={agent.id}>
                   <div className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
+                    <Bot className="h-4 w-4" />
                     <span>{agent.name}</span>
                   </div>
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        <Select value={selectedCompany} onValueChange={onCompanyChange}>
-          <SelectTrigger className="w-full sm:w-auto bg-violet-50 text-violet-700 border-violet-200 hover:bg-violet-100">
-            <div className="flex items-center gap-2">
-              <AtSign className="h-4 w-4 text-violet-500" />
-              <SelectValue placeholder="Select company" />
-            </div>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {companies.map((company) => (
-                <SelectItem key={company.id} value={company.id}>
-                  {company.name}
                 </SelectItem>
               ))}
             </SelectGroup>
