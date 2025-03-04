@@ -128,10 +128,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
             <SelectGroup>
               {agents.map((agent) => (
                 <SelectItem key={agent.id} value={agent.id}>
-                  <div className="flex items-center gap-2">
-                    <Bot className="h-4 w-4" />
-                    <span>{agent.name}</span>
-                  </div>
+                  {agent.name}
                 </SelectItem>
               ))}
             </SelectGroup>
