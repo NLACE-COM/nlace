@@ -84,6 +84,7 @@ export async function fetchLLMModels(): Promise<LLMModel[]> {
     { id: "gemini-pro", name: "Gemini Pro", provider: "Google" },
     { id: "grok-1", name: "Grok", provider: "xAI" },
     { id: "deepseek", name: "DeepSeek", provider: "DeepSeek" },
+    { id: "llama-3", name: "Llama 3", provider: "Meta" },
   ];
 }
 

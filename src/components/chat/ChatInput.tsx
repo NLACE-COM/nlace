@@ -93,15 +93,16 @@ const ChatInput: React.FC<ChatInputProps> = ({
                 <ChevronDown className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
+            <DropdownMenuContent align="start" className="w-56">
               {llmModels.map((model) => (
                 <DropdownMenuItem
                   key={model.id}
                   onClick={() => onModelSelect(model.id)}
+                  className="py-2"
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-between w-full">
                     <span className="font-medium">{model.name}</span>
-                    <span className="ml-2 text-xs text-muted-foreground">
+                    <span className="text-xs text-muted-foreground">
                       ({model.provider})
                     </span>
                   </div>
