@@ -44,9 +44,9 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
         />
         <main
-          className={`flex-1 overflow-hidden transition-all duration-300 ${
+          className={`flex-1 transition-all duration-300 ${
             sidebarCollapsed ? "md:pl-20" : "md:pl-72"
-          }`}
+          } overflow-y-auto`}
         >
           {children}
         </main>
