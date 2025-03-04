@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ChevronLeft, ChevronRight, Plus, X, Search, XCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -106,10 +105,10 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
         </div>
       )}
 
-      {/* New chat button - now with fruit-salad colors and Spanish text */}
+      {/* New chat button - updated styles */}
       <div className="p-2">
         <Button 
-          className="w-full justify-start gap-2 bg-fruit-salad-600 hover:bg-fruit-salad-700 text-white border-none" 
+          className={`w-full justify-start gap-2 bg-apple-600 hover:bg-apple-700 text-white border-none shadow-md ${!sidebarCollapsed ? 'px-4' : 'justify-center'}`} 
           variant="default"
         >
           <Plus className="h-4 w-4" />
