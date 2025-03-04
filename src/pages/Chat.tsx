@@ -12,7 +12,6 @@ import { toast } from "sonner";
 
 const Chat = () => {
   const { t } = useLanguage();
-  const [message, setMessage] = useState("");
   const [selectedModel, setSelectedModel] = useState("gpt-4");
   const [selectedAgent, setSelectedAgent] = useState(agents[0].id);
   const [selectedCompany, setSelectedCompany] = useState(companies[0].id);
@@ -99,7 +98,7 @@ const Chat = () => {
   }, [conversationsError, conversationError, modelsError]);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex h-screen overflow-hidden bg-slate-50">
       {/* Sidebar Component */}
       <ChatSidebar
         conversations={conversations}
@@ -114,15 +113,21 @@ const Chat = () => {
       />
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden">
-        {/* Header Component */}
+      <div className="flex-1 flex flex-col h-full overflow-hidden bg-white">
+        {/* Header Component with agent and company selectors */}
         <ChatHeader
           title={currentConversation?.title || "New conversation"}
           selectedModel={selectedModel}
+          selectedAgent={selectedAgent}
+          selectedCompany={selectedCompany}
           isMobile={isMobile}
           llmModels={llmModels}
+          agents={agents}
+          companies={companies}
           isLoading={isLoadingModels}
           onModelSelect={setSelectedModel}
+          onAgentChange={setSelectedAgent}
+          onCompanyChange={setSelectedCompany}
           onMobileSidebarToggle={() => setShowSidebarMobile(true)}
         />
 
@@ -134,13 +139,7 @@ const Chat = () => {
 
         {/* Input Component */}
         <ChatInput
-          selectedAgent={selectedAgent}
-          selectedCompany={selectedCompany}
-          agents={agents}
-          companies={companies}
           onSendMessage={handleSendMessage}
-          onAgentChange={setSelectedAgent}
-          onCompanyChange={setSelectedCompany}
           isLoading={sendMessageMutation.isPending}
         />
       </div>

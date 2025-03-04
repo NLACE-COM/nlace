@@ -29,9 +29,27 @@ export function useConversationSearch(conversations: Conversation[]) {
     setFilteredConversations(filtered);
   }, [searchQuery, conversations]);
 
+  // Provide a way to clear the search
+  const clearSearch = () => {
+    setSearchQuery('');
+  };
+
+  // Memoize the search result stats
+  const searchStats = useMemo(() => {
+    if (!searchQuery.trim()) return null;
+    
+    return {
+      total: conversations.length,
+      filtered: filteredConversations.length,
+      hasResults: filteredConversations.length > 0
+    };
+  }, [searchQuery, conversations, filteredConversations]);
+
   return {
     searchQuery,
     setSearchQuery,
+    clearSearch,
     filteredConversations,
+    searchStats
   };
 }

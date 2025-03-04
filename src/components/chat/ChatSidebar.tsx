@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ChevronLeft, ChevronRight, Plus, X, Search } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, X, Search, XCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -32,7 +32,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
   onCloseMobileSidebar
 }) => {
   // Use the search hook to filter conversations
-  const { searchQuery, setSearchQuery, filteredConversations } = useConversationSearch(conversations);
+  const { searchQuery, setSearchQuery, clearSearch, filteredConversations } = useConversationSearch(conversations);
 
   // Calculate sidebar style based on state
   const sidebarStyle = isMobile 
@@ -50,29 +50,29 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
   );
 
   return (
-    <div className={`bg-background border-r ${sidebarStyle}`}>
+    <div className={`bg-indigo-50 border-r border-indigo-100 ${sidebarStyle}`}>
       {/* Mobile close button */}
       {isMobile && showSidebarMobile && (
         <Button
           variant="ghost"
           size="icon"
           onClick={onCloseMobileSidebar}
-          className="absolute right-2 top-2"
+          className="absolute right-2 top-2 text-indigo-500 hover:text-indigo-700 hover:bg-indigo-100"
         >
           <X className="h-5 w-5" />
         </Button>
       )}
 
       {/* Sidebar header with toggle button */}
-      <div className="flex items-center justify-between p-4 border-b">
+      <div className="flex items-center justify-between p-4 border-b border-indigo-100">
         {!sidebarCollapsed && (
-          <h2 className="text-xl font-bold">Chats</h2>
+          <h2 className="text-xl font-bold text-indigo-800">Chats</h2>
         )}
         <Button
           variant="ghost"
           size="icon"
           onClick={onSidebarCollapse}
-          className={sidebarCollapsed ? 'mx-auto' : ''}
+          className={`${sidebarCollapsed ? 'mx-auto' : ''} text-indigo-500 hover:text-indigo-700 hover:bg-indigo-100`}
         >
           {sidebarCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
         </Button>
@@ -82,21 +82,32 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
       {!sidebarCollapsed && (
         <div className="p-3">
           <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-indigo-400" />
             <Input
               type="text"
               placeholder="Search conversations..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 h-9 text-sm"
+              className="pl-9 h-9 text-sm border-indigo-200 focus-visible:ring-indigo-500"
             />
+            {searchQuery && (
+              <button 
+                className="absolute right-2.5 top-2.5"
+                onClick={clearSearch}
+              >
+                <XCircle className="h-4 w-4 text-indigo-400 hover:text-indigo-600" />
+              </button>
+            )}
           </div>
         </div>
       )}
 
       {/* New chat button */}
       <div className="p-2">
-        <Button className="w-full justify-start gap-2" variant="outline">
+        <Button 
+          className="w-full justify-start gap-2 bg-white hover:bg-indigo-100 text-indigo-700 border border-indigo-200" 
+          variant="outline"
+        >
           <Plus className="h-4 w-4" />
           {!sidebarCollapsed && <span>New Chat</span>}
         </Button>
@@ -115,23 +126,23 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   onClick={() => onChatSelect(chat.id)}
                   className={`w-full text-left p-2 rounded-lg ${
                     activeChat === chat.id
-                      ? 'bg-accent text-accent-foreground'
-                      : 'hover:bg-muted'
+                      ? 'bg-indigo-200 text-indigo-900'
+                      : 'hover:bg-indigo-100 text-indigo-700'
                   } transition-colors`}
                 >
                   {sidebarCollapsed ? (
                     <div className="flex justify-center">
-                      <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs">
+                      <span className="w-8 h-8 rounded-full bg-indigo-200 flex items-center justify-center text-indigo-700 text-xs">
                         {chat.title.charAt(0)}
                       </span>
                     </div>
                   ) : (
                     <div>
                       <div className="font-medium truncate">{chat.title}</div>
-                      <div className="text-xs text-muted-foreground truncate">
+                      <div className="text-xs text-indigo-600 truncate">
                         {chat.preview}
                       </div>
-                      <div className="text-xs text-muted-foreground mt-1">
+                      <div className="text-xs text-indigo-400 mt-1">
                         {chat.timestamp} · {chat.model}
                       </div>
                     </div>
@@ -139,7 +150,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 </button>
               ))
             ) : (
-              <div className="px-2 py-4 text-center text-sm text-muted-foreground">
+              <div className="px-2 py-4 text-center text-sm text-indigo-500">
                 No conversations found
               </div>
             )}
