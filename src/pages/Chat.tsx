@@ -474,7 +474,12 @@ const Chat = () => {
         {/* Área de mensajes */}
         <div className="flex-1 overflow-y-auto p-4 space-y-6">
           {currentConversation?.messages.map((msg) => (
-            <ChatMessage key={msg.id} message={msg} />
+            <ChatMessage
+              key={msg.id}
+              content={msg.content}
+              sender={msg.sender}
+              timestamp={msg.timestamp}
+            />
           ))}
         </div>
 

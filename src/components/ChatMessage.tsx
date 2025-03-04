@@ -23,7 +23,6 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
       >
         <div className="chat-message-content">
           <ReactMarkdown
-            className="whitespace-pre-line prose prose-sm max-w-none dark:prose-invert"
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw]}
             components={{
@@ -43,13 +42,19 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
                 <td className="border border-gray-300 dark:border-gray-700 px-4 py-2" {...props} />
               ),
               // Style code blocks
-              code: ({ node, inline, className, children, ...props }) => (
-                inline 
-                  ? <code className="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-800 text-sm" {...props}>{children}</code>
-                  : <pre className="p-4 rounded bg-gray-100 dark:bg-gray-900 overflow-auto">
+              code: ({ node, className, children, ...props }) => {
+                const match = /language-(\w+)/.exec(className || '');
+                const isCodeBlock = Boolean(match);
+                
+                return isCodeBlock 
+                  ? (
+                    <pre className="p-4 rounded bg-gray-100 dark:bg-gray-900 overflow-auto">
                       <code className={className} {...props}>{children}</code>
                     </pre>
-              ),
+                  ) : (
+                    <code className="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-800 text-sm" {...props}>{children}</code>
+                  );
+              },
               // Handle images, videos, and audio
               img: ({ node, ...props }) => (
                 <div className="my-2">
