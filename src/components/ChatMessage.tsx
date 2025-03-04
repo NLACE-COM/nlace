@@ -1,6 +1,9 @@
 
 import React from 'react';
 import { Image, Play, Volume2 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 
 interface ChatMessageProps {
   content: string;
@@ -81,6 +84,18 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
               }
             } catch (error) {
               console.error("Error parsing YouTube URL:", error);
+              // Return a normal link if we can't parse the YouTube URL
+              return (
+                <a 
+                  key={`link-${lineIndex}-${partIndex}`}
+                  href={part} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  {part}
+                </a>
+              );
             }
               
             if (videoId) {
@@ -139,6 +154,57 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
     });
   };
 
+  // Función que decide si procesar con markdown o con el formato de enlaces personalizado
+  const processContent = () => {
+    // Si el contenido parece tener formato markdown (contiene # o * o ` o > etc)
+    if (/[#*`>_~-]/.test(content) || content.includes('```') || content.includes('<div')) {
+      return (
+        <ReactMarkdown 
+          rehypePlugins={[rehypeRaw]}
+          remarkPlugins={[remarkGfm]}
+          components={{
+            // Customize how code blocks are rendered
+            code: ({node, inline, className, children, ...props}) => {
+              const match = /language-(\w+)/.exec(className || '');
+              return !inline ? (
+                <pre className="bg-gray-100 dark:bg-gray-900 p-3 my-2 overflow-auto rounded">
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                </pre>
+              ) : (
+                <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>
+                  {children}
+                </code>
+              )
+            },
+            // Customize image rendering
+            img: ({node, ...props}) => (
+              <img className="max-w-full rounded my-2" {...props} />
+            ),
+            // Customize table rendering
+            table: ({node, ...props}) => (
+              <div className="overflow-x-auto my-4">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700" {...props} />
+              </div>
+            ),
+            th: ({node, ...props}) => (
+              <th className="px-3 py-2 bg-gray-100 dark:bg-gray-800 text-left text-xs font-medium uppercase tracking-wider" {...props} />
+            ),
+            td: ({node, ...props}) => (
+              <td className="px-3 py-2 whitespace-nowrap text-sm" {...props} />
+            ),
+          }}
+        >
+          {content}
+        </ReactMarkdown>
+      );
+    }
+    
+    // Si no tiene formato markdown, usar el parser de enlaces
+    return formatText(content);
+  };
+
   return (
     <div className={`flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`}>
       <div 
@@ -149,7 +215,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
         }`}
       >
         <div className="chat-message-content">
-          {formatText(content)}
+          {processContent()}
         </div>
         <div 
           className={`text-xs mt-1 ${
