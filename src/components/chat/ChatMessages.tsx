@@ -4,13 +4,20 @@ import ChatMessage from "@/components/ChatMessage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChatMessage as ChatMessageType } from "@/types/chat";
 import { MessageSquarePlus } from "lucide-react";
+import { agents } from "@/lib/data";
 
 interface ChatMessagesProps {
   messages: ChatMessageType[];
   isLoading: boolean;
+  selectedAgent?: string;
 }
 
-const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading }) => {
+const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading, selectedAgent }) => {
+  // Find the selected agent name
+  const agentName = selectedAgent ? 
+    agents.find(agent => agent.id === selectedAgent)?.name || "ContentGen" : 
+    "ContentGen";
+
   // Render loading skeletons
   const renderLoadingSkeletons = () => (
     Array(3).fill(0).map((_, index) => (
@@ -44,7 +51,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading }) => {
       </div>
       <h3 className="text-2xl font-semibold text-gray-800 mb-3">Comienza una nueva conversación</h3>
       <p className="text-gray-500 max-w-md">
-        Escribe un mensaje abajo para iniciar una conversación con uno de nuestros asistentes virtuales.
+        Escribe un mensaje abajo para iniciar una conversación con <span className="font-medium text-apple-600">{agentName}</span>.
       </p>
     </div>
   );

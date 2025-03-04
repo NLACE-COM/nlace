@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -129,7 +128,8 @@ const Chat = () => {
         {/* Messages Component */}
         <ChatMessages 
           messages={currentConversation?.messages || []} 
-          isLoading={isLoadingConversation} 
+          isLoading={isLoadingConversation}
+          selectedAgent={selectedAgent}
         />
 
         {/* Input Component */}
