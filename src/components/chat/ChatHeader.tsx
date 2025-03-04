@@ -50,6 +50,12 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
     return model ? `${model.name}` : "Select model";
   };
 
+  // Function to get selected agent name
+  const getSelectedAgentName = () => {
+    const agent = agents.find(a => a.id === selectedAgent);
+    return agent ? agent.name : "Select agent";
+  };
+
   return (
     <header className="flex flex-col border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       {/* Main header row */}
@@ -115,10 +121,8 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
       <div className="flex flex-wrap gap-2 px-4 pb-4">
         <Select value={selectedAgent} onValueChange={onAgentChange}>
           <SelectTrigger className="w-full sm:w-auto bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100">
-            <div className="flex items-center gap-2">
-              <Bot className="h-4 w-4 text-indigo-500" />
-              <SelectValue placeholder="Select agent" />
-            </div>
+            <Bot className="h-4 w-4 text-indigo-500 mr-2" />
+            <SelectValue placeholder="Select agent" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
