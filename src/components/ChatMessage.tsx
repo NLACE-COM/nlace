@@ -164,9 +164,9 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
           remarkPlugins={[remarkGfm]}
           components={{
             // Customize how code blocks are rendered
-            code: ({node, inline, className, children, ...props}) => {
+            code: ({node, className, children, ...props}: any) => {
               const match = /language-(\w+)/.exec(className || '');
-              return !inline ? (
+              return !props.inline ? (
                 <pre className="bg-gray-100 dark:bg-gray-900 p-3 my-2 overflow-auto rounded">
                   <code className={className} {...props}>
                     {children}
@@ -179,19 +179,19 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
               )
             },
             // Customize image rendering
-            img: ({node, ...props}) => (
+            img: ({node, ...props}: any) => (
               <img className="max-w-full rounded my-2" {...props} />
             ),
             // Customize table rendering
-            table: ({node, ...props}) => (
+            table: ({node, ...props}: any) => (
               <div className="overflow-x-auto my-4">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700" {...props} />
               </div>
             ),
-            th: ({node, ...props}) => (
+            th: ({node, ...props}: any) => (
               <th className="px-3 py-2 bg-gray-100 dark:bg-gray-800 text-left text-xs font-medium uppercase tracking-wider" {...props} />
             ),
-            td: ({node, ...props}) => (
+            td: ({node, ...props}: any) => (
               <td className="px-3 py-2 whitespace-nowrap text-sm" {...props} />
             ),
           }}
