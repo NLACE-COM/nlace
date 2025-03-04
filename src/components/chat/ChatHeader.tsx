@@ -57,11 +57,11 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           )}
         </div>
         <div className="flex items-center space-x-2">
-          {/* Agent selector */}
+          {/* Agent selector - updated with responsive width */}
           <Select value={selectedAgent} onValueChange={onAgentChange}>
-            <SelectTrigger className="w-44 bg-apple-50 text-apple-700 border-apple-200 hover:bg-apple-100">
+            <SelectTrigger className={`${isMobile ? 'w-32' : 'w-44'} bg-apple-50 text-apple-700 border-apple-200 hover:bg-apple-100`}>
               <Bot className="h-4 w-4 text-apple-500 mr-2" />
-              <SelectValue placeholder="Select agent" />
+              <SelectValue placeholder="Select agent" className="truncate" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
