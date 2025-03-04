@@ -1,21 +1,18 @@
 
 import React from 'react';
-import { MessageSquare, User, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Conversation } from '@/types/chat';
 
 interface ChatSidebarProps {
-  conversations: Array<{
-    id: string;
-    title: string;
-    preview: string;
-    timestamp: string;
-    model: string;
-  }>;
+  conversations: Conversation[];
   activeChat: string | null;
   sidebarCollapsed: boolean;
   showSidebarMobile: boolean;
   isMobile: boolean;
+  isLoading: boolean;
   onChatSelect: (chatId: string) => void;
   onSidebarCollapse: () => void;
   onCloseMobileSidebar: () => void;
@@ -27,117 +24,101 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
   sidebarCollapsed,
   showSidebarMobile,
   isMobile,
+  isLoading,
   onChatSelect,
   onSidebarCollapse,
   onCloseMobileSidebar
 }) => {
+  // Calculate sidebar style based on state
+  const sidebarStyle = isMobile 
+    ? `fixed inset-y-0 left-0 z-50 w-72 ${showSidebarMobile ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out` 
+    : `relative ${sidebarCollapsed ? 'w-16' : 'w-72'} transition-width duration-200 ease-in-out`;
+
+  // Render loading skeletons
+  const renderLoadingSkeletons = () => (
+    Array(5).fill(0).map((_, index) => (
+      <div key={`skeleton-${index}`} className="p-2">
+        <Skeleton className="h-6 w-3/4 mb-1" />
+        <Skeleton className="h-4 w-1/2" />
+      </div>
+    ))
+  );
+
   return (
-    <div
-      className={`${
-        showSidebarMobile ? "block" : "hidden"
-      } md:block fixed md:relative z-20 w-72 h-full transition-all duration-300 ease-in-out bg-background border-r shadow-md md:shadow-none ${
-        sidebarCollapsed && !showSidebarMobile ? "md:w-20" : "md:w-72"
-      }`}
-    >
-      <div className="flex flex-col h-full">
-        <div className="flex items-center justify-between p-4 border-b">
-          <div
-            className={`${
-              sidebarCollapsed && !showSidebarMobile ? "md:hidden" : ""
-            } flex items-center`}
-          >
-            <MessageSquare className="h-6 w-6 mr-2" />
-            <h2 className="text-xl font-bold">Chats</h2>
-          </div>
-          <div className="flex items-center">
-            {isMobile && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onCloseMobileSidebar}
-                className="md:hidden"
-              >
-                <X className="h-5 w-5" />
-              </Button>
-            )}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onSidebarCollapse}
-              className="hidden md:flex"
-            >
-              {sidebarCollapsed ? (
-                <ChevronRight className="h-5 w-5" />
-              ) : (
-                <ChevronLeft className="h-5 w-5" />
-              )}
-            </Button>
-          </div>
-        </div>
+    <div className={`bg-background border-r ${sidebarStyle}`}>
+      {/* Mobile close button */}
+      {isMobile && showSidebarMobile && (
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onCloseMobileSidebar}
+          className="absolute right-2 top-2"
+        >
+          <X className="h-5 w-5" />
+        </Button>
+      )}
 
-        <div className="p-3">
-          <Button className="w-full justify-start">
-            <MessageSquare className="mr-2 h-4 w-4" />
-            <span>Nuevo chat</span>
-          </Button>
-        </div>
+      {/* Sidebar header with toggle button */}
+      <div className="flex items-center justify-between p-4 border-b">
+        {!sidebarCollapsed && (
+          <h2 className="text-xl font-bold">Chats</h2>
+        )}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onSidebarCollapse}
+          className={sidebarCollapsed ? 'mx-auto' : ''}
+        >
+          {sidebarCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+        </Button>
+      </div>
 
-        {/* Lista de conversaciones */}
-        <div className="flex-grow overflow-y-auto">
-          <div className="p-3 space-y-2">
-            {conversations.map((conversation) => (
-              <div
-                key={conversation.id}
-                onClick={() => onChatSelect(conversation.id)}
-                className={`p-2 rounded-lg cursor-pointer flex items-start ${
-                  activeChat === conversation.id
-                    ? "bg-secondary"
-                    : "hover:bg-secondary/50"
-                } ${sidebarCollapsed && !showSidebarMobile ? "md:justify-center" : ""}`}
+      {/* New chat button */}
+      <div className="p-2">
+        <Button className="w-full justify-start gap-2" variant="outline">
+          <Plus className="h-4 w-4" />
+          {!sidebarCollapsed && <span>New Chat</span>}
+        </Button>
+      </div>
+
+      {/* Chat list */}
+      <ScrollArea className="h-[calc(100%-120px)]">
+        {isLoading ? (
+          renderLoadingSkeletons()
+        ) : (
+          <div className="p-2 space-y-2">
+            {conversations.map((chat) => (
+              <button
+                key={chat.id}
+                onClick={() => onChatSelect(chat.id)}
+                className={`w-full text-left p-2 rounded-lg ${
+                  activeChat === chat.id
+                    ? 'bg-accent text-accent-foreground'
+                    : 'hover:bg-muted'
+                } transition-colors`}
               >
-                <MessageSquare
-                  className={`flex-shrink-0 h-5 w-5 ${
-                    sidebarCollapsed && !showSidebarMobile ? "md:mx-auto" : "mt-1 mr-2"
-                  }`}
-                />
-                {(!sidebarCollapsed || showSidebarMobile) && (
-                  <div className="flex-grow overflow-hidden">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-medium truncate">{conversation.title}</h3>
-                      <span className="text-xs text-muted-foreground ml-2">
-                        {conversation.timestamp}
-                      </span>
+                {sidebarCollapsed ? (
+                  <div className="flex justify-center">
+                    <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs">
+                      {chat.title.charAt(0)}
+                    </span>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="font-medium truncate">{chat.title}</div>
+                    <div className="text-xs text-muted-foreground truncate">
+                      {chat.preview}
                     </div>
-                    <p className="text-sm text-muted-foreground truncate">
-                      {conversation.preview}
-                    </p>
-                    <div className="flex items-center mt-1">
-                      <Badge variant="outline" className="text-xs px-1 py-0">
-                        {conversation.model}
-                      </Badge>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {chat.timestamp} · {chat.model}
                     </div>
                   </div>
                 )}
-              </div>
+              </button>
             ))}
           </div>
-        </div>
-
-        {/* Usuario */}
-        <div className="p-4 border-t">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <User className="h-9 w-9 p-2 bg-secondary rounded-full" />
-            </div>
-            {(!sidebarCollapsed || showSidebarMobile) && (
-              <div className="ml-3">
-                <p className="text-sm font-medium">Alex Johnson</p>
-                <p className="text-xs text-muted-foreground">alex@example.com</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+        )}
+      </ScrollArea>
     </div>
   );
 };

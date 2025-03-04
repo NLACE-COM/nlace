@@ -2,18 +2,21 @@
 import React from 'react';
 import { Sparkles, Settings, Menu, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { LLMModel } from '@/types/chat';
 
 interface ChatHeaderProps {
   title: string;
   selectedModel: string;
   isMobile: boolean;
-  llmModels: Array<{ id: string; name: string; provider: string; }>;
+  llmModels: LLMModel[];
+  isLoading: boolean;
   onModelSelect: (modelId: string) => void;
   onMobileSidebarToggle: () => void;
 }
@@ -23,13 +26,14 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
   selectedModel,
   isMobile,
   llmModels,
+  isLoading,
   onModelSelect,
   onMobileSidebarToggle
 }) => {
   // Function to get selected model name
   const getSelectedModelName = () => {
     const model = llmModels.find(m => m.id === selectedModel);
-    return model ? `${model.name}` : "Seleccionar modelo";
+    return model ? `${model.name}` : "Select model";
   };
 
   return (
@@ -45,16 +49,26 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
             <Menu className="h-5 w-5" />
           </Button>
         )}
-        <h1 className="text-xl font-bold truncate">{title}</h1>
+        {isLoading ? (
+          <Skeleton className="h-6 w-48" />
+        ) : (
+          <h1 className="text-xl font-bold truncate">{title}</h1>
+        )}
       </div>
       <div className="flex items-center space-x-2">
-        {/* Selector de modelo */}
+        {/* Model selector */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center">
+            <Button variant="outline" className="flex items-center" disabled={isLoading}>
               <Sparkles className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">{getSelectedModelName()}</span>
-              <ChevronDown className="ml-2 h-4 w-4" />
+              {isLoading ? (
+                <Skeleton className="h-4 w-24" />
+              ) : (
+                <>
+                  <span className="hidden sm:inline">{getSelectedModelName()}</span>
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </>
+              )}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -74,7 +88,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* Botón de configuración */}
+        {/* Settings button */}
         <Button variant="ghost" size="icon">
           <Settings className="h-5 w-5" />
         </Button>
