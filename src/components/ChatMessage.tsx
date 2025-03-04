@@ -61,13 +61,19 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
             // Extraer el ID del video de YouTube
             let videoId: string | null = null;
             
-            if (part.includes('youtube.com')) {
-              const urlParams = new URL(part).searchParams;
-              videoId = urlParams.get('v');
-            } else if (part.includes('youtu.be')) {
-              // Para URLs del tipo youtu.be/{videoId}
-              const pathSegments = new URL(part).pathname.split('/');
-              videoId = pathSegments[1] || null;
+            try {
+              if (part.includes('youtube.com')) {
+                const url = new URL(part);
+                videoId = url.searchParams.get('v');
+              } else if (part.includes('youtu.be')) {
+                // Para URLs del tipo youtu.be/{videoId}
+                const url = new URL(part);
+                const pathSegments = url.pathname.split('/');
+                videoId = pathSegments[1] || null;
+              }
+            } catch (error) {
+              console.error("Error parsing YouTube URL:", error);
+              // Continue to the fallback link case
             }
               
             if (videoId) {
