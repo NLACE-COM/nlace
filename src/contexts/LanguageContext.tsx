@@ -15,17 +15,14 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+// Modificado para devolver español como idioma predeterminado
 const getDefaultLanguage = (): Language => {
   // Intentar obtener el idioma guardado
   const savedLanguage = localStorage.getItem("language") as Language;
   if (savedLanguage) return savedLanguage;
 
-  // Detectar idioma del navegador
-  const browserLanguage = navigator.language.toLowerCase().split('-')[0];
-  
-  // Convertir a los idiomas soportados
-  if (browserLanguage === 'es') return 'es';
-  return 'en'; // Idioma por defecto si no es español
+  // Por defecto, devolvemos español en lugar de detectar el idioma del navegador
+  return 'es';
 };
 
 const getDefaultCountry = (language: Language): Country => {
@@ -40,6 +37,13 @@ const getDefaultCountry = (language: Language): Country => {
 export const LanguageProvider: React.FC<{children: ReactNode}> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(getDefaultLanguage);
   const [country, setCountryState] = useState<Country>(() => getDefaultCountry(getDefaultLanguage()));
+
+  // Al iniciar la aplicación, asegurarse de que el idioma esté establecido en español
+  useEffect(() => {
+    if (language !== 'es') {
+      setLanguage('es');
+    }
+  }, []);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);

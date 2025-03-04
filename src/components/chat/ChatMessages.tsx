@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ChatMessage as ChatMessageType } from "@/types/chat";
 import { MessageSquarePlus } from "lucide-react";
 import { agents } from "@/lib/data";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ChatMessagesProps {
   messages: ChatMessageType[];
@@ -13,6 +14,8 @@ interface ChatMessagesProps {
 }
 
 const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading, selectedAgent }) => {
+  const { language } = useLanguage();
+  
   // Find the selected agent name
   const agentName = selectedAgent ? 
     agents.find(agent => agent.id === selectedAgent)?.name || "ContentGen" : 
