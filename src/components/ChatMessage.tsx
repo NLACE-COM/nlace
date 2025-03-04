@@ -1,8 +1,5 @@
 
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 import { Image, Play, Volume2 } from 'lucide-react';
 
 interface ChatMessageProps {
@@ -12,6 +9,102 @@ interface ChatMessageProps {
 }
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp }) => {
+  // Función simple para convertir enlaces en elementos clicables
+  const formatText = (text: string) => {
+    // Dividir por líneas para manejar saltos
+    const lines = text.split('\n');
+    
+    return lines.map((line, lineIndex) => {
+      // Expresión regular para detectar URLs
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      
+      // Si la línea está vacía, devolver un salto de línea
+      if (!line.trim()) {
+        return <br key={`br-${lineIndex}`} />;
+      }
+      
+      // Dividir la línea por URLs
+      const parts = line.split(urlRegex);
+      const matches = line.match(urlRegex) || [];
+      
+      // Combinar partes con enlaces cuando corresponda
+      const formattedParts = parts.map((part, partIndex) => {
+        // Si esta parte coincide con una URL, convertirla en un enlace
+        if (matches.includes(part)) {
+          // Comprobar si es una imagen, video o audio
+          if (/\.(jpg|jpeg|png|gif|webp)$/i.test(part)) {
+            return (
+              <div key={`img-${lineIndex}-${partIndex}`} className="my-2">
+                <img src={part} alt="Imagen" className="max-w-full rounded" />
+              </div>
+            );
+          } else if (/\.(mp4|webm|ogg)$/i.test(part)) {
+            return (
+              <div key={`video-${lineIndex}-${partIndex}`} className="my-2">
+                <video className="w-full rounded" controls>
+                  <source src={part} />
+                  Tu navegador no soporta el tag de video.
+                </video>
+              </div>
+            );
+          } else if (/\.(mp3|wav)$/i.test(part)) {
+            return (
+              <div key={`audio-${lineIndex}-${partIndex}`} className="my-2 flex items-center gap-2">
+                <Volume2 className="h-4 w-4" />
+                <audio controls className="h-8">
+                  <source src={part} />
+                  Tu navegador no soporta el tag de audio.
+                </audio>
+              </div>
+            );
+          } else if (part.includes('youtube.com') || part.includes('youtu.be')) {
+            const videoId = part.includes('youtube.com') 
+              ? part.split('v=')[1]?.split('&')[0] 
+              : part.split('youtu.be/')[1]?.split('?')[0];
+              
+            if (videoId) {
+              return (
+                <div key={`yt-${lineIndex}-${partIndex}`} className="my-2">
+                  <iframe 
+                    className="w-full rounded"
+                    height="200"
+                    src={`https://www.youtube.com/embed/${videoId}`}
+                    title="Video"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              );
+            }
+          }
+          
+          // Enlace normal
+          return (
+            <a 
+              key={`link-${lineIndex}-${partIndex}`}
+              href={part} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              {part}
+            </a>
+          );
+        }
+        
+        // Texto normal
+        return <span key={`text-${lineIndex}-${partIndex}`}>{part}</span>;
+      });
+      
+      return (
+        <div key={`line-${lineIndex}`} className="mb-2">
+          {formattedParts}
+        </div>
+      );
+    });
+  };
+
   return (
     <div className={`flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`}>
       <div 
@@ -22,95 +115,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
         }`}
       >
         <div className="chat-message-content">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw]}
-            components={{
-              // Style tables
-              table: ({ node, ...props }) => (
-                <div className="overflow-auto my-2">
-                  <table className="w-full border-collapse border border-gray-300 dark:border-gray-700" {...props} />
-                </div>
-              ),
-              thead: ({ node, ...props }) => (
-                <thead className="bg-gray-100 dark:bg-gray-800" {...props} />
-              ),
-              th: ({ node, ...props }) => (
-                <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left" {...props} />
-              ),
-              td: ({ node, ...props }) => (
-                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2" {...props} />
-              ),
-              // Style code blocks
-              code: ({ node, className, children, ...props }) => {
-                const match = /language-(\w+)/.exec(className || '');
-                const isCodeBlock = Boolean(match);
-                
-                return isCodeBlock 
-                  ? (
-                    <pre className="p-4 rounded bg-gray-100 dark:bg-gray-900 overflow-auto">
-                      <code className={className} {...props}>{children}</code>
-                    </pre>
-                  ) : (
-                    <code className="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-800 text-sm" {...props}>{children}</code>
-                  );
-              },
-              // Handle images, videos, and audio
-              img: ({ node, ...props }) => (
-                <div className="my-2">
-                  <img className="max-w-full rounded" {...props} alt={props.alt || 'Image'} />
-                </div>
-              ),
-              a: ({ node, href, children, ...props }) => {
-                // Handle YouTube or video links
-                if (href && (href.includes('youtube.com') || href.includes('youtu.be'))) {
-                  return (
-                    <div className="my-2">
-                      <iframe 
-                        className="w-full rounded"
-                        height="200"
-                        src={href.replace('watch?v=', 'embed/')}
-                        title="Video"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </div>
-                  );
-                }
-                
-                // Handle video files
-                if (href && /\.(mp4|webm|ogg)$/.test(href)) {
-                  return (
-                    <div className="my-2">
-                      <video className="w-full rounded" controls>
-                        <source src={href} />
-                        Your browser does not support the video tag.
-                      </video>
-                    </div>
-                  );
-                }
-                
-                // Handle audio files
-                if (href && /\.(mp3|wav|ogg)$/.test(href)) {
-                  return (
-                    <div className="my-2 flex items-center gap-2">
-                      <Volume2 className="h-4 w-4" />
-                      <audio controls className="h-8">
-                        <source src={href} />
-                        Your browser does not support the audio tag.
-                      </audio>
-                    </div>
-                  );
-                }
-                
-                // Regular links
-                return <a className="text-blue-500 hover:underline" href={href} target="_blank" rel="noopener noreferrer" {...props}>{children}</a>;
-              },
-            }}
-          >
-            {content}
-          </ReactMarkdown>
+          {formatText(content)}
         </div>
         <div 
           className={`text-xs mt-1 ${
