@@ -3,6 +3,7 @@ import React from 'react';
 import ChatMessage from "@/components/ChatMessage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChatMessage as ChatMessageType } from "@/types/chat";
+import { MessageSquarePlus } from "lucide-react";
 
 interface ChatMessagesProps {
   messages: ChatMessageType[];
@@ -35,27 +36,36 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading }) => {
     ))
   );
 
+  // Render empty state with inviting image/icon when no messages and not loading
+  const renderEmptyState = () => (
+    <div className="flex flex-col items-center justify-center h-full p-6 text-center">
+      <div className="w-32 h-32 bg-apple-50 rounded-full flex items-center justify-center mb-6 shadow-md">
+        <MessageSquarePlus className="h-16 w-16 text-apple-600" />
+      </div>
+      <h3 className="text-2xl font-semibold text-gray-800 mb-3">Comienza una nueva conversación</h3>
+      <p className="text-gray-500 max-w-md">
+        Escribe un mensaje abajo para iniciar una conversación con uno de nuestros asistentes virtuales.
+      </p>
+    </div>
+  );
+
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-6">
       {isLoading ? (
         renderLoadingSkeletons()
       ) : (
-        messages.map((msg) => (
-          <ChatMessage 
-            key={msg.id}
-            content={msg.content}
-            sender={msg.sender}
-            timestamp={msg.timestamp}
-          />
-        ))
-      )}
-      {!isLoading && messages.length === 0 && (
-        <div className="flex items-center justify-center h-full">
-          <p className="text-muted-foreground text-center">
-            No messages in this conversation yet.<br />
-            Start the conversation by sending a message.
-          </p>
-        </div>
+        messages.length > 0 ? (
+          messages.map((msg) => (
+            <ChatMessage 
+              key={msg.id}
+              content={msg.content}
+              sender={msg.sender}
+              timestamp={msg.timestamp}
+            />
+          ))
+        ) : (
+          renderEmptyState()
+        )
       )}
     </div>
   );

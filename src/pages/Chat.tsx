@@ -16,7 +16,7 @@ const Chat = () => {
   const [selectedAgent, setSelectedAgent] = useState(agents[0].id);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const [showSidebarMobile, setShowSidebarMobile] = useState(false);
-  const [activeChat, setActiveChat] = useState<string | null>("rich-formatted");
+  const [activeChat, setActiveChat] = useState<string | null>(null); // Changed to null by default
   const isMobile = useIsMobile();
 
   // React Query hooks
@@ -114,7 +114,7 @@ const Chat = () => {
       <div className="flex-1 flex flex-col h-full overflow-hidden bg-white">
         {/* Header Component with agent selector */}
         <ChatHeader
-          title={currentConversation?.title || "New conversation"}
+          title={currentConversation?.title || "Nueva conversación"}
           selectedModel={selectedModel}
           selectedAgent={selectedAgent}
           isMobile={isMobile}
