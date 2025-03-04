@@ -60,7 +60,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   return (
     <div className="border-t p-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Message input */}
+        {/* Message input with send button */}
         <div className="flex items-end gap-2">
           <Textarea
             value={message}
@@ -73,15 +73,16 @@ const ChatInput: React.FC<ChatInputProps> = ({
           <Button
             type="submit"
             size="icon"
-            className="rounded-full bg-indigo-600 hover:bg-indigo-700"
+            className="rounded-full bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition-all duration-200 shadow-md hover:shadow-indigo-300/50"
             disabled={!message.trim() || isLoading}
           >
             <Send className="h-4 w-4" />
           </Button>
         </div>
 
-        {/* Model selector */}
-        <div className="flex justify-between items-center">
+        {/* Model selector and action buttons in one row */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Model selector */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="flex items-center bg-gray-50" disabled={isLoading}>
@@ -107,45 +108,43 @@ const ChatInput: React.FC<ChatInputProps> = ({
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Action buttons */}
-          <div className="flex gap-2">
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
-              disabled={isLoading}
-            >
-              <PaperclipIcon className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
-              disabled={isLoading}
-            >
-              <Image className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
-              disabled={isLoading}
-            >
-              <FileUp className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
-              disabled={isLoading}
-            >
-              <SearchCode className="h-4 w-4" />
-            </Button>
-          </div>
+          {/* Action buttons moved to the right of the model selector */}
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
+            disabled={isLoading}
+          >
+            <PaperclipIcon className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
+            disabled={isLoading}
+          >
+            <Image className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
+            disabled={isLoading}
+          >
+            <FileUp className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
+            disabled={isLoading}
+          >
+            <SearchCode className="h-4 w-4" />
+          </Button>
         </div>
       </form>
     </div>
