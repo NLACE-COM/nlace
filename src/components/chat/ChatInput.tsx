@@ -6,18 +6,33 @@ import {
   Image,
   FileUp,
   SearchCode,
+  Sparkles,
+  ChevronDown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { LLMModel } from '@/types/chat';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface ChatInputProps {
   isLoading: boolean;
   onSendMessage: (message: string) => void;
+  selectedModel: string;
+  llmModels: LLMModel[];
+  onModelSelect: (modelId: string) => void;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
   isLoading,
   onSendMessage,
+  selectedModel,
+  llmModels,
+  onModelSelect
 }) => {
   const [message, setMessage] = useState("");
 
@@ -34,6 +49,12 @@ const ChatInput: React.FC<ChatInputProps> = ({
       e.preventDefault();
       handleSubmit(e);
     }
+  };
+
+  // Function to get selected model name
+  const getSelectedModelName = () => {
+    const model = llmModels.find(m => m.id === selectedModel);
+    return model ? `${model.name}` : "Select model";
   };
 
   return (
@@ -59,8 +80,34 @@ const ChatInput: React.FC<ChatInputProps> = ({
           </Button>
         </div>
 
-        {/* Action buttons */}
-        <div className="flex justify-between">
+        {/* Model selector */}
+        <div className="flex justify-between items-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="flex items-center bg-gray-50" disabled={isLoading}>
+                <Sparkles className="mr-2 h-4 w-4 text-indigo-500" />
+                <span className="mr-1">{getSelectedModelName()}</span>
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              {llmModels.map((model) => (
+                <DropdownMenuItem
+                  key={model.id}
+                  onClick={() => onModelSelect(model.id)}
+                >
+                  <div className="flex items-center">
+                    <span className="font-medium">{model.name}</span>
+                    <span className="ml-2 text-xs text-muted-foreground">
+                      ({model.provider})
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Action buttons */}
           <div className="flex gap-2">
             <Button
               type="button"
@@ -89,16 +136,16 @@ const ChatInput: React.FC<ChatInputProps> = ({
             >
               <FileUp className="h-4 w-4" />
             </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
+              disabled={isLoading}
+            >
+              <SearchCode className="h-4 w-4" />
+            </Button>
           </div>
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
-            disabled={isLoading}
-          >
-            <SearchCode className="h-4 w-4" />
-          </Button>
         </div>
       </form>
     </div>

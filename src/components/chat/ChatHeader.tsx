@@ -1,14 +1,8 @@
 
 import React from 'react';
-import { Sparkles, Settings, Menu, ChevronDown, Bot } from 'lucide-react';
+import { Settings, Menu, Bot } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { LLMModel } from '@/types/chat';
 import {
   Select,
@@ -34,22 +28,13 @@ interface ChatHeaderProps {
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({
   title,
-  selectedModel,
   selectedAgent,
   isMobile,
-  llmModels,
   agents,
   isLoading,
-  onModelSelect,
   onAgentChange,
   onMobileSidebarToggle
 }) => {
-  // Function to get selected model name
-  const getSelectedModelName = () => {
-    const model = llmModels.find(m => m.id === selectedModel);
-    return model ? `${model.name}` : "Select model";
-  };
-
   // Function to get selected agent name
   const getSelectedAgentName = () => {
     const agent = agents.find(a => a.id === selectedAgent);
@@ -78,38 +63,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           )}
         </div>
         <div className="flex items-center space-x-2">
-          {/* Model selector */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex items-center" disabled={isLoading}>
-                <Sparkles className="mr-2 h-4 w-4 text-indigo-500" />
-                {isLoading ? (
-                  <Skeleton className="h-4 w-24" />
-                ) : (
-                  <>
-                    <span className="hidden sm:inline">{getSelectedModelName()}</span>
-                    <ChevronDown className="ml-2 h-4 w-4" />
-                  </>
-                )}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {llmModels.map((model) => (
-                <DropdownMenuItem
-                  key={model.id}
-                  onClick={() => onModelSelect(model.id)}
-                >
-                  <div className="flex items-center">
-                    <span className="font-medium">{model.name}</span>
-                    <span className="ml-2 text-xs text-muted-foreground">
-                      ({model.provider})
-                    </span>
-                  </div>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
           {/* Settings button */}
           <Button variant="ghost" size="icon">
             <Settings className="h-5 w-5" />

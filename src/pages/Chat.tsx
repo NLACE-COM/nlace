@@ -136,6 +136,9 @@ const Chat = () => {
         <ChatInput
           onSendMessage={handleSendMessage}
           isLoading={sendMessageMutation.isPending}
+          selectedModel={selectedModel}
+          llmModels={llmModels}
+          onModelSelect={setSelectedModel}
         />
       </div>
     </div>
