@@ -58,7 +58,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
               </div>
             );
           } else if (part.includes('youtube.com') || part.includes('youtu.be')) {
-            // Extraer el ID del video de YouTube
+            // Extract YouTube video ID
             let videoId: string | null = null;
             
             try {
@@ -66,14 +66,12 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
                 const url = new URL(part);
                 videoId = url.searchParams.get('v');
               } else if (part.includes('youtu.be')) {
-                // Para URLs del tipo youtu.be/{videoId}
                 const url = new URL(part);
                 const pathSegments = url.pathname.split('/');
                 videoId = pathSegments[1] || null;
               }
             } catch (error) {
               console.error("Error parsing YouTube URL:", error);
-              // Continue to the fallback link case
             }
               
             if (videoId) {
@@ -91,7 +89,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
                 </div>
               );
             }
-            // Si no se puede extraer el ID del video, mostrar como enlace normal
+            
+            // If we couldn't extract the video ID, return a normal link
             return (
               <a 
                 key={`link-${lineIndex}-${partIndex}`}
@@ -105,7 +104,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
             );
           }
           
-          // Enlace normal
+          // Normal link
           return (
             <a 
               key={`link-${lineIndex}-${partIndex}`}
@@ -119,7 +118,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
           );
         }
         
-        // Texto normal
+        // Normal text
         return <span key={`text-${lineIndex}-${partIndex}`}>{part}</span>;
       });
       
