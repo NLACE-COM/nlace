@@ -58,9 +58,17 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, sender, timestamp })
               </div>
             );
           } else if (part.includes('youtube.com') || part.includes('youtu.be')) {
-            const videoId = part.includes('youtube.com') 
-              ? part.split('v=')[1]?.split('&')[0] 
-              : part.split('youtu.be/')[1]?.split('?')[0];
+            // Extraer el ID del video de YouTube
+            let videoId: string | null = null;
+            
+            if (part.includes('youtube.com')) {
+              const urlParams = new URL(part).searchParams;
+              videoId = urlParams.get('v');
+            } else if (part.includes('youtu.be')) {
+              // Para URLs del tipo youtu.be/{videoId}
+              const pathSegments = new URL(part).pathname.split('/');
+              videoId = pathSegments[1] || null;
+            }
               
             if (videoId) {
               return (
