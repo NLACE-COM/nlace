@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Conversation } from '@/types/chat';
 import { useConversationSearch } from '@/hooks/use-conversation-search';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ChatSidebarProps {
   conversations: Conversation[];
@@ -31,6 +32,9 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
   onSidebarCollapse,
   onCloseMobileSidebar
 }) => {
+  // Get language context for translations
+  const { t } = useLanguage();
+
   // Use the search hook to filter conversations
   const { searchQuery, setSearchQuery, clearSearch, filteredConversations } = useConversationSearch(conversations);
 
@@ -102,14 +106,14 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
         </div>
       )}
 
-      {/* New chat button */}
+      {/* New chat button - now with fruit-salad colors and Spanish text */}
       <div className="p-2">
         <Button 
-          className="w-full justify-start gap-2 bg-white hover:bg-gray-100 text-gray-800 border border-gray-200" 
-          variant="outline"
+          className="w-full justify-start gap-2 bg-fruit-salad-600 hover:bg-fruit-salad-700 text-white border-none" 
+          variant="default"
         >
           <Plus className="h-4 w-4" />
-          {!sidebarCollapsed && <span>New Chat</span>}
+          {!sidebarCollapsed && <span>Nuevo Chat</span>}
         </Button>
       </div>
 
