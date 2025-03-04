@@ -50,29 +50,29 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
   );
 
   return (
-    <div className={`bg-[#f1f0fb] border-r border-slate-200 ${sidebarStyle}`}>
+    <div className={`bg-white border-r border-gray-200 ${sidebarStyle}`}>
       {/* Mobile close button */}
       {isMobile && showSidebarMobile && (
         <Button
           variant="ghost"
           size="icon"
           onClick={onCloseMobileSidebar}
-          className="absolute right-2 top-2 text-indigo-500 hover:text-indigo-700 hover:bg-indigo-100"
+          className="absolute right-2 top-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100"
         >
           <X className="h-5 w-5" />
         </Button>
       )}
 
       {/* Sidebar header with toggle button */}
-      <div className="flex items-center justify-between p-4 border-b border-slate-200">
+      <div className="flex items-center justify-between p-4 border-b border-gray-200">
         {!sidebarCollapsed && (
-          <h2 className="text-xl font-bold text-indigo-800">Chats</h2>
+          <h2 className="text-xl font-bold text-gray-900">Chats</h2>
         )}
         <Button
           variant="ghost"
           size="icon"
           onClick={onSidebarCollapse}
-          className={`${sidebarCollapsed ? 'mx-auto' : ''} text-indigo-500 hover:text-indigo-700 hover:bg-indigo-100`}
+          className={`${sidebarCollapsed ? 'mx-auto' : ''} text-gray-600 hover:text-gray-900 hover:bg-gray-100`}
         >
           {sidebarCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
         </Button>
@@ -82,20 +82,20 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
       {!sidebarCollapsed && (
         <div className="p-3">
           <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-indigo-400" />
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
             <Input
               type="text"
               placeholder="Search conversations..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 h-9 text-sm border-slate-200 focus-visible:ring-indigo-500"
+              className="pl-9 h-9 text-sm border-gray-200 focus-visible:ring-gray-500"
             />
             {searchQuery && (
               <button 
                 className="absolute right-2.5 top-2.5"
                 onClick={clearSearch}
               >
-                <XCircle className="h-4 w-4 text-indigo-400 hover:text-indigo-600" />
+                <XCircle className="h-4 w-4 text-gray-400 hover:text-gray-600" />
               </button>
             )}
           </div>
@@ -105,7 +105,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
       {/* New chat button */}
       <div className="p-2">
         <Button 
-          className="w-full justify-start gap-2 bg-white hover:bg-slate-100 text-indigo-700 border border-slate-200" 
+          className="w-full justify-start gap-2 bg-white hover:bg-gray-100 text-gray-800 border border-gray-200" 
           variant="outline"
         >
           <Plus className="h-4 w-4" />
@@ -126,23 +126,23 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   onClick={() => onChatSelect(chat.id)}
                   className={`w-full text-left p-2 rounded-lg ${
                     activeChat === chat.id
-                      ? 'bg-indigo-100 text-indigo-900'
-                      : 'hover:bg-indigo-50 text-indigo-700'
+                      ? 'bg-gray-100 text-gray-900'
+                      : 'hover:bg-gray-50 text-gray-700'
                   } transition-colors`}
                 >
                   {sidebarCollapsed ? (
                     <div className="flex justify-center">
-                      <span className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 text-xs">
+                      <span className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 text-xs">
                         {chat.title.charAt(0)}
                       </span>
                     </div>
                   ) : (
                     <div>
                       <div className="font-medium truncate">{chat.title}</div>
-                      <div className="text-xs text-indigo-600 truncate">
+                      <div className="text-xs text-gray-600 truncate">
                         {chat.preview}
                       </div>
-                      <div className="text-xs text-indigo-400 mt-1">
+                      <div className="text-xs text-gray-400 mt-1">
                         {chat.timestamp} · {chat.model}
                       </div>
                     </div>
@@ -150,7 +150,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 </button>
               ))
             ) : (
-              <div className="px-2 py-4 text-center text-sm text-indigo-500">
+              <div className="px-2 py-4 text-center text-sm text-gray-500">
                 No conversations found
               </div>
             )}
