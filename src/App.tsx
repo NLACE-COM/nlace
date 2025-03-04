@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
@@ -44,13 +43,11 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
         />
         <main
-          className={`flex-1 overflow-auto transition-all duration-300 ${
+          className={`flex-1 overflow-hidden transition-all duration-300 ${
             sidebarCollapsed ? "md:pl-20" : "md:pl-72"
           }`}
         >
-          <div className="container mx-auto p-4 md:p-6">
-            {children}
-          </div>
+          {children}
         </main>
       </div>
     </div>

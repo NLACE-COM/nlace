@@ -96,7 +96,7 @@ const Chat = () => {
   }, [conversationsError, conversationError, modelsError]);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
+    <div className="flex h-full overflow-hidden bg-slate-50">
       {/* Sidebar Component */}
       <ChatSidebar
         conversations={conversations}
