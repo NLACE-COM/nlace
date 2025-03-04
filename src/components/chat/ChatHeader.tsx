@@ -35,12 +35,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
   onAgentChange,
   onMobileSidebarToggle
 }) => {
-  // Function to get selected agent name
-  const getSelectedAgentName = () => {
-    const agent = agents.find(a => a.id === selectedAgent);
-    return agent ? agent.name : "Select agent";
-  };
-
   return (
     <header className="flex flex-col border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       {/* Main header row */}
@@ -63,30 +57,28 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           )}
         </div>
         <div className="flex items-center space-x-2">
+          {/* Agent selector */}
+          <Select value={selectedAgent} onValueChange={onAgentChange}>
+            <SelectTrigger className="w-44 bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100">
+              <Bot className="h-4 w-4 text-indigo-500 mr-2" />
+              <SelectValue placeholder="Select agent" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {agents.map((agent) => (
+                  <SelectItem key={agent.id} value={agent.id}>
+                    {agent.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          
           {/* Settings button */}
           <Button variant="ghost" size="icon">
             <Settings className="h-5 w-5" />
           </Button>
         </div>
-      </div>
-
-      {/* Agent selector row */}
-      <div className="flex flex-wrap gap-2 px-4 pb-4">
-        <Select value={selectedAgent} onValueChange={onAgentChange}>
-          <SelectTrigger className="w-full sm:w-auto bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100">
-            <Bot className="h-4 w-4 text-indigo-500 mr-2" />
-            <SelectValue placeholder="Select agent" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {agents.map((agent) => (
-                <SelectItem key={agent.id} value={agent.id}>
-                  {agent.name}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
       </div>
     </header>
   );
