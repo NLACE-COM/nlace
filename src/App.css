@@ -1,8 +1,43 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+:root {
+  --primary: 125 37% 31%;
+  --primary-foreground: 0 0% 98%;
+  
+  --secondary: 124 19% 93%;
+  --secondary-foreground: 125 30% 18%;
+  
+  --accent: 124 28% 85%;
+  --accent-foreground: 125 30% 18%;
+  
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --ring: 125 37% 31%; 
+  
+  --radius: 0.5rem;
+}
+
+.dark {
+  --primary: 125 30% 35%;
+  --primary-foreground: 0 0% 98%;
+  
+  --secondary: 125 20% 20%;
+  --secondary-foreground: 0 0% 98%;
+  
+  --accent: 125 25% 25%;
+  --accent-foreground: 0 0% 98%;
+  
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --ring: 125 30% 35%;
 }
 
 .logo {

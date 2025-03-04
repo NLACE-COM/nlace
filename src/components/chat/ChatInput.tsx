@@ -67,13 +67,13 @@ const ChatInput: React.FC<ChatInputProps> = ({
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
-            className="flex-1 min-h-[80px] resize-none rounded-2xl border-slate-200 focus-visible:ring-indigo-500"
+            className="flex-1 min-h-[80px] resize-none rounded-2xl border-slate-200 focus-visible:ring-fruit-salad-500"
             disabled={isLoading}
           />
           <Button
             type="submit"
             size="icon"
-            className="rounded-full bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition-all duration-200 shadow-md hover:shadow-indigo-300/50"
+            className="rounded-full bg-fruit-salad-600 hover:bg-fruit-salad-700 hover:scale-105 transition-all duration-200 shadow-md hover:shadow-fruit-salad-300/50"
             disabled={!message.trim() || isLoading}
           >
             <Send className="h-4 w-4" />
@@ -86,7 +86,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="flex items-center bg-gray-50" disabled={isLoading}>
-                <Sparkles className="mr-2 h-4 w-4 text-indigo-500" />
+                <Sparkles className="mr-2 h-4 w-4 text-fruit-salad-500" />
                 <span className="mr-1">{getSelectedModelName()}</span>
                 <ChevronDown className="h-4 w-4" />
               </Button>
@@ -113,7 +113,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
             type="button"
             variant="outline"
             size="icon"
-            className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
+            className="rounded-full border-slate-200 text-slate-600 hover:bg-fruit-salad-50"
             disabled={isLoading}
           >
             <PaperclipIcon className="h-4 w-4" />
@@ -122,7 +122,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
             type="button"
             variant="outline"
             size="icon"
-            className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
+            className="rounded-full border-slate-200 text-slate-600 hover:bg-fruit-salad-50"
             disabled={isLoading}
           >
             <Image className="h-4 w-4" />
@@ -131,7 +131,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
             type="button"
             variant="outline"
             size="icon"
-            className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
+            className="rounded-full border-slate-200 text-slate-600 hover:bg-fruit-salad-50"
             disabled={isLoading}
           >
             <FileUp className="h-4 w-4" />
@@ -140,7 +140,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
             type="button"
             variant="outline"
             size="icon"
-            className="rounded-full border-slate-200 text-slate-600 hover:bg-slate-100"
+            className="rounded-full border-slate-200 text-slate-600 hover:bg-fruit-salad-50"
             disabled={isLoading}
           >
             <SearchCode className="h-4 w-4" />
