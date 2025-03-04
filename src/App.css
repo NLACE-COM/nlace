@@ -7,37 +7,37 @@
 }
 
 :root {
-  --primary: 125 37% 31%;
+  --primary: 142 76% 36%;
   --primary-foreground: 0 0% 98%;
   
-  --secondary: 124 19% 93%;
-  --secondary-foreground: 125 30% 18%;
+  --secondary: 142 100% 92%;
+  --secondary-foreground: 142 76% 18%;
   
-  --accent: 124 28% 85%;
-  --accent-foreground: 125 30% 18%;
+  --accent: 142 100% 85%;
+  --accent-foreground: 142 76% 18%;
   
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
   
-  --ring: 125 37% 31%; 
+  --ring: 142 76% 36%; 
   
   --radius: 0.5rem;
 }
 
 .dark {
-  --primary: 125 30% 35%;
+  --primary: 142 76% 30%;
   --primary-foreground: 0 0% 98%;
   
-  --secondary: 125 20% 20%;
+  --secondary: 142 76% 16%;
   --secondary-foreground: 0 0% 98%;
   
-  --accent: 125 25% 25%;
+  --accent: 142 76% 20%;
   --accent-foreground: 0 0% 98%;
   
   --destructive: 0 70% 50%;
   --destructive-foreground: 0 0% 98%;
   
-  --ring: 125 30% 35%;
+  --ring: 142 76% 30%;
 }
 
 .logo {
