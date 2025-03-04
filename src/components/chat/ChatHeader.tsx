@@ -57,22 +57,24 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           )}
         </div>
         <div className="flex items-center space-x-2">
-          {/* Agent selector - updated with responsive width */}
-          <Select value={selectedAgent} onValueChange={onAgentChange}>
-            <SelectTrigger className={`${isMobile ? 'w-32' : 'w-44'} bg-apple-50 text-apple-700 border-apple-200 hover:bg-apple-100`}>
-              <Bot className="h-4 w-4 text-apple-500 mr-2" />
-              <SelectValue placeholder="Select agent" className="truncate" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {agents.map((agent) => (
-                  <SelectItem key={agent.id} value={agent.id}>
-                    {agent.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          {/* Agent selector - fixed for mobile */}
+          <div className={isMobile ? "max-w-[100px]" : "max-w-[200px]"}>
+            <Select value={selectedAgent} onValueChange={onAgentChange}>
+              <SelectTrigger className="bg-apple-50 text-apple-700 border-apple-200 hover:bg-apple-100 w-full">
+                <Bot className="h-4 w-4 text-apple-500 mr-2 flex-shrink-0" />
+                <SelectValue placeholder="Select agent" className="truncate" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {agents.map((agent) => (
+                    <SelectItem key={agent.id} value={agent.id}>
+                      {agent.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
           
           {/* Settings button */}
           <Button variant="ghost" size="icon">
