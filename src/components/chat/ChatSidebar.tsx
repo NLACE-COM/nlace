@@ -89,7 +89,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
             <Input
               type="text"
-              placeholder="Search conversations..."
+              placeholder="Buscar conversaciones..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-9 h-9 text-sm border-gray-200 focus-visible:ring-gray-500"
@@ -155,7 +155,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
               ))
             ) : (
               <div className="px-2 py-4 text-center text-sm text-gray-500">
-                No conversations found
+                No se encontraron conversaciones
               </div>
             )}
           </div>

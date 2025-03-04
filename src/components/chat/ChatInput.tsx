@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { LLMModel } from '@/types/chat';
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,6 +36,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   onModelSelect
 }) => {
   const [message, setMessage] = useState("");
+  const { t } = useLanguage();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,7 +56,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   // Function to get selected model name
   const getSelectedModelName = () => {
     const model = llmModels.find(m => m.id === selectedModel);
-    return model ? `${model.name}` : "Select model";
+    return model ? `${model.name}` : "Seleccionar modelo";
   };
 
   return (
@@ -66,7 +68,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type your message..."
+            placeholder="Escribe tu mensaje..."
             className="flex-1 min-h-[80px] resize-none rounded-2xl border-slate-200 focus-visible:ring-fruit-salad-500"
             disabled={isLoading}
           />

@@ -42,6 +42,13 @@ const translations = {
     "searchCompany": "Buscar empresa...",
     "noCompaniesFound": "No se encontraron empresas.",
     
+    // Chat
+    "newChat": "Nuevo Chat",
+    "searchConversations": "Buscar conversaciones...",
+    "noConversationsFound": "No se encontraron conversaciones",
+    "typeYourMessage": "Escribe tu mensaje...",
+    "selectModel": "Seleccionar modelo",
+    
     // Settings
     "settingsTitle": "Configuración",
     "settingsDescription": "Gestiona la configuración de tu cuenta y empresa",
@@ -113,6 +120,13 @@ const translations = {
     "addNewCompany": "Add new company",
     "searchCompany": "Search company...",
     "noCompaniesFound": "No companies found.",
+    
+    // Chat
+    "newChat": "New Chat",
+    "searchConversations": "Search conversations...",
+    "noConversationsFound": "No conversations found",
+    "typeYourMessage": "Type your message...",
+    "selectModel": "Select model",
     
     // Settings
     "settingsTitle": "Settings",
