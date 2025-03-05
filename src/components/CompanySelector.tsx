@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Check, ChevronDown, ChevronUp, Plus, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -85,11 +85,11 @@ const CompanySelector = () => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 animate-scale-in">
+      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
         <Command>
           <CommandInput placeholder={t("searchCompany")} className="h-9" />
           <CommandEmpty>{t("noCompaniesFound")}</CommandEmpty>
-          <CommandGroup className="max-h-[300px] overflow-auto">
+          <CommandGroup>
             {companies.map((company) => (
               <CommandItem
                 key={company.id}
