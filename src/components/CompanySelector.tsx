@@ -1,6 +1,6 @@
 
-import { useState } from "react";
-import { Check, ChevronDown, ChevronUp, Plus } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Check, ChevronDown, ChevronUp, Plus, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -14,16 +14,44 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { companies, currentCompany } from "@/lib/data";
+import { companies } from "@/lib/data";
 import { Company } from "@/lib/types";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useToast } from "@/components/ui/use-toast";
 
 const CompanySelector = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(
-    currentCompany
+    companies[0]
   );
+
+  const handleCompanyChange = (company: Company) => {
+    setSelectedCompany(company);
+    setOpen(false);
+    
+    // Mostrar un toast de confirmación
+    toast({
+      title: t("companyChanged"),
+      description: `${t("switchedTo")} ${company.name}`,
+      duration: 3000,
+    });
+    
+    // Aquí se podría implementar lógica adicional como:
+    // - Actualizar un contexto global
+    // - Hacer una petición API
+    // - Redirigir a otra página
+  };
+
+  const handleAddNewCompany = () => {
+    toast({
+      title: t("featureInDevelopment"),
+      description: t("comingSoon"),
+      duration: 3000,
+    });
+    setOpen(false);
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -36,16 +64,18 @@ const CompanySelector = () => {
         >
           <div className="flex items-center gap-2 overflow-hidden">
             <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden">
-              {selectedCompany?.logo && (
+              {selectedCompany?.logo ? (
                 <img
                   src={selectedCompany.logo}
                   alt={selectedCompany.name}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain"
                 />
+              ) : (
+                <Building className="h-full w-full p-1 text-gray-500" />
               )}
             </div>
             <span className="truncate font-medium">
-              {selectedCompany?.name || t("selectCountry")}
+              {selectedCompany?.name || t("selectCompany")}
             </span>
           </div>
           {open ? (
@@ -64,19 +94,18 @@ const CompanySelector = () => {
               <CommandItem
                 key={company.id}
                 value={company.name}
-                onSelect={() => {
-                  setSelectedCompany(company);
-                  setOpen(false);
-                }}
+                onSelect={() => handleCompanyChange(company)}
                 className="flex items-center gap-2 py-2"
               >
                 <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden">
-                  {company.logo && (
+                  {company.logo ? (
                     <img
                       src={company.logo}
                       alt={company.name}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-contain"
                     />
+                  ) : (
+                    <Building className="h-full w-full p-1 text-gray-500" />
                   )}
                 </div>
                 <span>{company.name}</span>
@@ -87,9 +116,7 @@ const CompanySelector = () => {
             ))}
             <CommandItem
               value="add-new"
-              onSelect={() => {
-                setOpen(false);
-              }}
+              onSelect={handleAddNewCompany}
               className="flex items-center gap-2 py-2 text-primary"
             >
               <Plus className="h-4 w-4" />

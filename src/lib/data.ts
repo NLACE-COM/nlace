@@ -1,28 +1,42 @@
 
 import { Agent, AgentCategory, AgentStatus, AgentType, Company, KnowledgeBase, Task, User, UsageMetrics } from "./types";
 
-// Empresas ficticias
+// Empresas reconocidas B2B
 export const companies: Company[] = [
   {
     id: "c1",
-    name: "TechCorp",
+    name: "Microsoft",
     plan: "enterprise",
-    logo: "/placeholder.svg",
-    description: "Empresa líder en soluciones tecnológicas",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
+    description: "Líder mundial en software y soluciones empresariales",
   },
   {
     id: "c2",
-    name: "RetailPro",
-    plan: "business",
-    logo: "/placeholder.svg",
-    description: "Plataforma de gestión para retail",
+    name: "Salesforce",
+    plan: "enterprise",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg",
+    description: "Plataforma líder en CRM y soluciones en la nube",
   },
   {
     id: "c3",
-    name: "FoodDelivery",
-    plan: "startup",
-    logo: "/placeholder.svg",
-    description: "Servicio de entrega de comida a domicilio",
+    name: "SAP",
+    plan: "enterprise",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg",
+    description: "Software de planificación de recursos empresariales",
+  },
+  {
+    id: "c4",
+    name: "Oracle",
+    plan: "enterprise",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg",
+    description: "Bases de datos y soluciones empresariales a gran escala",
+  },
+  {
+    id: "c5",
+    name: "IBM",
+    plan: "enterprise",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
+    description: "Tecnologías y consultoría para transformación empresarial",
   },
 ];
 
