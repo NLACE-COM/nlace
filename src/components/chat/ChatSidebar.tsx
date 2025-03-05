@@ -17,6 +17,7 @@ interface ChatSidebarProps {
   onChatSelect: (chatId: string) => void;
   onSidebarCollapse: () => void;
   onCloseMobileSidebar: () => void;
+  onNewChat?: () => void;
 }
 
 const ChatSidebar: React.FC<ChatSidebarProps> = ({
@@ -28,7 +29,8 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
   isLoading,
   onChatSelect,
   onSidebarCollapse,
-  onCloseMobileSidebar
+  onCloseMobileSidebar,
+  onNewChat
 }) => {
   // Use the search hook to filter conversations
   const { searchQuery, setSearchQuery, clearSearch, filteredConversations } = useConversationSearch(conversations);
@@ -59,7 +61,10 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
       )}
 
       {/* New Chat Button */}
-      <NewChatButton sidebarCollapsed={sidebarCollapsed} />
+      <NewChatButton 
+        sidebarCollapsed={sidebarCollapsed} 
+        onNewChat={onNewChat}
+      />
 
       {/* Chat List */}
       <ChatList 

@@ -6,9 +6,13 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 interface NewChatButtonProps {
   sidebarCollapsed: boolean;
+  onNewChat?: () => void;
 }
 
-const NewChatButton: React.FC<NewChatButtonProps> = ({ sidebarCollapsed }) => {
+const NewChatButton: React.FC<NewChatButtonProps> = ({ 
+  sidebarCollapsed,
+  onNewChat 
+}) => {
   const { t } = useLanguage();
   
   return (
@@ -16,6 +20,7 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({ sidebarCollapsed }) => {
       <Button 
         className={`w-full justify-start gap-2 bg-apple-600 hover:bg-apple-700 text-white border-none shadow-md ${!sidebarCollapsed ? 'px-4' : 'justify-center'}`} 
         variant="default"
+        onClick={onNewChat}
       >
         <Plus className="h-4 w-4" />
         {!sidebarCollapsed && <span>{t("newChat")}</span>}

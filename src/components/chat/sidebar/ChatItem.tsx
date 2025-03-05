@@ -15,14 +15,20 @@ const ChatItem: React.FC<ChatItemProps> = ({
   sidebarCollapsed, 
   onClick 
 }) => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onClick();
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       className={`w-full text-left p-2 rounded-lg ${
         isActive
           ? 'bg-gray-100 text-gray-900'
           : 'hover:bg-gray-50 text-gray-700'
       } transition-colors`}
+      aria-label={`Select chat: ${chat.title}`}
     >
       {sidebarCollapsed ? (
         <div className="flex justify-center">
