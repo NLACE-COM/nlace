@@ -38,6 +38,13 @@ export const companies: Company[] = [
     logo: "https://upload.wikimedia.org/wikipedia/commons/4/42/Freeport-McMoRan_logo.svg",
     description: "Compañía minera con operaciones de cobre en Chile",
   },
+  {
+    id: "c6",
+    name: "Albemarle",
+    plan: "enterprise",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Albemarle_Corporation_Logo.svg",
+    description: "Líder mundial en la producción de litio con operaciones en el Salar de Atacama, Chile",
+  },
 ];
 
 // Export the current company
