@@ -79,46 +79,64 @@ const CompanySelector = () => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 bg-popover">
-        <Command>
-          <CommandInput placeholder={t("searchCompany")} className="h-9" />
-          <CommandEmpty>{t("noCompaniesFound")}</CommandEmpty>
-          <CommandGroup>
-            {companies.map((company) => (
-              <CommandItem
-                key={company.id}
-                value={company.name}
-                onSelect={() => handleCompanyChange(company)}
-                className="flex items-center gap-2 py-2"
-              >
-                <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden">
-                  {company.logo ? (
-                    <img
-                      src={company.logo}
-                      alt={company.name}
-                      className="h-full w-full object-contain"
-                    />
-                  ) : (
-                    <Building className="h-full w-full p-1 text-gray-500" />
-                  )}
+      {open && (
+        <PopoverContent 
+          className="w-[var(--radix-popover-trigger-width)] p-0" 
+          style={{ backgroundColor: 'white', zIndex: 100 }}
+          align="start"
+        >
+          <div className="bg-white rounded-md shadow-md border border-gray-200">
+            <div className="p-2">
+              <div className="relative">
+                <input
+                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder={t("searchCompany")}
+                />
+              </div>
+            </div>
+            <div className="py-2 max-h-[300px] overflow-auto">
+              {companies.length === 0 ? (
+                <div className="px-3 py-2 text-sm text-muted-foreground">
+                  {t("noCompaniesFound")}
                 </div>
-                <span>{company.name}</span>
-                {selectedCompany?.id === company.id && (
-                  <Check className="ml-auto h-4 w-4 opacity-70" />
-                )}
-              </CommandItem>
-            ))}
-            <CommandItem
-              value="add-new"
-              onSelect={handleAddNewCompany}
-              className="flex items-center gap-2 py-2 text-primary"
-            >
-              <Plus className="h-4 w-4" />
-              <span>{t("addNewCompany")}</span>
-            </CommandItem>
-          </CommandGroup>
-        </Command>
-      </PopoverContent>
+              ) : (
+                companies.map((company) => (
+                  <div
+                    key={company.id}
+                    className={`px-3 py-2 text-sm flex items-center gap-2 cursor-pointer hover:bg-muted ${
+                      selectedCompany?.id === company.id ? "bg-muted/50" : ""
+                    }`}
+                    onClick={() => handleCompanyChange(company)}
+                  >
+                    <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden">
+                      {company.logo ? (
+                        <img
+                          src={company.logo}
+                          alt={company.name}
+                          className="h-full w-full object-contain"
+                        />
+                      ) : (
+                        <Building className="h-full w-full p-1 text-gray-500" />
+                      )}
+                    </div>
+                    <span>{company.name}</span>
+                    {selectedCompany?.id === company.id && (
+                      <Check className="ml-auto h-4 w-4 opacity-70" />
+                    )}
+                  </div>
+                ))
+              )}
+              <div
+                className="px-3 py-2 text-sm flex items-center gap-2 cursor-pointer hover:bg-muted text-primary"
+                onClick={handleAddNewCompany}
+              >
+                <Plus className="h-4 w-4" />
+                <span>{t("addNewCompany")}</span>
+              </div>
+            </div>
+          </div>
+        </PopoverContent>
+      )}
     </Popover>
   );
 };
