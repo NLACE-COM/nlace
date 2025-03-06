@@ -31,17 +31,11 @@ const CompanySelector = () => {
     setSelectedCompany(company);
     setOpen(false);
     
-    // Mostrar un toast de confirmación
     toast({
       title: t("companyChanged"),
       description: `${t("switchedTo")} ${company.name}`,
       duration: 3000,
     });
-    
-    // Aquí se podría implementar lógica adicional como:
-    // - Actualizar un contexto global
-    // - Hacer una petición API
-    // - Redirigir a otra página
   };
 
   const handleAddNewCompany = () => {
@@ -85,7 +79,7 @@ const CompanySelector = () => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 bg-popover">
         <Command>
           <CommandInput placeholder={t("searchCompany")} className="h-9" />
           <CommandEmpty>{t("noCompaniesFound")}</CommandEmpty>

@@ -64,7 +64,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
                 <Bot className="h-4 w-4 text-apple-500 mr-2 flex-shrink-0" />
                 <SelectValue placeholder="Select agent" className="truncate" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-popover">
                 <SelectGroup>
                   {agents.map((agent) => (
                     <SelectItem key={agent.id} value={agent.id}>
