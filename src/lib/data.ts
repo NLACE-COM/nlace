@@ -1,42 +1,41 @@
-
 import { Agent, AgentCategory, AgentStatus, AgentType, Company, KnowledgeBase, Task, User, UsageMetrics } from "./types";
 
 // Empresas reconocidas B2B
 export const companies: Company[] = [
   {
     id: "c1",
-    name: "Microsoft",
+    name: "Codelco",
     plan: "enterprise",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
-    description: "Líder mundial en software y soluciones empresariales",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/26/Codelco_logo.svg",
+    description: "Principal productor de cobre en Chile y el mundo",
   },
   {
     id: "c2",
-    name: "Salesforce",
+    name: "BHP",
     plan: "enterprise",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg",
-    description: "Plataforma líder en CRM y soluciones en la nube",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/43/BHP_2017_logo.svg",
+    description: "Compañía minera global con importantes operaciones en Chile",
   },
   {
     id: "c3",
-    name: "SAP",
+    name: "Anglo American",
     plan: "enterprise",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg",
-    description: "Software de planificación de recursos empresariales",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/7/79/Anglo_American_logo.svg",
+    description: "Operaciones de cobre y otros minerales en Chile",
   },
   {
     id: "c4",
-    name: "Oracle",
+    name: "Antofagasta Minerals",
     plan: "enterprise",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg",
-    description: "Bases de datos y soluciones empresariales a gran escala",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Antofagasta_Minerals_logo.svg",
+    description: "Grupo minero chileno con foco en producción de cobre",
   },
   {
     id: "c5",
-    name: "IBM",
+    name: "Freeport-McMoRan",
     plan: "enterprise",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
-    description: "Tecnologías y consultoría para transformación empresarial",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/42/Freeport-McMoRan_logo.svg",
+    description: "Compañía minera con operaciones de cobre en Chile",
   },
 ];
 
