@@ -4,7 +4,7 @@ import ChatMessage from "@/components/ChatMessage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChatMessage as ChatMessageType } from "@/types/chat";
 import { MessageSquarePlus } from "lucide-react";
-import { agents } from "@/lib/data";
+import { agents } from "@/lib/data/agents";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ChatMessagesProps {
