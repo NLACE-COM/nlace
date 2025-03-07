@@ -3,13 +3,6 @@ import { useState } from "react";
 import { Check, ChevronDown, ChevronUp, Plus, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -26,6 +19,7 @@ const CompanySelector = () => {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(
     companies[0]
   );
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   const handleCompanyChange = (company: Company) => {
     setSelectedCompany(company);
@@ -47,6 +41,13 @@ const CompanySelector = () => {
     setOpen(false);
   };
 
+  const handleImageError = (companyId: string) => {
+    setImageErrors(prev => ({
+      ...prev,
+      [companyId]: true
+    }));
+  };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -57,15 +58,16 @@ const CompanySelector = () => {
           className="w-full justify-between border-muted bg-background hover:bg-muted/50 h-auto py-3"
         >
           <div className="flex items-center gap-2 overflow-hidden">
-            <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden">
-              {selectedCompany?.logo ? (
+            <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden flex items-center justify-center">
+              {selectedCompany?.logo && !imageErrors[selectedCompany.id] ? (
                 <img
                   src={selectedCompany.logo}
                   alt={selectedCompany.name}
                   className="h-full w-full object-contain"
+                  onError={() => handleImageError(selectedCompany.id)}
                 />
               ) : (
-                <Building className="h-full w-full p-1 text-gray-500" />
+                <Building className="h-4 w-4 text-gray-500" />
               )}
             </div>
             <span className="truncate font-medium">
@@ -108,15 +110,16 @@ const CompanySelector = () => {
                     }`}
                     onClick={() => handleCompanyChange(company)}
                   >
-                    <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden">
-                      {company.logo ? (
+                    <div className="h-6 w-6 rounded bg-muted shrink-0 overflow-hidden flex items-center justify-center">
+                      {company.logo && !imageErrors[company.id] ? (
                         <img
                           src={company.logo}
                           alt={company.name}
                           className="h-full w-full object-contain"
+                          onError={() => handleImageError(company.id)}
                         />
                       ) : (
-                        <Building className="h-full w-full p-1 text-gray-500" />
+                        <Building className="h-4 w-4 text-gray-500" />
                       )}
                     </div>
                     <span>{company.name}</span>
