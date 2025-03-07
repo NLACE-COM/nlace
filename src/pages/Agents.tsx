@@ -22,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import AgentCard from "@/components/AgentCard";
 import { currentCompany, getAgentsByCompany } from "@/lib/data";
 import { Agent, AgentCategory, AgentType } from "@/lib/types";
@@ -35,6 +34,7 @@ const Agents = () => {
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [view, setView] = useState<"grid" | "list">("grid");
 
+  // Safely get agents by company
   const companyAgents = currentCompany
     ? getAgentsByCompany(currentCompany.id)
     : [];

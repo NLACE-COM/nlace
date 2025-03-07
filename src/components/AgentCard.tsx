@@ -19,7 +19,6 @@ import {
   Headphones,
   GitPullRequest
 } from "lucide-react";
-import { getConversationsByAgent, getIntegrationsByAgent, getKnowledgeBasesByAgent } from "@/lib/data";
 
 interface AgentCardProps {
   agent: Agent;
@@ -27,9 +26,11 @@ interface AgentCardProps {
 }
 
 const AgentCard = ({ agent, onClick }: AgentCardProps) => {
-  const knowledgeBases = getKnowledgeBasesByAgent(agent.id);
-  const integrations = getIntegrationsByAgent(agent.id);
-  const conversations = getConversationsByAgent(agent.id);
+  // Instead of using functions that might not be defined properly, 
+  // we'll use the agent's properties directly
+  const knowledgeBasesCount = agent.knowledgeBases?.length || 0;
+  const integrationsCount = agent.integrations?.length || 0;
+  const conversations = agent.conversationCount || 0;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -171,7 +172,7 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
               <MessagesSquare className="h-3.5 w-3.5 mr-1 text-muted-foreground" />
               <p className="text-xs text-muted-foreground">Conversaciones</p>
             </div>
-            <p className="font-medium">{agent.conversationCount || 0}</p>
+            <p className="font-medium">{conversations}</p>
           </div>
           <div className="bg-muted/50 p-2 rounded flex flex-col">
             <div className="flex items-center mb-1">
@@ -187,22 +188,22 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
             <span className="text-muted-foreground">Recursos asociados:</span>
           </div>
           <div className="flex flex-wrap gap-2">
-            {knowledgeBases.length > 0 && (
+            {knowledgeBasesCount > 0 && (
               <Badge variant="outline" className="flex items-center gap-1">
                 <Book className="h-3 w-3" />
-                <span>{knowledgeBases.length} KB</span>
+                <span>{knowledgeBasesCount} KB</span>
               </Badge>
             )}
-            {integrations.length > 0 && (
+            {integrationsCount > 0 && (
               <Badge variant="outline" className="flex items-center gap-1">
                 <Plug className="h-3 w-3" />
-                <span>{integrations.length} integraciones</span>
+                <span>{integrationsCount} integraciones</span>
               </Badge>
             )}
-            {agent.conversationCount && agent.conversationCount > 0 && (
+            {conversations > 0 && (
               <Badge variant="outline" className="flex items-center gap-1">
                 <Lock className="h-3 w-3" />
-                <span>{Math.floor(agent.conversationCount * 0.8)}K tokens</span>
+                <span>{Math.floor(conversations * 0.8)}K tokens</span>
               </Badge>
             )}
           </div>
@@ -217,7 +218,7 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
           >
             Gestionar
           </Button>
-          {conversations.length > 0 && (
+          {conversations > 0 && (
             <Button 
               variant="secondary"
               className="flex items-center gap-1"
