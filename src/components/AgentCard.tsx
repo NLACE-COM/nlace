@@ -12,7 +12,12 @@ import {
   Settings, 
   FileSearch,
   Plug,
-  Lock
+  Lock,
+  HelpCircle,
+  ClipboardCheck,
+  FileSignature,
+  Headphones,
+  GitPullRequest
 } from "lucide-react";
 import { getConversationsByAgent, getIntegrationsByAgent, getKnowledgeBasesByAgent } from "@/lib/data";
 
@@ -56,7 +61,15 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
     }
   };
 
-  const getAgentIcon = (type: string) => {
+  const getAgentIcon = (type: string, name: string) => {
+    // Asignar iconos específicos por nombre de agente
+    if (name === "Revisor de Contratos") return <FileSignature className="h-6 w-6" />;
+    if (name === "Generador de Reportes") return <BarChart className="h-6 w-6" />;
+    if (name === "Creador de Notas de Pago") return <ClipboardCheck className="h-6 w-6" />;
+    if (name === "Asesor Técnico") return <Headphones className="h-6 w-6" />;
+    if (name === "Seguimiento de Proyecto") return <GitPullRequest className="h-6 w-6" />;
+    
+    // Si no hay una correspondencia específica, usar el tipo
     switch (type) {
       case "data-analysis":
         return <BarChart className="h-6 w-6" />;
@@ -131,7 +144,7 @@ const AgentCard = ({ agent, onClick }: AgentCardProps) => {
         <div className="flex justify-between items-start">
           <div className="flex items-center">
             <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-3">
-              {getAgentIcon(agent.type)}
+              {getAgentIcon(agent.type, agent.name)}
             </div>
             <div>
               <h3 className="font-medium text-lg line-clamp-1">{agent.name}</h3>

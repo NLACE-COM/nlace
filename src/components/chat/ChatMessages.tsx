@@ -18,8 +18,8 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading, select
   
   // Find the selected agent name
   const agentName = selectedAgent ? 
-    agents.find(agent => agent.id === selectedAgent)?.name || "ContentGen" : 
-    "ContentGen";
+    agents.find(agent => agent.id === selectedAgent)?.name || "Revisor de Contratos" : 
+    "Revisor de Contratos";
 
   // Render loading skeletons
   const renderLoadingSkeletons = () => (
