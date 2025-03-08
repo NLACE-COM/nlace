@@ -29,7 +29,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useTranslation } from "@/translations";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Interface para las integraciones
 interface Integration {
@@ -45,7 +45,7 @@ interface Integration {
 
 const Integrations = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   // Lista de integraciones disponibles
   const integrationsList: Integration[] = [
