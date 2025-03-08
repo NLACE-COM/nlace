@@ -16,6 +16,7 @@ import {
   Bookmark,
   Slack,
   Mail,
+  Plug,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,8 +28,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "@/translations";
 
 // Interface para las integraciones
 interface Integration {
@@ -44,6 +45,7 @@ interface Integration {
 
 const Integrations = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { t } = useTranslation();
 
   // Lista de integraciones disponibles
   const integrationsList: Integration[] = [
@@ -222,7 +224,7 @@ const Integrations = () => {
     <div className="container py-6 max-w-7xl animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Integraciones</h1>
+          <h1 className="text-2xl font-bold">{t("integrations")}</h1>
           <p className="text-muted-foreground">
             Conecta aplicaciones externas para ampliar las capacidades de tus agentes
           </p>
@@ -241,9 +243,9 @@ const Integrations = () => {
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {sortedIntegrations.length === 0 ? (
-          <div className="col-span-2 flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
+          <div className="col-span-full flex flex-col items-center justify-center p-12 text-center border rounded-lg bg-muted/10">
             <Globe className="h-12 w-12 text-muted-foreground mb-4" />
             <h3 className="text-xl font-medium mb-2">No se encontraron integraciones</h3>
             <p className="text-muted-foreground mb-6">
@@ -253,40 +255,33 @@ const Integrations = () => {
         ) : (
           sortedIntegrations.map((integration) => (
             <Card key={integration.id} className="animate-fade-in hover:shadow-md transition-shadow duration-200">
-              <CardHeader className="flex flex-row items-center gap-4">
+              <CardHeader className="flex flex-row items-center gap-3 p-4">
                 <div className="p-2 border rounded-md flex items-center justify-center">
                   {integration.icon}
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">{integration.name}</CardTitle>
+                    <CardTitle className="text-base">{integration.name}</CardTitle>
                     {renderStatus(integration.status)}
                   </div>
-                  <CardDescription className="mt-1 line-clamp-2">{integration.description}</CardDescription>
+                  <CardDescription className="mt-1 line-clamp-2 text-xs">{integration.description}</CardDescription>
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-4 pt-0">
                 {integration.status === "connected" && integration.connectedDate && (
-                  <div className="flex items-center gap-1 text-sm">
-                    <span className="text-muted-foreground">Conectado desde: {formatDate(integration.connectedDate)}</span>
+                  <div className="text-xs text-muted-foreground">
+                    Conectado desde: {formatDate(integration.connectedDate)}
                   </div>
                 )}
               </CardContent>
-              <CardFooter className="flex justify-between items-center">
-                <div className="flex items-center">
-                  {integration.status === "connected" && (
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium">Activo</span>
-                      <Switch checked={true} />
-                    </div>
-                  )}
-                </div>
+              <CardFooter className="p-4 pt-0 flex justify-end">
                 <Button 
                   variant={integration.status === "connected" ? "outline" : "default"}
-                  className="gap-2"
+                  size="sm"
+                  className="gap-1 group transition-all duration-200 hover:scale-105"
                 >
                   {integration.status === "connected" ? "Configurar" : "Conectar"}
-                  <ExternalLink className="h-4 w-4" />
+                  <ExternalLink className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Button>
               </CardFooter>
             </Card>
