@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   Facebook,
@@ -29,7 +28,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 // Interface para las integraciones
@@ -207,20 +205,6 @@ const Integrations = () => {
     }).format(date);
   };
 
-  // Función para renderizar el estado con colores y texto adecuados
-  const renderStatus = (status: Integration["status"]) => {
-    switch (status) {
-      case "connected":
-        return <Badge className="bg-green-500">Conectado</Badge>;
-      case "disconnected":
-        return <Badge variant="outline">Desconectado</Badge>;
-      case "pending":
-        return <Badge className="bg-amber-500">Pendiente</Badge>;
-      default:
-        return null;
-    }
-  };
-
   return (
     <div className="container py-6 max-w-7xl animate-fade-in">
       <div className="flex items-center justify-between mb-6">
@@ -261,12 +245,9 @@ const Integrations = () => {
                   {integration.icon}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between gap-2">
-                    <CardTitle className="text-base truncate">{integration.name}</CardTitle>
-                    <div className="flex-shrink-0">
-                      {renderStatus(integration.status)}
-                    </div>
-                  </div>
+                  <CardTitle className="text-base md:text-lg truncate">
+                    {integration.name}
+                  </CardTitle>
                   <CardDescription className="mt-1 line-clamp-2 text-xs">
                     {integration.description}
                   </CardDescription>
