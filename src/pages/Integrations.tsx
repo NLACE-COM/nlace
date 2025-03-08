@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import {
   Facebook,
@@ -254,27 +255,31 @@ const Integrations = () => {
           </div>
         ) : (
           sortedIntegrations.map((integration) => (
-            <Card key={integration.id} className="animate-fade-in hover:shadow-md transition-shadow duration-200">
-              <CardHeader className="flex flex-row items-center gap-3 p-4">
-                <div className="p-2 border rounded-md flex items-center justify-center">
+            <Card key={integration.id} className="animate-fade-in hover:shadow-md transition-shadow duration-200 flex flex-col h-full overflow-hidden">
+              <CardHeader className="flex flex-row items-start gap-3 p-4">
+                <div className="p-2 border rounded-md flex items-center justify-center flex-shrink-0">
                   {integration.icon}
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-base">{integration.name}</CardTitle>
-                    {renderStatus(integration.status)}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-2">
+                    <CardTitle className="text-base truncate">{integration.name}</CardTitle>
+                    <div className="flex-shrink-0">
+                      {renderStatus(integration.status)}
+                    </div>
                   </div>
-                  <CardDescription className="mt-1 line-clamp-2 text-xs">{integration.description}</CardDescription>
+                  <CardDescription className="mt-1 line-clamp-2 text-xs">
+                    {integration.description}
+                  </CardDescription>
                 </div>
               </CardHeader>
-              <CardContent className="p-4 pt-0">
+              <CardContent className="p-4 pt-0 flex-grow">
                 {integration.status === "connected" && integration.connectedDate && (
                   <div className="text-xs text-muted-foreground">
                     Conectado desde: {formatDate(integration.connectedDate)}
                   </div>
                 )}
               </CardContent>
-              <CardFooter className="p-4 pt-0 flex justify-end">
+              <CardFooter className="p-4 pt-0 flex justify-end mt-auto">
                 <Button 
                   variant={integration.status === "connected" ? "outline" : "default"}
                   size="sm"
