@@ -26,8 +26,8 @@ const CompanySelector = () => {
     setOpen(false);
     
     toast({
-      title: t("companyChanged"),
-      description: `${t("switchedTo")} ${company.name}`,
+      title: t("empresaCambiada"),
+      description: `${t("cambiadoA")} ${company.name}`,
       duration: 3000,
     });
   };

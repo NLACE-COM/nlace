@@ -16,6 +16,12 @@ const translations = {
   "notificationDismissed": "Notification dismissed",
   "successful": "successful",
   
+  // Company
+  "empresaCambiada": "Company changed",
+  "cambiadoA": "Switched to",
+  "featureInDevelopment": "Feature in development",
+  "comingSoon": "Coming soon",
+  
   // Sidebar
   "dashboard": "Dashboard",
   "agents": "Agents",
