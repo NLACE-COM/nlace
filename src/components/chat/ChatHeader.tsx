@@ -91,14 +91,21 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           <div className={isMobile ? "max-w-[100px]" : "max-w-[200px]"}>
             <Select value={selectedAgent} onValueChange={onAgentChange}>
               <SelectTrigger className="bg-apple-50 text-apple-700 border-apple-200 hover:bg-apple-100 w-full">
-                <div className="flex items-center gap-2 w-full">
-                  <div className="text-apple-500 flex-shrink-0">
-                    {getAgentIcon(selectedAgentData?.type, selectedAgentData?.name)}
+                {/* Custom trigger content - shows icon + text or just icon on mobile */}
+                {isMobile ? (
+                  <div className="flex items-center justify-center pl-1">
+                    <span className="text-apple-500">
+                      {getAgentIcon(selectedAgentData?.type, selectedAgentData?.name)}
+                    </span>
                   </div>
-                  {!isMobile && (
-                    <SelectValue placeholder="Seleccionar agente" />
-                  )}
-                </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span className="text-apple-500 flex-shrink-0">
+                      {getAgentIcon(selectedAgentData?.type, selectedAgentData?.name)}
+                    </span>
+                    <span className="truncate">{selectedAgentData?.name}</span>
+                  </div>
+                )}
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-md">
                 <SelectGroup>
