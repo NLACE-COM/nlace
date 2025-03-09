@@ -1,4 +1,6 @@
 
+import { Integration } from "@/types/integration";
+
 // Función para formatear fechas
 export const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -10,14 +12,14 @@ export const formatDate = (dateString: string): string => {
 };
 
 // Función para ordenar integraciones
-export const sortIntegrations = (integrations: any[]) => {
+export const sortIntegrations = (integrations: Integration[]) => {
   return [...integrations].sort((a, b) => {
     const statusOrder = {
       connected: 0,
       pending: 1,
       disconnected: 2,
     };
-    return statusOrder[a.status as keyof typeof statusOrder] - statusOrder[b.status as keyof typeof statusOrder] 
+    return statusOrder[a.status] - statusOrder[b.status] 
       || b.popularityScore - a.popularityScore;
   });
 };
