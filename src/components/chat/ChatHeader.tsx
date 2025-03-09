@@ -91,12 +91,12 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           <div className={isMobile ? "max-w-[100px]" : "max-w-[200px]"}>
             <Select value={selectedAgent} onValueChange={onAgentChange}>
               <SelectTrigger className="bg-apple-50 text-apple-700 border-apple-200 hover:bg-apple-100 w-full">
-                <div className="flex items-center gap-1.5 w-full">
+                <div className="flex items-center gap-2 w-full">
                   <div className="text-apple-500 flex-shrink-0">
                     {getAgentIcon(selectedAgentData?.type, selectedAgentData?.name)}
                   </div>
                   {!isMobile && (
-                    <SelectValue placeholder="Seleccionar agente" className="truncate" />
+                    <SelectValue placeholder="Seleccionar agente" />
                   )}
                 </div>
               </SelectTrigger>
@@ -104,7 +104,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
                 <SelectGroup>
                   {agents.map((agent) => (
                     <SelectItem key={agent.id} value={agent.id} className="pl-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 pl-1">
                         <span className="flex-shrink-0 text-apple-500">
                           {getAgentIcon(agent.type, agent.name)}
                         </span>
