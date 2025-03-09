@@ -94,6 +94,14 @@ const Chat = () => {
     }
   }, [conversationsError, conversationError, modelsError]);
 
+  // Enhance agents with types for icons
+  const enhancedAgents = agents.map(agent => ({
+    id: agent.id,
+    name: agent.name,
+    avatar: agent.avatar,
+    type: agent.type
+  }));
+
   return (
     <div className="flex h-full overflow-hidden bg-slate-50">
       {/* Sidebar Component */}
@@ -118,7 +126,7 @@ const Chat = () => {
           selectedAgent={selectedAgent}
           isMobile={isMobile}
           llmModels={llmModels}
-          agents={agents}
+          agents={enhancedAgents}
           isLoading={isLoadingModels}
           onModelSelect={setSelectedModel}
           onAgentChange={setSelectedAgent}
