@@ -93,7 +93,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
               <SelectTrigger className="bg-apple-50 text-apple-700 border-apple-200 hover:bg-apple-100 w-full">
                 {/* Custom trigger content - shows icon + text or just icon on mobile */}
                 {isMobile ? (
-                  <div className="flex items-center justify-center pl-1">
+                  <div className="flex items-center justify-center pl-2">
                     <span className="text-apple-500">
                       {getAgentIcon(selectedAgentData?.type, selectedAgentData?.name)}
                     </span>
