@@ -99,7 +99,7 @@ const Chat = () => {
     id: agent.id,
     name: agent.name,
     avatar: agent.avatar,
-    type: agent.type
+    type: agent.type || "" // Ensure type is always defined
   }));
 
   return (
