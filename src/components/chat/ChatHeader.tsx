@@ -1,31 +1,26 @@
-
 import React from 'react';
 import { Settings, Menu, FileSignature, BarChart, ClipboardCheck, Headphones, GitPullRequest, Search, MessagesSquare, FileSearch, Book } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LLMModel } from '@/types/chat';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 interface ChatHeaderProps {
   title: string;
   selectedModel: string;
   selectedAgent: string;
   isMobile: boolean;
   llmModels: LLMModel[];
-  agents: { id: string; name: string; avatar?: string; type?: string }[];
+  agents: {
+    id: string;
+    name: string;
+    avatar?: string;
+    type?: string;
+  }[];
   isLoading: boolean;
   onModelSelect: (modelId: string) => void;
   onAgentChange: (agentId: string) => void;
   onMobileSidebarToggle: () => void;
 }
-
 const ChatHeader: React.FC<ChatHeaderProps> = ({
   title,
   selectedAgent,
@@ -44,7 +39,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
     if (name.includes("Asesor Técnico")) return <Headphones className="h-4 w-4" />;
     if (name.includes("Seguimiento")) return <GitPullRequest className="h-4 w-4" />;
     if (name.includes("Asistente de Investigación")) return <Search className="h-4 w-4" />;
-    
+
     // Si no hay una correspondencia específica, usar el tipo
     switch (type) {
       case "data-analysis":
@@ -64,27 +59,14 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
 
   // Find the currently selected agent
   const selectedAgentData = agents.find(agent => agent.id === selectedAgent) || agents[0];
-
-  return (
-    <header className="flex flex-col border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  return <header className="flex flex-col border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       {/* Main header row */}
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center">
-          {isMobile && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onMobileSidebarToggle}
-              className="mr-2 md:hidden"
-            >
+          {isMobile && <Button variant="ghost" size="icon" onClick={onMobileSidebarToggle} className="mr-2 md:hidden">
               <Menu className="h-5 w-5" />
-            </Button>
-          )}
-          {isLoading ? (
-            <Skeleton className="h-6 w-48" />
-          ) : (
-            <h1 className="text-xl font-bold truncate">{title}</h1>
-          )}
+            </Button>}
+          {isLoading ? <Skeleton className="h-6 w-48" /> : <h1 className="text-xl font-bold truncate">{title}</h1>}
         </div>
         <div className="flex items-center space-x-2">
           {/* Agent selector - optimized for mobile */}
@@ -92,33 +74,27 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
             <Select value={selectedAgent} onValueChange={onAgentChange}>
               <SelectTrigger className="bg-apple-50 text-apple-700 border-apple-200 hover:bg-apple-100 w-full">
                 {/* Custom trigger content - shows icon + text or just icon on mobile */}
-                {isMobile ? (
-                  <div className="flex items-center justify-center pl-2">
+                {isMobile ? <div className="flex items-center justify-center pl-2">
                     <span className="text-apple-500">
                       {getAgentIcon(selectedAgentData?.type, selectedAgentData?.name)}
                     </span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
+                  </div> : <div className="flex items-center gap-2">
                     <span className="text-apple-500 flex-shrink-0">
                       {getAgentIcon(selectedAgentData?.type, selectedAgentData?.name)}
                     </span>
                     <span className="truncate">{selectedAgentData?.name}</span>
-                  </div>
-                )}
+                  </div>}
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-md">
                 <SelectGroup>
-                  {agents.map((agent) => (
-                    <SelectItem key={agent.id} value={agent.id} className="pl-2">
+                  {agents.map(agent => <SelectItem key={agent.id} value={agent.id} className="pl-2">
                       <div className="flex items-center gap-2 pl-1">
                         <span className="flex-shrink-0 text-apple-500">
                           {getAgentIcon(agent.type, agent.name)}
                         </span>
                         <span className="truncate">{agent.name}</span>
                       </div>
-                    </SelectItem>
-                  ))}
+                    </SelectItem>)}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -130,8 +106,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
           </Button>
         </div>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default ChatHeader;
