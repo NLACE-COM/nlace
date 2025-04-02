@@ -23,8 +23,8 @@ const SidebarItem = ({
       className={({ isActive }) =>
         `flex items-center h-12 px-4 rounded-md transition-colors ${
           isActive
-            ? "bg-accent text-accent-foreground font-medium"
-            : "text-sidebar-foreground hover:bg-muted/50"
+            ? "bg-brand-blue text-white font-medium"
+            : "text-sidebar-foreground hover:bg-brand-blue/10 hover:text-brand-blue"
         } ${collapsed ? "justify-center" : "gap-3"}`
       }
       onClick={onClick}

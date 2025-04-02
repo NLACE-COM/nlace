@@ -23,7 +23,7 @@ const SidebarFooter = ({ collapsed, onItemClick }: SidebarFooterProps) => {
         onClick={onItemClick}
       />
       <div
-        className={`flex items-center h-12 px-4 rounded-md cursor-pointer transition-colors hover:bg-muted/50 ${
+        className={`flex items-center h-12 px-4 rounded-md cursor-pointer transition-colors hover:bg-brand-blue/10 hover:text-brand-blue ${
           collapsed ? "justify-center" : "gap-3"
         }`}
       >
