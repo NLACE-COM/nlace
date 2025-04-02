@@ -20,7 +20,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/50 to-transparent"></div>
       </div>
       
-      <div className="flex flex-col md:flex-row flex-1">
+      <div className="flex flex-col md:flex-row flex-1 h-[80vh] md:h-auto">
         {/* Columna de la izquierda - Imagen (en desktop) */}
         <div className="hidden md:block md:w-1/2 relative overflow-hidden">
           <img src="/lovable-uploads/4e8356c4-36c0-494b-98ea-adfc53608356.png" alt="Modern art with statue" className="w-full h-full object-cover" />
@@ -28,7 +28,7 @@ const Index = () => {
         </div>
         
         {/* Columna de la derecha - Login */}
-        <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-8 bg-brand-blue">
+        <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-8 bg-brand-blue flex-1">
           <div className="w-full max-w-md">
             <div className="mb-8 text-center">
               <h1 className="text-3xl font-bold mb-2 bg-brand-dark text-brand-light px-4 py-2 inline-block rounded">NLACE AI Studio</h1>
