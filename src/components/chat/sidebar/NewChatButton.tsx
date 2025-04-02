@@ -18,7 +18,7 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
   return (
     <div className="p-2">
       <Button 
-        className={`w-full justify-start gap-2 bg-apple-600 hover:bg-apple-700 text-white border-none shadow-md ${!sidebarCollapsed ? 'px-4' : 'justify-center'}`} 
+        className={`w-full justify-start gap-2 bg-brand-blue hover:bg-brand-blue/80 text-white border-none shadow-md ${!sidebarCollapsed ? 'px-4' : 'justify-center'}`} 
         variant="default"
         onClick={onNewChat}
       >
