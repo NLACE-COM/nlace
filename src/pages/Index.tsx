@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LoginForm from "@/components/login/LoginForm";
@@ -5,11 +6,13 @@ import GoogleLoginButton from "@/components/login/GoogleLoginButton";
 import PasswordResetDialog from "@/components/login/PasswordResetDialog";
 import LoginDivider from "@/components/login/LoginDivider";
 import SignupLink from "@/components/login/SignupLink";
+
 const Index = () => {
   const {
     language
   } = useLanguage();
   const [openResetDialog, setOpenResetDialog] = useState(false);
+
   return <div className="min-h-screen w-full flex flex-col md:flex-row bg-brand-dark">
       {/* Columna de la izquierda - Imagen */}
       <div className="hidden md:block md:w-1/2 relative overflow-hidden">
@@ -21,7 +24,7 @@ const Index = () => {
       <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-8 bg-brand-blue">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold mb-2 text-brand-pink">NLACE AI Studio</h1>
+            <h1 className="text-3xl font-bold mb-2 bg-brand-dark text-brand-light px-4 py-2 inline-block rounded">NLACE AI Studio</h1>
             <p className="text-brand-light/80">
               {language === "es" ? "Inicia sesión para acceder a tus agentes de IA" : "Sign in to access your AI agents"}
             </p>
@@ -47,4 +50,5 @@ const Index = () => {
       </div>
     </div>;
 };
+
 export default Index;
