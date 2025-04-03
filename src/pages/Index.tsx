@@ -31,8 +31,8 @@ const Index = () => {
         <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-8 bg-brand-blue flex-1">
           <div className="w-full max-w-md">
             <div className="mb-8 text-center">
-              <h1 className="text-3xl font-bold mb-2 bg-brand-dark text-brand-light px-4 py-2 inline-block rounded">NLACE AI Studio</h1>
-              <p className="text-brand-light/80">
+              <h1 className="text-3xl font-bold mb-2 bg-brand-dark text-brand-light px-4 py-2 inline-block rounded font-heading">NLACE AI Studio</h1>
+              <p className="text-brand-light/80 font-sans">
                 {language === "es" ? "Inicia sesión para acceder a tus agentes de IA" : "Sign in to access your AI agents"}
               </p>
             </div>
