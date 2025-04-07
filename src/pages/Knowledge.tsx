@@ -1,81 +1,33 @@
-
 import { useState } from "react";
-import {
-  Clock,
-  Download,
-  FileText,
-  MoreHorizontal,
-  Plus,
-  Search,
-  Upload,
-  Trash2,
-  AlertCircle,
-  File,
-  FolderX,
-  Trash,
-  X,
-} from "lucide-react";
+import { Clock, Download, FileText, MoreHorizontal, Plus, Search, Upload, Trash2, AlertCircle, File, FolderX, Trash, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { currentCompany, getKnowledgeBasesByCompany } from "@/lib/data";
 import { toast } from "@/hooks/use-toast";
 import { KnowledgeBase, KnowledgeDocument } from "@/lib/types";
-
 const Knowledge = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [knowledgeBaseToDelete, setKnowledgeBaseToDelete] = useState<KnowledgeBase | null>(null);
-  const [documentToDelete, setDocumentToDelete] = useState<{kb: KnowledgeBase, doc: KnowledgeDocument} | null>(null);
+  const [documentToDelete, setDocumentToDelete] = useState<{
+    kb: KnowledgeBase;
+    doc: KnowledgeDocument;
+  } | null>(null);
   const [isNewKBDialogOpen, setIsNewKBDialogOpen] = useState(false);
   const [newKBName, setNewKBName] = useState("");
   const [newKBDescription, setNewKBDescription] = useState("");
-  
+
   // Estado para manejar la subida de archivos
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [selectedKB, setSelectedKB] = useState<KnowledgeBase | null>(null);
-  
-  const companyKnowledgeBases = currentCompany
-    ? getKnowledgeBasesByCompany(currentCompany.id)
-    : [];
-    
-  const filteredKnowledgeBases = companyKnowledgeBases.filter((kb) =>
-    kb.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  const companyKnowledgeBases = currentCompany ? getKnowledgeBasesByCompany(currentCompany.id) : [];
+  const filteredKnowledgeBases = companyKnowledgeBases.filter(kb => kb.name.toLowerCase().includes(searchTerm.toLowerCase()));
   const formatFileSize = (sizeInKB: number): string => {
     if (sizeInKB < 1000) {
       return `${sizeInKB} KB`;
@@ -83,16 +35,14 @@ const Knowledge = () => {
       return `${(sizeInKB / 1000).toFixed(1)} MB`;
     }
   };
-
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("es-ES", {
       day: "numeric",
       month: "short",
-      year: "numeric",
+      year: "numeric"
     }).format(date);
   };
-
   const getFileIcon = (type: string) => {
     switch (type) {
       case "pdf":
@@ -109,42 +59,35 @@ const Knowledge = () => {
         return <FileText className="h-6 w-6 text-gray-500" />;
     }
   };
-
   const handleDeleteKnowledgeBase = () => {
     if (knowledgeBaseToDelete) {
       // Aquí iría la lógica para eliminar la base de conocimiento
       console.log("Eliminando base de conocimiento:", knowledgeBaseToDelete.id);
-      
       toast({
         title: "Base de conocimiento eliminada",
-        description: `La base de conocimiento "${knowledgeBaseToDelete.name}" ha sido eliminada.`,
+        description: `La base de conocimiento "${knowledgeBaseToDelete.name}" ha sido eliminada.`
       });
-      
       setKnowledgeBaseToDelete(null);
       setIsDeleteDialogOpen(false);
     }
   };
-
   const handleDeleteDocument = () => {
     if (documentToDelete) {
       // Aquí iría la lógica para eliminar el documento
       console.log("Eliminando documento:", documentToDelete.doc.id, "de la KB:", documentToDelete.kb.id);
-      
       toast({
         title: "Documento eliminado",
-        description: `El documento "${documentToDelete.doc.title}" ha sido eliminado.`,
+        description: `El documento "${documentToDelete.doc.title}" ha sido eliminado.`
       });
-      
       setDocumentToDelete(null);
     }
   };
-
   const handleCreateKnowledgeBase = () => {
     if (!newKBName.trim()) {
       toast({
         title: "Error",
         description: "El nombre de la base de conocimiento es obligatorio.",
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
@@ -152,37 +95,31 @@ const Knowledge = () => {
     // Aquí iría la lógica para crear una nueva base de conocimiento
     console.log("Creando nueva base de conocimiento:", {
       name: newKBName,
-      description: newKBDescription,
+      description: newKBDescription
     });
-
     toast({
       title: "Base de conocimiento creada",
-      description: `La base de conocimiento "${newKBName}" ha sido creada.`,
+      description: `La base de conocimiento "${newKBName}" ha sido creada.`
     });
-
     setNewKBName("");
     setNewKBDescription("");
     setIsNewKBDialogOpen(false);
   };
-
   const handleUploadFile = () => {
     if (!selectedKB) return;
 
     // Aquí iría la lógica para subir archivos
     toast({
       title: "Documento subido",
-      description: "El documento ha sido añadido a la base de conocimiento.",
+      description: "El documento ha sido añadido a la base de conocimiento."
     });
-
     setSelectedKB(null);
     setIsUploadDialogOpen(false);
   };
-
-  return (
-    <div className="container py-6 max-w-7xl animate-fade-in pb-20">
+  return <div className="container py-6 max-w-7xl animate-fade-in pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
         <div>
-          <h1 className="heading-1">Base de Conocimiento</h1>
+          <h1 className="heading-1 font-extrabold">Base de Conocimiento</h1>
           <p className="text-muted-foreground">
             Gestiona el conocimiento privado de tu empresa
           </p>
@@ -203,22 +140,11 @@ const Knowledge = () => {
             <div className="space-y-4 py-2">
               <div className="space-y-2">
                 <Label htmlFor="name">Nombre</Label>
-                <Input
-                  id="name"
-                  placeholder="Ej: Documentación Técnica"
-                  value={newKBName}
-                  onChange={(e) => setNewKBName(e.target.value)}
-                />
+                <Input id="name" placeholder="Ej: Documentación Técnica" value={newKBName} onChange={e => setNewKBName(e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="description">Descripción</Label>
-                <Textarea
-                  id="description"
-                  placeholder="Ej: Contiene toda la documentación técnica de nuestros productos"
-                  value={newKBDescription}
-                  onChange={(e) => setNewKBDescription(e.target.value)}
-                  rows={3}
-                />
+                <Textarea id="description" placeholder="Ej: Contiene toda la documentación técnica de nuestros productos" value={newKBDescription} onChange={e => setNewKBDescription(e.target.value)} rows={3} />
               </div>
             </div>
             <DialogFooter>
@@ -234,12 +160,7 @@ const Knowledge = () => {
       <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-6">
         <div className="w-full md:w-72 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Buscar bases de conocimiento..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9"
-          />
+          <Input placeholder="Buscar bases de conocimiento..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-9" />
         </div>
 
         <div className="flex gap-2 w-full md:w-auto">
@@ -259,24 +180,16 @@ const Knowledge = () => {
               <div className="space-y-4 py-2">
                 <div className="space-y-2">
                   <Label>Base de Conocimiento</Label>
-                  <select 
-                    className="w-full h-10 px-3 py-2 rounded-md border border-input bg-background text-sm"
-                    onChange={(e) => {
-                      const kb = companyKnowledgeBases.find(
-                        (kb) => kb.id === e.target.value
-                      );
-                      setSelectedKB(kb || null);
-                    }}
-                    value={selectedKB?.id || ""}
-                  >
+                  <select className="w-full h-10 px-3 py-2 rounded-md border border-input bg-background text-sm" onChange={e => {
+                  const kb = companyKnowledgeBases.find(kb => kb.id === e.target.value);
+                  setSelectedKB(kb || null);
+                }} value={selectedKB?.id || ""}>
                     <option value="" disabled>
                       Selecciona una base de conocimiento
                     </option>
-                    {companyKnowledgeBases.map((kb) => (
-                      <option key={kb.id} value={kb.id}>
+                    {companyKnowledgeBases.map(kb => <option key={kb.id} value={kb.id}>
                         {kb.name}
-                      </option>
-                    ))}
+                      </option>)}
                   </select>
                 </div>
                 <div className="space-y-2">
@@ -289,16 +202,8 @@ const Knowledge = () => {
                     <p className="text-xs text-muted-foreground">
                       Soporta PDF, DOCX, TXT (máx. 10MB)
                     </p>
-                    <Input
-                      type="file"
-                      className="hidden"
-                      id="file-upload"
-                      accept=".pdf,.docx,.txt"
-                    />
-                    <Label
-                      htmlFor="file-upload"
-                      className="mt-4 inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground cursor-pointer"
-                    >
+                    <Input type="file" className="hidden" id="file-upload" accept=".pdf,.docx,.txt" />
+                    <Label htmlFor="file-upload" className="mt-4 inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground cursor-pointer">
                       Seleccionar archivo
                     </Label>
                   </div>
@@ -317,23 +222,17 @@ const Knowledge = () => {
         </div>
       </div>
 
-      {filteredKnowledgeBases.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-6 sm:p-12 text-center border rounded-lg bg-muted/10">
+      {filteredKnowledgeBases.length === 0 ? <div className="flex flex-col items-center justify-center p-6 sm:p-12 text-center border rounded-lg bg-muted/10">
           <FileText className="h-12 w-12 text-muted-foreground mb-4" />
           <h3 className="text-xl font-medium mb-2">No se encontraron bases de conocimiento</h3>
           <p className="text-muted-foreground mb-6">
-            {searchTerm
-              ? "Prueba a ajustar tu término de búsqueda"
-              : "Crea tu primera base de conocimiento para comenzar"}
+            {searchTerm ? "Prueba a ajustar tu término de búsqueda" : "Crea tu primera base de conocimiento para comenzar"}
           </p>
           <Button onClick={() => setIsNewKBDialogOpen(true)}>
             <Plus className="mr-2 h-4 w-4" /> Nueva Base de Conocimiento
           </Button>
-        </div>
-      ) : (
-        <div className="grid gap-6 md:grid-cols-2">
-          {filteredKnowledgeBases.map((kb) => (
-            <Card key={kb.id} className="animate-fade-in card-hover">
+        </div> : <div className="grid gap-6 md:grid-cols-2">
+          {filteredKnowledgeBases.map(kb => <Card key={kb.id} className="animate-fade-in card-hover">
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-start">
                   <div>
@@ -351,19 +250,16 @@ const Knowledge = () => {
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>Editar base de conocimiento</DropdownMenuItem>
                       <DropdownMenuItem onClick={() => {
-                        setSelectedKB(kb);
-                        setIsUploadDialogOpen(true);
-                      }}>
+                  setSelectedKB(kb);
+                  setIsUploadDialogOpen(true);
+                }}>
                         Añadir documentos
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem 
-                        className="text-destructive flex items-center"
-                        onClick={() => {
-                          setKnowledgeBaseToDelete(kb);
-                          setIsDeleteDialogOpen(true);
-                        }}
-                      >
+                      <DropdownMenuItem className="text-destructive flex items-center" onClick={() => {
+                  setKnowledgeBaseToDelete(kb);
+                  setIsDeleteDialogOpen(true);
+                }}>
                         <Trash2 className="h-4 w-4 mr-2" />
                         Eliminar base de conocimiento
                       </DropdownMenuItem>
@@ -378,16 +274,9 @@ const Knowledge = () => {
                 </div>
 
                 <div className="space-y-2">
-                  {kb.documents.length === 0 ? (
-                    <div className="p-4 text-center border border-dashed rounded-md">
+                  {kb.documents.length === 0 ? <div className="p-4 text-center border border-dashed rounded-md">
                       <p className="text-muted-foreground">No hay documentos aún</p>
-                    </div>
-                  ) : (
-                    kb.documents.map((doc) => (
-                      <div
-                        key={doc.id}
-                        className="flex items-center justify-between p-3 bg-muted/40 rounded-md hover:bg-muted transition-colors duration-200"
-                      >
+                    </div> : kb.documents.map(doc => <div key={doc.id} className="flex items-center justify-between p-3 bg-muted/40 rounded-md hover:bg-muted transition-colors duration-200">
                         <div className="flex items-center gap-3">
                           <div className="rounded-md p-2 bg-background">
                             {getFileIcon(doc.type)}
@@ -417,12 +306,10 @@ const Knowledge = () => {
                           <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger asChild>
-                                <Button 
-                                  variant="ghost" 
-                                  size="icon" 
-                                  className="h-8 w-8 hover:text-destructive"
-                                  onClick={() => setDocumentToDelete({ kb, doc })}
-                                >
+                                <Button variant="ghost" size="icon" className="h-8 w-8 hover:text-destructive" onClick={() => setDocumentToDelete({
+                        kb,
+                        doc
+                      })}>
                                   <Trash className="h-4 w-4" />
                                 </Button>
                               </TooltipTrigger>
@@ -430,29 +317,20 @@ const Knowledge = () => {
                             </Tooltip>
                           </TooltipProvider>
                         </div>
-                      </div>
-                    ))
-                  )}
+                      </div>)}
                 </div>
               </CardContent>
               <CardFooter>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full"
-                  onClick={() => {
-                    setSelectedKB(kb);
-                    setIsUploadDialogOpen(true);
-                  }}
-                >
+                <Button variant="outline" size="sm" className="w-full" onClick={() => {
+            setSelectedKB(kb);
+            setIsUploadDialogOpen(true);
+          }}>
                   <Plus className="mr-2 h-3 w-3" /> Añadir Documento
                 </Button>
               </CardFooter>
-            </Card>
-          ))}
+            </Card>)}
           {/* Se ha eliminado el módulo de "Crear Nueva Base de Conocimiento" que aparecía al final de la lista */}
-        </div>
-      )}
+        </div>}
 
       {/* Dialog para confirmar eliminación de base de conocimiento */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
@@ -477,10 +355,7 @@ const Knowledge = () => {
             <DialogClose asChild>
               <Button variant="outline">Cancelar</Button>
             </DialogClose>
-            <Button 
-              variant="destructive" 
-              onClick={handleDeleteKnowledgeBase}
-            >
+            <Button variant="destructive" onClick={handleDeleteKnowledgeBase}>
               <Trash2 className="h-4 w-4 mr-2" /> Eliminar Base de Conocimiento
             </Button>
           </DialogFooter>
@@ -488,7 +363,7 @@ const Knowledge = () => {
       </Dialog>
 
       {/* Dialog para confirmar eliminación de documento */}
-      <Dialog open={!!documentToDelete} onOpenChange={(open) => !open && setDocumentToDelete(null)}>
+      <Dialog open={!!documentToDelete} onOpenChange={open => !open && setDocumentToDelete(null)}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
@@ -510,17 +385,12 @@ const Knowledge = () => {
             <DialogClose asChild>
               <Button variant="outline">Cancelar</Button>
             </DialogClose>
-            <Button 
-              variant="destructive" 
-              onClick={handleDeleteDocument}
-            >
+            <Button variant="destructive" onClick={handleDeleteDocument}>
               <Trash2 className="h-4 w-4 mr-2" /> Eliminar Documento
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
-  );
+    </div>;
 };
-
 export default Knowledge;
